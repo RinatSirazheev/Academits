@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RangeTask
 {
-    class Program
+    class Range
     {
         static void Main()
         {
