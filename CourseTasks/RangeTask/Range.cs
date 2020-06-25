@@ -8,9 +8,15 @@ namespace RangeTask
 {
     class Range
     {
-        static void Main()
+        public double From { get; set; }
+
+        public double To { get; set; }
+
+        public Range(double from, double to)
         {
-            Console.WriteLine("Hello GitHub!");
+            From=from;
+            To=to;
         }
+
     }
 }
