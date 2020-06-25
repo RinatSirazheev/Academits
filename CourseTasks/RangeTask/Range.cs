@@ -14,9 +14,18 @@ namespace RangeTask
 
         public Range(double from, double to)
         {
-            From=from;
-            To=to;
+            From = from;
+            To = to;
         }
 
+        public double GetLenght()
+        {
+            return To - From;
+        }
+
+        public bool IsInside(double x)
+        {
+            return x - From > 0 && x - To < 0;
+        }
     }
 }
