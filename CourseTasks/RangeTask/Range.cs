@@ -42,5 +42,35 @@ namespace RangeTask
 
             return interval;
         }
+
+        public Range [] GetCombiningTwoIntervals(Range range)
+        {
+            double from;
+            double to;
+
+            if(this.From < range.To && this.To > range.From)
+            {
+                from = (this.From < range.From) ? this.From : range.From;
+                to = (this.To > range.To) ? this.To : range.To;
+
+                Range range2 = new Range(from, to);
+
+                Range[] range_1 = new Range[1];
+                range_1[0] = range2;
+
+                return range_1;
+            }
+            else
+            {
+                Range range1 = new Range(this.From, this.To);
+                Range range2 = new Range(range.From, range.To);
+
+                Range[] range_1 = new Range[2];
+                range_1[0] = range1;
+                range_1[1] = range2;
+
+                return range_1;
+            }            
+        }
     }
 }
