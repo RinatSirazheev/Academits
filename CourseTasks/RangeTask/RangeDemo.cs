@@ -45,7 +45,7 @@ namespace RangeTask
               Console.WriteLine($"Интервал пересечения двух интервалов: от {rangeA.GetInterval(rangeB).From} до {rangeA.GetInterval(rangeB).To}");
             }
 
-
+            
 
         }
     }
