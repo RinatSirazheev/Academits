@@ -49,7 +49,12 @@ namespace RangeTask
                 Console.WriteLine("Второй интервал не пересекается с первым интервалом.");
             }
 
-            
+            Console.WriteLine($"Результат объединения: ");
+
+            foreach (Range e in rangeA.GetCombiningTwoRanges(rangeB))
+            {
+                Console.WriteLine($"от {e.From} до {e.To}");
+            }
 
         }
     }
