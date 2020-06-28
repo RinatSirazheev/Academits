@@ -28,14 +28,9 @@ namespace RangeTask
             return x - From > 0 && x - To < 0;
         }
 
-        public bool IsIntersect(Range range)
+         public Range GetInterval(Range range)
         {
-            return this.From < range.To && this.To > range.From;
-        }
-
-        public Range GetInterval(Range range)
-        {
-            if (this.From > range.To || this.To < range.From)
+            if (this.From >= range.To || this.To <= range.From)
             {
                 return null;
             }
@@ -52,16 +47,12 @@ namespace RangeTask
 
         public Range[] GetCombiningTwoRanges(Range secondRange)
         {
-            double from;
-            double to;
-
             if (this.From <= secondRange.To && this.To >= secondRange.From)
             {
-                from = (this.From < secondRange.From) ? this.From : secondRange.From;
-                to = (this.To > secondRange.To) ? this.To : secondRange.To;
+                double from = (this.From < secondRange.From) ? this.From : secondRange.From;
+                double to = (this.To > secondRange.To) ? this.To : secondRange.To;
 
                 Range interval = new Range(from, to);
-
                 Range[] intervalsArray = new Range[1] { interval };
 
                 return intervalsArray;
@@ -74,6 +65,35 @@ namespace RangeTask
             }
         }
 
+        public Range[] GetTwoIntervalsDifference(Range secondRange)
+        {
+            if (this.From == secondRange.From && this.To < secondRange.To)
+            {
+                return null;
+            }
+            else if (this.From > secondRange.To || this.To < secondRange.From)
+            {
+                Range[] intervalsArray = new Range[2] { this, secondRange };
 
+                return intervalsArray;
+            }
+            else
+            {
+                if (this.From == secondRange.From)
+                {
+                    Range interval = new Range(secondRange.To, this.To);
+                    Range[] intervalsArray = new Range[1] { interval };
+
+                    return intervalsArray;
+                }
+                else
+                {
+                    Range interval = new Range(this.From, secondRange.From);
+                    Range[] intervalsArray = new Range[1] { interval };
+
+                    return intervalsArray;
+                }
+            }
+        }
     }
 }
