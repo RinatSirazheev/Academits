@@ -28,16 +28,16 @@ namespace RangeTask
             return x - From > 0 && x - To < 0;
         }
 
-         public Range GetInterval(Range range)
+        public Range GetTwoIntervalsIntersection(Range secondRange)                              // Получение интервала-пересечения двух интервалов.
         {
-            if (this.From >= range.To || this.To <= range.From)
+            if (this.From >= secondRange.To || this.To <= secondRange.From)
             {
                 return null;
             }
             else
             {
-                double from = (this.From > range.From) ? this.From : range.From;
-                double to = (this.To < range.To) ? this.To : range.To;
+                double from = (this.From > secondRange.From) ? this.From : secondRange.From;
+                double to = (this.To < secondRange.To) ? this.To : secondRange.To;
 
                 Range interval = new Range(from, to);
 
@@ -45,7 +45,7 @@ namespace RangeTask
             }
         }
 
-        public Range[] GetCombiningTwoRanges(Range secondRange)
+        public Range[] GetTwoIntervalsUnion(Range secondRange)                                   // Получение объединения двух интервалов.
         {
             if (this.From <= secondRange.To && this.To >= secondRange.From)
             {
@@ -65,34 +65,31 @@ namespace RangeTask
             }
         }
 
-        public Range[] GetTwoIntervalsDifference(Range secondRange)
+        public Range[] GetTwoIntervalsDifference(Range secondRange)                             // Получение разности двух интервалов.
         {
-            if (this.From == secondRange.From && this.To < secondRange.To)
+            if (this.From == secondRange.From && this.To <= secondRange.To)
             {
                 return null;
             }
-            else if (this.From > secondRange.To || this.To < secondRange.From)
+            else if (this.From >= secondRange.To || this.To <= secondRange.From)
             {
                 Range[] intervalsArray = new Range[2] { this, secondRange };
 
                 return intervalsArray;
             }
+            else if (this.From == secondRange.From)
+            {
+                Range interval = new Range(secondRange.To, this.To);
+                Range[] intervalsArray = new Range[1] { interval };
+
+                return intervalsArray;
+            }
             else
             {
-                if (this.From == secondRange.From)
-                {
-                    Range interval = new Range(secondRange.To, this.To);
-                    Range[] intervalsArray = new Range[1] { interval };
+                Range interval = new Range(this.From, secondRange.From);
+                Range[] intervalsArray = new Range[1] { interval };
 
-                    return intervalsArray;
-                }
-                else
-                {
-                    Range interval = new Range(this.From, secondRange.From);
-                    Range[] intervalsArray = new Range[1] { interval };
-
-                    return intervalsArray;
-                }
+                return intervalsArray;
             }
         }
     }

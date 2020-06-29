@@ -40,25 +40,40 @@ namespace RangeTask
 
             Range rangeB = new Range(fromB, toB);
 
-            if (rangeA.GetInterval(rangeB) == null)
+            Range intersectionInterval = rangeA.GetTwoIntervalsIntersection(rangeB);
+
+            if (intersectionInterval == null)
             {
                 Console.WriteLine("Второй интервал не пересекается с первым интервалом.");
-            }                                       // Получение интервала-пересечения двух интервалов.
+            }
             else
             {
-                Range intersectionInterval = rangeA.GetInterval(rangeA);
                 Console.WriteLine($"Интервал пересечения двух интервалов: от {intersectionInterval.From} до {intersectionInterval.To}");
             }
 
-            Console.WriteLine($"Результат объединения: ");                                  // Получение объединения двух интервалов.
+            Console.WriteLine($"Результат объединения двух интервалов: ");
 
-            Range[] intervalsArray = rangeA.GetCombiningTwoRanges(rangeB);
-            foreach (Range e in intervalsArray)
+            Range[] unionIntervalsArray = rangeA.GetTwoIntervalsUnion(rangeB);
+            foreach (Range e in unionIntervalsArray)
             {
                 Console.WriteLine($"от {e.From} до {e.To}");
             }
 
+            Range[] differenceIntervalsArray = rangeA.GetTwoIntervalsDifference(rangeB);
 
+            if (differenceIntervalsArray == null)
+            {
+                Console.WriteLine("Оба интервала совпадают, в результате разности этих интервалов получается 0. ");
+            }
+            else
+            {
+                Console.WriteLine($"Результат разности двух интервалов: ");
+
+                foreach (Range e in differenceIntervalsArray)
+                {
+                    Console.WriteLine($"от {e.From} до {e.To}");
+                }
+            } 
         }
     }
 }
