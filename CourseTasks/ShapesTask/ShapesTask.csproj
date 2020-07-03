@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5477B593-9F56-4F97-8826-8A66B436545F}</ProjectGuid>
+    <ProjectGuid>{A13C28B0-AE75-4AEE-99BA-26B2DCC223B5}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>CourseTasks</RootNamespace>
-    <AssemblyName>CourseTasks</AssemblyName>
+    <RootNamespace>ShapesTask</RootNamespace>
+    <AssemblyName>ShapesTask</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

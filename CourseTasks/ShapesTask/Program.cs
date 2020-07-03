@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CourseTasks
+namespace ShapesTask
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
         }
     }
