@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RangeTask
 {
@@ -51,7 +47,7 @@ namespace RangeTask
                 Console.WriteLine($"Интервал пересечения двух интервалов: от {intersectionInterval.From} до {intersectionInterval.To}");
             }
 
-            Console.WriteLine($"Результат объединения двух интервалов: ");
+            Console.WriteLine("Результат объединения двух интервалов: ");
 
             Range[] unionIntervalsArray = rangeA.GetTwoIntervalsUnion(rangeB);
             foreach (Range e in unionIntervalsArray)
@@ -61,13 +57,13 @@ namespace RangeTask
 
             Range[] differenceIntervalsArray = rangeA.GetTwoIntervalsDifference(rangeB);
 
-            if (differenceIntervalsArray == null)
+            if  (differenceIntervalsArray.Length == 0)
             {
-                Console.WriteLine("Оба интервала совпадают, в результате разности этих интервалов получается 0. ");
+                Console.WriteLine("В результате разности первого и второго интервалов получается 0. ");
             }
             else
             {
-                Console.WriteLine($"Результат разности двух интервалов: ");
+                Console.WriteLine("Результат разности двух интервалов: ");
 
                 foreach (Range e in differenceIntervalsArray)
                 {

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RangeTask
 {
@@ -25,72 +21,56 @@ namespace RangeTask
 
         public bool IsInside(double x)
         {
-            return x - From > 0 && x - To < 0;
+            return x >= From && x <= To;
         }
 
-        public Range GetTwoIntervalsIntersection(Range secondRange)                              // Получение интервала-пересечения двух интервалов.
+        public Range GetTwoIntervalsIntersection(Range range)
         {
-            if (this.From >= secondRange.To || this.To <= secondRange.From)
+            if (From >= range.To || To <= range.From)
             {
                 return null;
             }
-            else
-            {
-                double from = (this.From > secondRange.From) ? this.From : secondRange.From;
-                double to = (this.To < secondRange.To) ? this.To : secondRange.To;
 
-                Range interval = new Range(from, to);
+            double from = Math.Max(From, range.From);
+            double to = Math.Min(To, range.To);
 
-                return interval;
-            }
+            return new Range(from, to);
         }
 
-        public Range[] GetTwoIntervalsUnion(Range secondRange)                                   // Получение объединения двух интервалов.
+        public Range[] GetTwoIntervalsUnion(Range range)
         {
-            if (this.From <= secondRange.To && this.To >= secondRange.From)
+            if (From <= range.To && To >= range.From)
             {
-                double from = (this.From < secondRange.From) ? this.From : secondRange.From;
-                double to = (this.To > secondRange.To) ? this.To : secondRange.To;
+                double from = Math.Min(From, range.From);
+                double to = Math.Max(To, range.To);
 
-                Range interval = new Range(from, to);
-                Range[] intervalsArray = new Range[1] { interval };
-
-                return intervalsArray;
+                return new Range[] { new Range(from, to) };
             }
-            else
-            {
-                Range[] intervalsArray = new Range[2] { this, secondRange };
 
-                return intervalsArray;
-            }
+            return new Range[] { new Range(From, To), new Range(range.From, range.To) };
         }
 
-        public Range[] GetTwoIntervalsDifference(Range secondRange)                             // Получение разности двух интервалов.
+        public Range[] GetTwoIntervalsDifference(Range range)
         {
-            if (this.From == secondRange.From && this.To <= secondRange.To)
+            if (From >= range.From && To <= range.To)
             {
-                return null;
+                return new Range[0];
             }
-            else if (this.From >= secondRange.To || this.To <= secondRange.From)
+            else if (From < range.From && To > range.To)
             {
-                Range[] intervalsArray = new Range[2] { this, secondRange };
+                return new Range[] { new Range(From, range.From), new Range(range.To, To) };
+            }
+            else if (From >= range.From)
+            {
+                return new Range[] { new Range(range.To, To) };
+            }
+            else if (To <= range.To)
+            {
+                return new Range[] { new Range(From, range.From) };
+            }
 
-                return intervalsArray;
-            }
-            else if (this.From == secondRange.From)
-            {
-                Range interval = new Range(secondRange.To, this.To);
-                Range[] intervalsArray = new Range[1] { interval };
 
-                return intervalsArray;
-            }
-            else
-            {
-                Range interval = new Range(this.From, secondRange.From);
-                Range[] intervalsArray = new Range[1] { interval };
-
-                return intervalsArray;
-            }
+            return new Range[] { new Range(From, To), new Range(range.From, range.To) };
         }
     }
 }
