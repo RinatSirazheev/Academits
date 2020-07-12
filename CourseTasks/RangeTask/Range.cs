@@ -24,7 +24,7 @@ namespace RangeTask
             return x >= From && x <= To;
         }
 
-        public Range GetRangesIntersection(Range range)
+        public Range GetIntersection(Range range)
         {
             if (From >= range.To || To <= range.From)
             {
@@ -37,7 +37,7 @@ namespace RangeTask
             return new Range(from, to);
         }
 
-        public Range[] GetRangesUnion(Range range)
+        public Range[] GetUnion(Range range)
         {
             if (From <= range.To && To >= range.From)
             {
@@ -50,7 +50,7 @@ namespace RangeTask
             return new Range[] { new Range(From, To), new Range(range.From, range.To) };
         }
 
-        public Range[] GetRangesDifference(Range range)
+        public Range[] GetDifference(Range range)
         {
             if (From >= range.From && To <= range.To)
             {
@@ -62,7 +62,7 @@ namespace RangeTask
                 return new Range[] { new Range(From, range.From), new Range(range.To, To) };
             }
 
-            if (From >= range.From && To > range.To)
+            if (From >= range.From && From < range.To)
             {
                 return new Range[] { new Range(range.To, To) };
             }

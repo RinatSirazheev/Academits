@@ -36,7 +36,7 @@ namespace RangeTask
 
             Range rangeB = new Range(fromB, toB);
 
-            Range intersectionInterval = rangeA.GetRangesIntersection(rangeB);
+            Range intersectionInterval = rangeA.GetIntersection(rangeB);
 
             if (intersectionInterval == null)
             {
@@ -49,13 +49,13 @@ namespace RangeTask
 
             Console.WriteLine("Результат объединения двух интервалов: ");
 
-            Range[] unionIntervalsArray = rangeA.GetRangesUnion(rangeB);
+            Range[] unionIntervalsArray = rangeA.GetUnion(rangeB);
             foreach (Range e in unionIntervalsArray)
             {
                 Console.WriteLine($"от {e.From} до {e.To}");
             }
 
-            Range[] differenceIntervalsArray = rangeA.GetRangesDifference(rangeB);
+            Range[] differenceIntervalsArray = rangeA.GetDifference(rangeB);
 
             if  (differenceIntervalsArray.Length == 0)
             {
