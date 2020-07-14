@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ShapesTask
+﻿namespace ShapesTask
 {
     public class ShapesDemo
     {

@@ -43,8 +43,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Circle.cs" />
+    <Compile Include="ShapeSecondLargestPerimetrFinder.cs" />
+    <Compile Include="ShapeMaxAreaFinder.cs" />
+    <Compile Include="ShapesPerimetrComparer.cs" />
+    <Compile Include="ShapesAreaComparer.cs" />
+    <Compile Include="Rectangle.cs" />
+    <Compile Include="Triangle.cs" />
+    <Compile Include="Square.cs" />
+    <Compile Include="IShape.cs" />
     <Compile Include="ShapesDemo.cs" />
-    <Compile Include="Shapes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
