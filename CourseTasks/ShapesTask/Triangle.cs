@@ -52,5 +52,42 @@ namespace ShapesTask
         {
             return Math.Max(Math.Max(X1, X2), X3) - Math.Min(Math.Min(X1, X2), X3);
         }
+
+        public override string ToString()
+        {
+            return string.Join(", ", new double[] { X1, X2, X3, Y1, Y2, Y3 });
+        }
+
+        public override bool Equals(object o)
+        {
+            if (ReferenceEquals(o, this))
+            {
+                return true;
+            }
+
+            if (o is null || o.GetType() != this.GetType())
+            {
+                return false;
+            }
+
+            Triangle p = (Triangle)o;
+
+            return X1 == p.X1 && X2 == p.X2 && X3 == p.X3 && Y1 == p.Y1 && Y2 == p.Y2 && Y3 == p.Y3;
+        }
+
+        public override int GetHashCode()
+        {
+            int prime = 37;
+            int hash = 1;
+
+            hash = prime * hash + X1.GetHashCode();
+            hash = prime * hash + X2.GetHashCode();
+            hash = prime * hash + X3.GetHashCode();
+            hash = prime * hash + Y1.GetHashCode();
+            hash = prime * hash + Y2.GetHashCode();
+            hash = prime * hash + Y3.GetHashCode();
+
+            return hash;
+        }
     }
 }

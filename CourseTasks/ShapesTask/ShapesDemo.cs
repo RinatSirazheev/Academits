@@ -1,4 +1,5 @@
-﻿namespace ShapesTask
+﻿
+namespace ShapesTask
 {
     public class ShapesDemo
     {
@@ -12,7 +13,7 @@
                 new Circle(8),
                 new Triangle(2.4,5,10,2,8,2)
             };
-                       
+
             shapes.GetShapeMaxArea();
 
             shapes.GetShapeSecondLargestPerimetr();
