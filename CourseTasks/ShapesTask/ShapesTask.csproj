@@ -43,14 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Circle.cs" />
-    <Compile Include="ShapeSecondLargestPerimetrFinder.cs" />
-    <Compile Include="ShapeMaxAreaFinder.cs" />
-    <Compile Include="ShapesPerimetrComparer.cs" />
+    <Compile Include="Shapes\Circle.cs" />
+    <Compile Include="ShapesPerimeterComparer.cs" />
     <Compile Include="ShapesAreaComparer.cs" />
-    <Compile Include="Rectangle.cs" />
-    <Compile Include="Triangle.cs" />
-    <Compile Include="Square.cs" />
+    <Compile Include="Shapes\Rectangle.cs" />
+    <Compile Include="Shapes\Triangle.cs" />
+    <Compile Include="Shapes\Square.cs" />
     <Compile Include="IShape.cs" />
     <Compile Include="ShapesDemo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -58,5 +56,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

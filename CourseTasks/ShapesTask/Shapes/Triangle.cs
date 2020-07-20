@@ -39,7 +39,7 @@ namespace ShapesTask
             return Math.Max(Math.Max(Y1, Y2), Y3) - Math.Min(Math.Min(Y1, Y2), Y3);
         }
 
-        public double GetPerimetr()
+        public double GetPerimeter()
         {
             double segmentAB = Math.Sqrt(Math.Pow((X2 - X1), 2) + Math.Pow((Y2 - Y1), 2));
             double segmentAC = Math.Sqrt(Math.Pow((X3 - X1), 2) + Math.Pow((Y3 - Y1), 2));

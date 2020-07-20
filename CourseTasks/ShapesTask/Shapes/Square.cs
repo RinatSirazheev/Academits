@@ -24,7 +24,7 @@ namespace ShapesTask
             return SideLength;
         }
 
-        public double GetPerimetr()
+        public double GetPerimeter()
         {
             return 4 * SideLength;
         }

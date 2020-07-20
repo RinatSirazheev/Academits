@@ -25,7 +25,7 @@
             return SideLengthA;
         }
 
-        public double GetPerimetr()
+        public double GetPerimeter()
         {
             return SideLengthA * 2 + SideLengthB * 2;
         }

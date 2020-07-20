@@ -2,16 +2,16 @@
 
 namespace ShapesTask
 {
-    class ShapesPerimetrComparer : IComparer<IShape>
+    class ShapesPerimeterComparer : IComparer<IShape>
     {
         public int Compare(IShape x, IShape y)
         {
-            if (x.GetPerimetr() > y.GetPerimetr())
+            if (x.GetPerimeter() > y.GetPerimeter())
             {
                 return 1;
             }
 
-            if (x.GetPerimetr() < y.GetPerimetr())
+            if (x.GetPerimeter() < y.GetPerimeter())
             {
                 return -1;
             }

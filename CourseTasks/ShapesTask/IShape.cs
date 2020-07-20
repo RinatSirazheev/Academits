@@ -4,8 +4,11 @@
     {
         string Name { get; }
         double GetWidth();
+
         double GetHeight();
+
         double GetArea();
-        double GetPerimetr();
+
+        double GetPerimeter();
     }
 }
