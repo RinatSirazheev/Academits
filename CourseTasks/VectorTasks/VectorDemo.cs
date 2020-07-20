@@ -13,10 +13,14 @@ namespace VectorTasks
             double[] p = new double[] { 1, 2, 3, 4, 5 };
 
             Vector array = new Vector(3,p);
+            Vector array1 = new Vector(new double[] { 1, 2, 3, 4, 5 });
 
             Console.WriteLine(array);
 
-            Console.WriteLine(array.GetSize());
+            array.GetTurn();
+            Console.WriteLine(array);
+
+            Console.WriteLine("Хеш код ={0} ", array.GetHashCode());
         }
     }
 }
