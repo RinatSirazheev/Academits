@@ -4,14 +4,11 @@ namespace ShapesTask
 {
     public class Square : IShape
     {
-        public string Name { get; }
-
         public double SideLength { get; set; }
 
         public Square(double sideLength)
         {
             SideLength = sideLength;
-            Name = "Квадрат";
         }
 
         public double GetArea()
@@ -36,7 +33,7 @@ namespace ShapesTask
 
         public override string ToString()
         {
-            return SideLength.ToString();
+            return "Квадрат со стороной = " + SideLength.ToString();
         }
 
         public override bool Equals(object o)
@@ -46,7 +43,7 @@ namespace ShapesTask
                 return true;
             }
 
-            if (o is null || o.GetType() != this.GetType())
+            if (ReferenceEquals(o, null) || o.GetType() != GetType())
             {
                 return false;
             }

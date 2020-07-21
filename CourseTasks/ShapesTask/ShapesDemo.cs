@@ -17,12 +17,12 @@ namespace ShapesTask
 
             Array.Sort(shapes, new ShapesAreaComparer());
 
-            Console.WriteLine("{0} является фигурой с самой большой площадью.", shapes[shapes.Length - 1].Name);
+            Console.WriteLine("{0}, является фигурой с самой большой площадью.", shapes[shapes.Length - 1]);
             Console.WriteLine("Ее площадь равна {0}", shapes[shapes.Length - 1].GetArea());
 
             Array.Sort(shapes, new ShapesPerimeterComparer());
 
-            Console.WriteLine("{0} является фигурой со вторым по величине периметром.", shapes[shapes.Length - 2].Name);
+            Console.WriteLine("{0} является фигурой со вторым по величине периметром.", shapes[shapes.Length - 2]);
             Console.WriteLine("Ее периметр равен {0}", shapes[shapes.Length - 2].GetPerimeter());
         }
     }

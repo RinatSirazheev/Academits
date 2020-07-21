@@ -4,8 +4,6 @@ namespace ShapesTask
 {
     public class Triangle : IShape
     {
-        public string Name { get; }
-
         public double X1 { get; set; }
 
         public double X2 { get; set; }
@@ -20,12 +18,11 @@ namespace ShapesTask
 
         public Triangle(double x1, double x2, double x3, double y1, double y2, double y3)
         {
-            Name = "Треугольник";
             X1 = x1;
-            X2 = x2;
-            X3 = x3;
             Y1 = y1;
+            X2 = x2;
             Y2 = y2;
+            X3 = x3;
             Y3 = y3;
         }
 
@@ -39,13 +36,14 @@ namespace ShapesTask
             return Math.Max(Math.Max(Y1, Y2), Y3) - Math.Min(Math.Min(Y1, Y2), Y3);
         }
 
+        public double GetSideLength(double x1, double y1, double x2, double y2)
+        {
+            return Math.Sqrt(Math.Pow((x2 - x1), 2) + Math.Pow((y2 - y1), 2));
+        }
+
         public double GetPerimeter()
         {
-            double segmentAB = Math.Sqrt(Math.Pow((X2 - X1), 2) + Math.Pow((Y2 - Y1), 2));
-            double segmentAC = Math.Sqrt(Math.Pow((X3 - X1), 2) + Math.Pow((Y3 - Y1), 2));
-            double segmentBC = Math.Sqrt(Math.Pow((X3 - X2), 2) + Math.Pow((Y3 - Y2), 2));
-
-            return segmentAB + segmentAC + segmentBC;
+            return GetSideLength(X1, Y1, X2, Y2) + GetSideLength(X1, Y1, X3, Y3) + GetSideLength(X2, Y2, X3, Y3);
         }
 
         public double GetWidth()
@@ -55,7 +53,7 @@ namespace ShapesTask
 
         public override string ToString()
         {
-            return string.Join(", ", new double[] { X1, X2, X3, Y1, Y2, Y3 });
+            return "Треугольник с координатами " + string.Join(", ", new double[] { X1, X2, X3, Y1, Y2, Y3 });
         }
 
         public override bool Equals(object o)
@@ -65,7 +63,7 @@ namespace ShapesTask
                 return true;
             }
 
-            if (o is null || o.GetType() != this.GetType())
+            if (ReferenceEquals(o, null) || o.GetType() != GetType())
             {
                 return false;
             }

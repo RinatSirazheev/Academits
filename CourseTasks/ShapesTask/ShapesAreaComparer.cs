@@ -4,19 +4,9 @@ namespace ShapesTask
 {
     class ShapesAreaComparer : IComparer<IShape>
     {
-        public int Compare(IShape x, IShape y)
+        public int Compare(IShape shape1, IShape shape2)
         {
-            if (x.GetArea() > y.GetArea())
-            {
-                return 1;
-            }
-
-            if (x.GetArea() < y.GetArea())
-            {
-                return -1;
-            }
-
-            return 0;
+            return shape1.GetArea().CompareTo(shape2.GetArea());
         }
     }
 }

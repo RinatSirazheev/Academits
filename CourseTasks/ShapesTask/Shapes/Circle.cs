@@ -4,13 +4,10 @@ namespace ShapesTask
 {
     public class Circle : IShape
     {
-        public string Name { get; }
-
         public double Radius { get; set; }
 
         public Circle(double radius)
         {
-            Name = "Круг";
             Radius = radius;
         }
 
@@ -36,7 +33,7 @@ namespace ShapesTask
 
         public override string ToString()
         {
-            return Radius.ToString();
+            return "Круг с радиусом = " + Radius.ToString();
         }
 
         public override bool Equals(object o)
@@ -46,7 +43,7 @@ namespace ShapesTask
                 return true;
             }
 
-            if (o is null || o.GetType() != this.GetType())
+            if (ReferenceEquals(o, null) || o.GetType() != GetType())
             {
                 return false;
             }
