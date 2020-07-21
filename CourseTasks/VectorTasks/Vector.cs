@@ -62,19 +62,19 @@ namespace VectorTasks
                 return true;
             }
 
-            if (obj is null || obj.GetType() != this.GetType())
+            if (ReferenceEquals(obj, null) || obj.GetType() != GetType())
             {
                 return false;
             }
 
             Vector vector = (Vector)obj;
 
-            if (this.GetSize() != vector.GetSize())
+            if (GetSize() != vector.GetSize())
             {
                 return false;
             }
 
-            for(int i = 0; i <= GetSize() - 1; i++)
+            for (int i = 0; i <= GetSize() - 1; i++)
             {
                 if (NumbersVector[i] != vector.NumbersVector[i])
                 {
@@ -97,7 +97,7 @@ namespace VectorTasks
 
         public int GetSize()
         {
-            return this.NumbersVector.Length;
+            return NumbersVector.Length;
         }
 
         public Vector GetSum(Vector vector)
@@ -106,7 +106,7 @@ namespace VectorTasks
             {
                 for (int i = 0; i <= NumbersVector.Length - 1; i++)
                 {
-                    NumbersVector[i] = NumbersVector[i] + vector.NumbersVector[i];             
+                    NumbersVector[i] = NumbersVector[i] + vector.NumbersVector[i];
                 }
 
                 return this;
@@ -122,7 +122,7 @@ namespace VectorTasks
             return this;
         }
 
-       public void GetSubtraction(Vector vector)
+        public Vector GetSubtraction(Vector vector)
         {
             if (NumbersVector.Length == vector.NumbersVector.Length)
             {
@@ -131,7 +131,7 @@ namespace VectorTasks
                     NumbersVector[i] = NumbersVector[i] - vector.NumbersVector[i];
                 }
 
-               // return this;
+                return this;
             }
 
             int minArrayLength = (NumbersVector.Length < vector.NumbersVector.Length) ? NumbersVector.Length : vector.NumbersVector.Length;
@@ -141,12 +141,12 @@ namespace VectorTasks
                 NumbersVector[i] = NumbersVector[i] - vector.NumbersVector[i];
             }
 
-          //  return this;
+            return this;
         }
 
         public Vector GetMultiplication(double x)
         {
-            for(int i = 0; i <= NumbersVector.Length; i++)
+            for (int i = 0; i <= NumbersVector.Length; i++)
             {
                 NumbersVector[i] = NumbersVector[i] * x;
             }
@@ -156,7 +156,7 @@ namespace VectorTasks
 
         public void GetTurn()
         {
-            for(int i = 0; i <= NumbersVector.Length - 1; i++)
+            for (int i = 0; i <= NumbersVector.Length - 1; i++)
             {
                 NumbersVector[i] = NumbersVector[i] * (-1);
             }
@@ -166,9 +166,9 @@ namespace VectorTasks
         {
             double sum = 0;
 
-            for(int i = 0; i <= NumbersVector.Length - 1; i++)
+            for (int i = 0; i <= NumbersVector.Length - 1; i++)
             {
-                sum += Math.Pow(NumbersVector[i],2);
+                sum += Math.Pow(NumbersVector[i], 2);
             }
 
             return Math.Sqrt(sum);
@@ -179,6 +179,14 @@ namespace VectorTasks
             return NumbersVector[x];
         }
 
+        public void SetComponent(int x, double vectorComponent)
+        {
+            NumbersVector[x] = vectorComponent;
+        }
 
+        public static Vector GetSum(Vector vector1, Vector vector2)
+        {
+            return new Vector(vector1.GetSum(vector2));
+        }
     }
 }
