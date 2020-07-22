@@ -1,58 +1,59 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace VectorTasks
 {
     public class Vector
     {
-        public double[] NumbersVector { get; set; }
+        public double[] VectorComponents { get; set; }
 
         public Vector(int n)
         {
-            NumbersVector = new double[n];
+            VectorComponents = new double[n];
         }
 
         public Vector(Vector vektor)
         {
-            NumbersVector = vektor.NumbersVector;
+            VectorComponents = new double[vektor.GetSize()];
+
+            for (int i = 0; i <= vektor.GetSize() - 1; i++)
+            {
+                this.VectorComponents[i] = vektor.VectorComponents[i];
+            }
         }
 
         public Vector(double[] array)
         {
-            NumbersVector = array;
+            VectorComponents = array;
         }
 
         public Vector(int n, double[] array)
         {
-            NumbersVector = new double[n];
+            VectorComponents = new double[n];
 
             if (array.Length < n)
             {
                 for (int i = 0; i <= array.Length - 1; i++)
                 {
-                    NumbersVector[i] = array[i];
+                    VectorComponents[i] = array[i];
                 }
 
                 for (int i = array.Length; i <= n - 1; i++)
                 {
-                    NumbersVector[i] = 0;
+                    VectorComponents[i] = 0;
                 }
             }
             else
             {
                 for (int i = 0; i < n; i++)
                 {
-                    NumbersVector[i] = array[i];
+                    VectorComponents[i] = array[i];
                 }
             }
         }
 
         public override string ToString()
         {
-            return string.Join(", ", NumbersVector);
+            return string.Join(", ", VectorComponents);
         }
 
         public override bool Equals(object obj)
@@ -76,7 +77,7 @@ namespace VectorTasks
 
             for (int i = 0; i <= GetSize() - 1; i++)
             {
-                if (NumbersVector[i] != vector.NumbersVector[i])
+                if (VectorComponents[i] != vector.VectorComponents[i])
                 {
                     return false;
                 }
@@ -90,75 +91,71 @@ namespace VectorTasks
             int prime = 37;
             int hash = 1;
 
-            hash = prime * hash + NumbersVector.GetHashCode();
+            hash = prime * hash + VectorComponents.GetHashCode();
 
             return hash;
         }
 
         public int GetSize()
         {
-            return NumbersVector.Length;
+            return VectorComponents.Length;
         }
 
-        public Vector GetSum(Vector vector)
+        public void Sum(Vector vector)
         {
-            if (NumbersVector.Length == vector.NumbersVector.Length)
+            if (VectorComponents.Length < vector.VectorComponents.Length)
             {
-                for (int i = 0; i <= NumbersVector.Length - 1; i++)
+                Vector newVector = new Vector(vector.VectorComponents.Length, VectorComponents);
+                VectorComponents = new double[vector.VectorComponents.Length];
+
+                for (int i = 0; i <= newVector.VectorComponents.Length - 1; i++)
                 {
-                    NumbersVector[i] = NumbersVector[i] + vector.NumbersVector[i];
+                    VectorComponents[i] = newVector.VectorComponents[i] + vector.VectorComponents[i];
                 }
-
-                return this;
             }
-
-            int minArrayLength = (NumbersVector.Length < vector.NumbersVector.Length) ? NumbersVector.Length : vector.NumbersVector.Length;
-
-            for (int i = 0; i <= minArrayLength - 1; i++)
+            else
             {
-                NumbersVector[i] = NumbersVector[i] + vector.NumbersVector[i];
-            }
-
-            return this;
-        }
-
-        public Vector GetSubtraction(Vector vector)
-        {
-            if (NumbersVector.Length == vector.NumbersVector.Length)
-            {
-                for (int i = 0; i <= NumbersVector.Length - 1; i++)
+                for (int i = 0; i <= vector.VectorComponents.Length - 1; i++)
                 {
-                    NumbersVector[i] = NumbersVector[i] - vector.NumbersVector[i];
+                    VectorComponents[i] = VectorComponents[i] + vector.VectorComponents[i];
                 }
-
-                return this;
             }
-
-            int minArrayLength = (NumbersVector.Length < vector.NumbersVector.Length) ? NumbersVector.Length : vector.NumbersVector.Length;
-
-            for (int i = 0; i <= minArrayLength - 1; i++)
-            {
-                NumbersVector[i] = NumbersVector[i] - vector.NumbersVector[i];
-            }
-
-            return this;
         }
 
-        public Vector GetMultiplication(double x)
+        public void Subtraction(Vector vector)
         {
-            for (int i = 0; i <= NumbersVector.Length; i++)
+            if (VectorComponents.Length < vector.VectorComponents.Length)
             {
-                NumbersVector[i] = NumbersVector[i] * x;
-            }
+                Vector newVector = new Vector(vector.VectorComponents.Length, VectorComponents);
+                VectorComponents = new double[vector.VectorComponents.Length];
 
-            return this;
+                for (int i = 0; i <= newVector.VectorComponents.Length - 1; i++)
+                {
+                    VectorComponents[i] = newVector.VectorComponents[i] - vector.VectorComponents[i];
+                }
+            }
+            else
+            {
+                for (int i = 0; i <= vector.VectorComponents.Length - 1; i++)
+                {
+                    VectorComponents[i] = VectorComponents[i] - vector.VectorComponents[i];
+                }
+            }
         }
 
-        public void GetTurn()
+        public void Multiplication(double x)
         {
-            for (int i = 0; i <= NumbersVector.Length - 1; i++)
+            for (int i = 0; i <= VectorComponents.Length - 1; i++)
             {
-                NumbersVector[i] = NumbersVector[i] * (-1);
+                VectorComponents[i] = VectorComponents[i] * x;
+            }
+        }
+
+        public void Turn()
+        {
+            for (int i = 0; i <= VectorComponents.Length - 1; i++)
+            {
+                VectorComponents[i] = VectorComponents[i] * (-1);
             }
         }
 
@@ -166,27 +163,53 @@ namespace VectorTasks
         {
             double sum = 0;
 
-            for (int i = 0; i <= NumbersVector.Length - 1; i++)
+            for (int i = 0; i <= VectorComponents.Length - 1; i++)
             {
-                sum += Math.Pow(NumbersVector[i], 2);
+                sum += Math.Pow(VectorComponents[i], 2);
             }
 
             return Math.Sqrt(sum);
         }
 
-        public double GetComponent(int x)
+        public double GetComponent(int index)
         {
-            return NumbersVector[x];
+            return VectorComponents[index];
         }
 
-        public void SetComponent(int x, double vectorComponent)
+        public void SetComponent(int index, double vectorComponent)
         {
-            NumbersVector[x] = vectorComponent;
+            VectorComponents[index] = vectorComponent;
         }
 
         public static Vector GetSum(Vector vector1, Vector vector2)
         {
-            return new Vector(vector1.GetSum(vector2));
+            Vector vectorCopy = new Vector(vector1);
+
+            vectorCopy.Sum(vector2);
+
+            return vectorCopy;
+        }
+
+        public static Vector GetSubtraction(Vector vector1, Vector vector2)
+        {
+            Vector vectorCopy = new Vector(vector1);
+
+            vectorCopy.Subtraction(vector2);
+
+            return vectorCopy;
+        }
+
+        public static double GetScalarMultiplication(Vector vector1, Vector vector2)
+        {
+            double sum = 0;
+            int smallerVectorLength = Math.Min(vector1.VectorComponents.Length, vector2.VectorComponents.Length);
+
+            for (int i = 0; i <= smallerVectorLength - 1; i++)
+            {
+                sum += (vector1.VectorComponents[i] * vector2.VectorComponents[i]);
+            }
+
+            return sum;
         }
     }
 }
