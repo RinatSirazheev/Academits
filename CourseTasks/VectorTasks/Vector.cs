@@ -15,9 +15,9 @@ namespace VectorTasks
         {
             VectorComponents = new double[vektor.GetSize()];
 
-            for (int i = 0; i <= vektor.GetSize() - 1; i++)
+            for (int i = 0; i < vektor.VectorComponents.Length; i++)
             {
-                this.VectorComponents[i] = vektor.VectorComponents[i];
+                VectorComponents[i] = vektor.VectorComponents[i];
             }
         }
 
@@ -32,12 +32,12 @@ namespace VectorTasks
 
             if (array.Length < n)
             {
-                for (int i = 0; i <= array.Length - 1; i++)
+                for (int i = 0; i < array.Length; i++)
                 {
                     VectorComponents[i] = array[i];
                 }
 
-                for (int i = array.Length; i <= n - 1; i++)
+                for (int i = array.Length; i < n; i++)
                 {
                     VectorComponents[i] = 0;
                 }
@@ -70,12 +70,12 @@ namespace VectorTasks
 
             Vector vector = (Vector)obj;
 
-            if (GetSize() != vector.GetSize())
+            if (VectorComponents.Length != vector.VectorComponents.Length)
             {
                 return false;
             }
 
-            for (int i = 0; i <= GetSize() - 1; i++)
+            for (int i = 0; i < vector.VectorComponents.Length; i++)
             {
                 if (VectorComponents[i] != vector.VectorComponents[i])
                 {
@@ -108,14 +108,14 @@ namespace VectorTasks
                 Vector newVector = new Vector(vector.VectorComponents.Length, VectorComponents);
                 VectorComponents = new double[vector.VectorComponents.Length];
 
-                for (int i = 0; i <= newVector.VectorComponents.Length - 1; i++)
+                for (int i = 0; i < newVector.VectorComponents.Length; i++)
                 {
                     VectorComponents[i] = newVector.VectorComponents[i] + vector.VectorComponents[i];
                 }
             }
             else
             {
-                for (int i = 0; i <= vector.VectorComponents.Length - 1; i++)
+                for (int i = 0; i < vector.VectorComponents.Length; i++)
                 {
                     VectorComponents[i] = VectorComponents[i] + vector.VectorComponents[i];
                 }
@@ -129,14 +129,14 @@ namespace VectorTasks
                 Vector newVector = new Vector(vector.VectorComponents.Length, VectorComponents);
                 VectorComponents = new double[vector.VectorComponents.Length];
 
-                for (int i = 0; i <= newVector.VectorComponents.Length - 1; i++)
+                for (int i = 0; i < newVector.VectorComponents.Length; i++)
                 {
                     VectorComponents[i] = newVector.VectorComponents[i] - vector.VectorComponents[i];
                 }
             }
             else
             {
-                for (int i = 0; i <= vector.VectorComponents.Length - 1; i++)
+                for (int i = 0; i < vector.VectorComponents.Length; i++)
                 {
                     VectorComponents[i] = VectorComponents[i] - vector.VectorComponents[i];
                 }
@@ -145,7 +145,7 @@ namespace VectorTasks
 
         public void Multiplication(double x)
         {
-            for (int i = 0; i <= VectorComponents.Length - 1; i++)
+            for (int i = 0; i < VectorComponents.Length; i++)
             {
                 VectorComponents[i] = VectorComponents[i] * x;
             }
@@ -153,7 +153,7 @@ namespace VectorTasks
 
         public void Turn()
         {
-            for (int i = 0; i <= VectorComponents.Length - 1; i++)
+            for (int i = 0; i < VectorComponents.Length; i++)
             {
                 VectorComponents[i] = VectorComponents[i] * (-1);
             }
@@ -163,7 +163,7 @@ namespace VectorTasks
         {
             double sum = 0;
 
-            for (int i = 0; i <= VectorComponents.Length - 1; i++)
+            for (int i = 0; i < VectorComponents.Length; i++)
             {
                 sum += Math.Pow(VectorComponents[i], 2);
             }
@@ -204,7 +204,7 @@ namespace VectorTasks
             double sum = 0;
             int smallerVectorLength = Math.Min(vector1.VectorComponents.Length, vector2.VectorComponents.Length);
 
-            for (int i = 0; i <= smallerVectorLength - 1; i++)
+            for (int i = 0; i < smallerVectorLength; i++)
             {
                 sum += (vector1.VectorComponents[i] * vector2.VectorComponents[i]);
             }
