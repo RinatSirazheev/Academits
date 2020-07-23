@@ -8,6 +8,11 @@ namespace VectorTasks
 
         public Vector(int n)
         {
+            if (n <= 0)
+            {
+                throw new ArgumentException("Ошибка! Размерность вектора должна быть больше нуля!", nameof(n));
+            }
+
             VectorComponents = new double[n];
         }
 
@@ -28,6 +33,11 @@ namespace VectorTasks
 
         public Vector(int n, double[] array)
         {
+            if (n <= 0)
+            {
+                throw new ArgumentException("Ошибка! Размерность вектора должна быть больше нуля!", nameof(n));
+            }
+
             VectorComponents = new double[n];
 
             if (array.Length < n)
