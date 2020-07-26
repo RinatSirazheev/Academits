@@ -63,7 +63,7 @@ namespace VectorTasks
 
         public override string ToString()
         {
-            return string.Join(", ", VectorComponents);
+            return "{" + string.Join(", ", VectorComponents) + "}";
         }
 
         public override bool Equals(object obj)
