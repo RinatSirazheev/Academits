@@ -1,4 +1,5 @@
 ﻿using VectorTasks;
+using System;
 
 namespace MatrixTask
 {
@@ -18,11 +19,11 @@ namespace MatrixTask
 
         public Matrix(Matrix matrix)
         {
-            int a = matrix.matrixComponents.Length;
+            int numberMatrixRows = matrix.matrixComponents.Length;
 
-            matrixComponents = new Vector[a];
+            matrixComponents = new Vector[numberMatrixRows];
 
-            for (int i = 0; i < a; i++)
+            for (int i = 0; i < numberMatrixRows; i++)
             {
                 matrixComponents[i] = matrix.matrixComponents[i];
             }
@@ -47,8 +48,20 @@ namespace MatrixTask
         {
             matrixComponents = new Vector[array.Length];
 
-            for(int i =0; i < array.Length; i++)
+            int maxLineLenght = 0;
+
+            for (int i = 0; i < array.Length; i++)
             {
+                maxLineLenght = Math.Max(maxLineLenght, array[i].VectorComponents.Length);
+            }
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (array[i].VectorComponents.Length < maxLineLenght)
+                {
+                    array[i] = new Vector(maxLineLenght, array[i].VectorComponents);
+                }
+
                 matrixComponents[i] = array[i];
             }
         }
@@ -66,5 +79,54 @@ namespace MatrixTask
 
         }
 
+        public void GetLenght()
+        {
+            Console.WriteLine("Размер матрицы {0} на {1}", matrixComponents.Length, matrixComponents[0].VectorComponents.Length);
+        }
+
+        public Vector GetVector(int index)
+        {
+            return matrixComponents[index];
+        }
+
+        public void SetVector(Vector vector, int index)
+        {
+            matrixComponents[index] = vector;
+        }
+
+        public Vector GetVectorColumn(int index)
+        {
+            Vector vector = new Vector(matrixComponents.Length);
+
+            for (int i = 0; i < matrixComponents.Length; i++)
+            {
+                vector.VectorComponents[i] = matrixComponents[i].VectorComponents[index];
+            }
+
+            return vector;
+        }
+
+        public Matrix GetTransposition()
+        {
+            Vector[] arrayVectors = new Vector[Math.Max(matrixComponents.Length, matrixComponents[0].VectorComponents.Length)];
+
+            for (int i = 0; i < Math.Max(matrixComponents.Length, matrixComponents[0].VectorComponents.Length); i++)
+            {
+                arrayVectors[i] = new Vector(Math.Min(matrixComponents.Length, matrixComponents[0].VectorComponents.Length));
+            }
+
+            Matrix transpositionMatrix = new Matrix(arrayVectors);
+
+            for (int i = 0; i < matrixComponents.Length; i++)
+            {
+                for (int j = 0; j < matrixComponents[i].VectorComponents.Length; j++)
+                {
+                    transpositionMatrix.matrixComponents[j].VectorComponents[i] = matrixComponents[i].VectorComponents[j];
+                }
+            }
+
+            return transpositionMatrix;
+
+        }
     }
 }

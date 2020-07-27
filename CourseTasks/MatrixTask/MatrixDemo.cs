@@ -11,7 +11,7 @@ namespace MatrixTask
     {
         static void Main()
         {
-            Matrix matrix1 = new Matrix(1,1);
+            Matrix matrix1 = new Matrix(3,1);
 
             Matrix matrix2 = new Matrix(matrix1);
 
@@ -20,7 +20,7 @@ namespace MatrixTask
             Matrix matrix3 = new Matrix(array);
 
             Vector vector1 = new Vector(new double[] { 1, 2, 3, 4, 5 });
-            Vector vector2 = new Vector(new double[] { 1, 2, 3, 4, 5 });
+            Vector vector2 = new Vector(new double[] { 1, 2, 3, 4 });
 
             Vector[] vec = new Vector[] { vector1, vector2 };
 
@@ -31,9 +31,8 @@ namespace MatrixTask
            Console.WriteLine(" "+ matrix1);
             Console.WriteLine(" " + matrix2);
 
-            Console.WriteLine(" " + matrix3);
+            Console.WriteLine(" " + matrix4.GetTransposition());
 
-            Console.WriteLine(" " + matrix4);
         }
     }
 }
