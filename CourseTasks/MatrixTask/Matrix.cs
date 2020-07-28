@@ -128,5 +128,56 @@ namespace MatrixTask
             return transpositionMatrix;
 
         }
+
+        public double GetDeterminant()
+        {
+            if (matrixComponents.Length != matrixComponents[0].VectorComponents.Length)
+            {
+                throw new ArgumentException("Ошибка! Матрица должна быть квадратной.");
+            }
+
+            if (matrixComponents.Length == 1)
+            {
+                return (int)matrixComponents[0].VectorComponents[0];
+            }
+
+            if (matrixComponents.Length == 2)
+            {
+                return (int)(matrixComponents[0].VectorComponents[0] * matrixComponents[1].VectorComponents[1] - matrixComponents[0].VectorComponents[1] * matrixComponents[1].VectorComponents[0]);
+            }
+
+            double determinant = 0;
+
+            for (int i = 0, j = 2; i < matrixComponents.Length; i++)
+            {
+                Matrix minor = this.GetMinor(i);
+                determinant += Math.Pow(-1, j) * matrixComponents[0].VectorComponents[i] * minor.GetDeterminant();
+                j++;
+            }
+
+            return determinant;
+        }
+
+        public Matrix GetMinor(int n)
+        {
+            int minorSize = matrixComponents.Length - 1;
+            Matrix minor = new Matrix(minorSize, minorSize);
+
+            for (int i = 1; i < matrixComponents.Length; i++)
+            {
+                for (int j = 0, k = 0; j < matrixComponents.Length; j++)
+                {
+                    if (j == n)
+                    {
+                        continue;
+                    }
+
+                    minor.matrixComponents[i - 1].VectorComponents[k] = matrixComponents[i].VectorComponents[j];
+                    k++;
+                }
+            }
+
+            return minor;
+        }
     }
 }
