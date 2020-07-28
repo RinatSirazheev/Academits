@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ShapesTask
+namespace ShapesTask.Shapes
 {
     public class Triangle : IShape
     {
@@ -16,7 +16,7 @@ namespace ShapesTask
 
         public double Y3 { get; set; }
 
-        public Triangle(double x1, double x2, double x3, double y1, double y2, double y3)
+        public Triangle(double x1, double y1, double x2, double y2, double x3, double y3)
         {
             X1 = x1;
             Y1 = y1;
@@ -36,7 +36,7 @@ namespace ShapesTask
             return Math.Max(Math.Max(Y1, Y2), Y3) - Math.Min(Math.Min(Y1, Y2), Y3);
         }
 
-        public double GetSideLength(double x1, double y1, double x2, double y2)
+        private static double GetSideLength(double x1, double y1, double x2, double y2)
         {
             return Math.Sqrt(Math.Pow((x2 - x1), 2) + Math.Pow((y2 - y1), 2));
         }
@@ -53,7 +53,7 @@ namespace ShapesTask
 
         public override string ToString()
         {
-            return "Треугольник с координатами " + string.Join(", ", new double[] { X1, X2, X3, Y1, Y2, Y3 });
+            return "Треугольник с координатами " + string.Join(", ", new double[] { X1, Y1, X2, Y2, X3, Y3 });
         }
 
         public override bool Equals(object o)

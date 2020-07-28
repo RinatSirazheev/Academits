@@ -1,4 +1,5 @@
 ﻿using System;
+using ShapesTask.Shapes;
 
 namespace ShapesTask
 {
@@ -6,7 +7,8 @@ namespace ShapesTask
     {
         static void Main()
         {
-            IShape[] shapes = {
+            IShape[] shapes =
+            {
                 new Square(5),
                 new Square(8.8),
                 new Rectangle(12, 20.5),

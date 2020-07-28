@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ShapesTask
+namespace ShapesTask.Shapes
 {
     public class Square : IShape
     {
@@ -33,7 +33,7 @@ namespace ShapesTask
 
         public override string ToString()
         {
-            return "Квадрат со стороной = " + SideLength.ToString();
+            return "Квадрат со стороной = " + SideLength;
         }
 
         public override bool Equals(object o)

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ShapesTask
+namespace ShapesTask.Shapes
 {
     public class Circle : IShape
     {
@@ -33,7 +33,7 @@ namespace ShapesTask
 
         public override string ToString()
         {
-            return "Круг с радиусом = " + Radius.ToString();
+            return "Круг с радиусом = " + Radius;
         }
 
         public override bool Equals(object o)
