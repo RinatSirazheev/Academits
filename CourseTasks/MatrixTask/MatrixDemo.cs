@@ -34,8 +34,13 @@ namespace MatrixTask
             Console.WriteLine(" " + matrix1);
             Console.WriteLine(" " + matrix2);
 
-            Console.WriteLine(" " + matrix4.GetDeterminant());
+            matrix4.Multiply(10);
+            Console.WriteLine(" " + matrix4);
 
+            matrix4 = null;
+
+            matrix4.GetLenght();
+        
         }
     }
 }
