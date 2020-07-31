@@ -96,6 +96,11 @@ namespace MatrixTask
 
         public Vector GetVector(int index)
         {
+            if (index < 0 || index >= matrixComponents.Length)
+            {
+                throw new ArgumentException("Ошибка! Неверное значение индекса!");
+            }
+
             return matrixComponents[index];
         }
 
@@ -136,7 +141,6 @@ namespace MatrixTask
             }
 
             return transpositionMatrix;
-
         }
 
         public void Multiply(double x)
