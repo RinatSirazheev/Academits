@@ -143,7 +143,7 @@ namespace MatrixTask
         {
             for (int i = 0; i < matrixComponents.Length; i++)
             {
-                matrixComponents[i].Multiplication(x);
+                matrixComponents[i].Multiply(x);
             }
         }
 
@@ -273,7 +273,7 @@ namespace MatrixTask
 
             for (int i = 0; i < matrix1.matrixComponents.Length; i++)
             {
-                matrix.matrixComponents[i] = Vector.GetSubtraction(matrix1.matrixComponents[i], matrix2.matrixComponents[i]);
+                matrix.matrixComponents[i] = Vector.GetDifference(matrix1.matrixComponents[i], matrix2.matrixComponents[i]);
             }
 
             return matrix1;

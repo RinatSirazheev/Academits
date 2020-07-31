@@ -25,6 +25,11 @@ namespace VectorTasks
 
         public Vector(double[] array)
         {
+            if (array.Length == 0)
+            {
+                throw new ArgumentException("Ошибка! Размерность, должна быть больше нуля!", nameof(array.Length) + " = " + array.Length);
+            }
+
             components = new double[array.Length];
 
             Array.Copy(array, components, array.Length);
@@ -34,7 +39,7 @@ namespace VectorTasks
         {
             if (size <= 0)
             {
-                throw new ArgumentException("Ошибка! Размерность вектора должна быть больше нуля!", nameof(size));
+                throw new ArgumentException("Ошибка! Размерность вектора должна быть больше нуля!", nameof(size) + " = " + size);
             }
 
             components = new double[size];
@@ -89,7 +94,10 @@ namespace VectorTasks
             int prime = 37;
             int hash = 1;
 
-            hash = prime * hash + components.GetHashCode();
+            foreach (double e in components)
+            {
+                hash = prime * hash + e.GetHashCode();
+            }
 
             return hash;
         }
@@ -127,7 +135,11 @@ namespace VectorTasks
         {
             if (components.Length < vector.components.Length)
             {
+                double[] componentsCopy = new double[components.Length];
+                components.CopyTo(componentsCopy, 0);
+
                 components = new double[vector.components.Length];
+                componentsCopy.CopyTo(components, 0);
 
                 for (int i = 0; i < components.Length; i++)
                 {
@@ -143,29 +155,26 @@ namespace VectorTasks
             }
         }
 
-        public void Multiplication(double x)
+        public void Multiply(double x)
         {
             for (int i = 0; i < components.Length; i++)
             {
-                components[i] = components[i] * x;
+                components[i] *= x;
             }
         }
 
         public void Turn()
         {
-            for (int i = 0; i < components.Length; i++)
-            {
-                components[i] = components[i] * (-1);
-            }
+            this.Multiply(-1);
         }
 
         public double GetLength()
         {
             double sum = 0;
 
-            for (int i = 0; i < components.Length; i++)
+            foreach (double e in components)
             {
-                sum += Math.Pow(components[i], 2);
+                sum += Math.Pow(e, 2);
             }
 
             return Math.Sqrt(sum);
@@ -190,7 +199,7 @@ namespace VectorTasks
             return vectorCopy;
         }
 
-        public static Vector GetSubtraction(Vector vector1, Vector vector2)
+        public static Vector GetDifference(Vector vector1, Vector vector2)
         {
             Vector vectorCopy = new Vector(vector1);
 
@@ -199,14 +208,14 @@ namespace VectorTasks
             return vectorCopy;
         }
 
-        public static double GetScalarMultiplication(Vector vector1, Vector vector2)
+        public static double GetDotProduct(Vector vector1, Vector vector2)
         {
             double sum = 0;
             int smallerVectorLength = Math.Min(vector1.components.Length, vector2.components.Length);
 
             for (int i = 0; i < smallerVectorLength; i++)
             {
-                sum += (vector1.components[i] * vector2.components[i]);
+                sum += vector1.components[i] * vector2.components[i];
             }
 
             return sum;
