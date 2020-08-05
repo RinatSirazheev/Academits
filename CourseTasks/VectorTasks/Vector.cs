@@ -165,7 +165,7 @@ namespace VectorTasks
 
         public void Turn()
         {
-            this.Multiply(-1);
+            Multiply(-1);
         }
 
         public double GetLength()
