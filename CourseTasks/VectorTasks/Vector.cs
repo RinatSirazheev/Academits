@@ -10,7 +10,7 @@ namespace VectorTasks
         {
             if (size <= 0)
             {
-                throw new ArgumentException("Ошибка! Размерность вектора должна быть больше нуля!", nameof(size));
+                throw new ArgumentException($"Ошибка, размерность вектора = {size}! Размерность вектора должна быть больше нуля!", nameof(size));
             }
 
             components = new double[size];
@@ -27,7 +27,7 @@ namespace VectorTasks
         {
             if (array.Length == 0)
             {
-                throw new ArgumentException("Ошибка! Размерность, должна быть больше нуля!", nameof(array.Length) + " = " + array.Length);
+                throw new ArgumentException($"Ошибка, размерность массива = {array.Length}! Размерность, должна быть больше нуля!", nameof(array.Length));
             }
 
             components = new double[array.Length];
@@ -39,19 +39,14 @@ namespace VectorTasks
         {
             if (size <= 0)
             {
-                throw new ArgumentException("Ошибка! Размерность вектора должна быть больше нуля!", nameof(size) + " = " + size);
+                throw new ArgumentException($"Ошибка, размерность вектора = {size}! Размерность вектора должна быть больше нуля!", nameof(size));
             }
 
             components = new double[size];
 
-            if (array.Length < size)
-            {
-                Array.Copy(array, components, array.Length);
-            }
-            else
-            {
-                Array.Copy(array, components, size);
-            }
+            int minSize = Math.Min(size, array.Length);
+
+            Array.Copy(array, components, minSize);
         }
 
         public override string ToString()
@@ -109,49 +104,49 @@ namespace VectorTasks
 
         public void Add(Vector vector)
         {
-            if (components.Length < vector.components.Length)
+            int maxArrayLength = components.Length;
+
+            if (components.Length != vector.components.Length)
             {
-                double[] componentsCopy = new double[components.Length];
-                components.CopyTo(componentsCopy, 0);
+                maxArrayLength = Math.Max(components.Length, vector.components.Length);
 
-                components = new double[vector.components.Length];
-                componentsCopy.CopyTo(components, 0);
-
-                for (int i = 0; i < components.Length; i++)
+                if (maxArrayLength == components.Length)
                 {
-                    components[i] += vector.components[i];
+                    Array.Resize(ref vector.components, maxArrayLength);
+                }
+                else
+                {
+                    Array.Resize(ref components, maxArrayLength);
                 }
             }
-            else
+
+            for (int i = 0; i < maxArrayLength; i++)
             {
-                for (int i = 0; i < vector.components.Length; i++)
-                {
-                    components[i] += vector.components[i];
-                }
+                components[i] += vector.components[i];
             }
         }
 
         public void Subtract(Vector vector)
         {
-            if (components.Length < vector.components.Length)
+            int maxArrayLength = components.Length;
+
+            if (components.Length != vector.components.Length)
             {
-                double[] componentsCopy = new double[components.Length];
-                components.CopyTo(componentsCopy, 0);
+                maxArrayLength = Math.Max(components.Length, vector.components.Length);
 
-                components = new double[vector.components.Length];
-                componentsCopy.CopyTo(components, 0);
-
-                for (int i = 0; i < components.Length; i++)
+                if (maxArrayLength == components.Length)
                 {
-                    components[i] -= vector.components[i];
+                    Array.Resize(ref vector.components, maxArrayLength);
+                }
+                else
+                {
+                    Array.Resize(ref components, maxArrayLength);
                 }
             }
-            else
+
+            for (int i = 0; i < maxArrayLength; i++)
             {
-                for (int i = 0; i < vector.components.Length; i++)
-                {
-                    components[i] -= vector.components[i];
-                }
+                components[i] -= vector.components[i];
             }
         }
 
