@@ -15,7 +15,7 @@ namespace MatrixTask
 
             Matrix matrix2 = new Matrix(matrix1);
 
-            double[,] array = new double[,] { { 1, 2, 3, 4 }, { 5, 4, 3, 2 } };
+            double[,] array = new double[,] { { 1, 2, 3, 4,1 }, { 5, 4, 3, 2,1 } };
 
             Matrix matrix3 = new Matrix(array);
 
@@ -34,9 +34,11 @@ namespace MatrixTask
             Console.WriteLine(" " + matrix1);
             Console.WriteLine(" " + matrix2);
 
-            matrix4.Multiply(10);
+            //matrix4.Multiply(10);
             Console.WriteLine(" " + matrix4);
 
+            Matrix ma = Matrix.GetMultiplication(matrix3, matrix4);
+            Console.WriteLine("" + ma);
 
            
 
