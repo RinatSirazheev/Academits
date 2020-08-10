@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ListTaskDemo.cs" />
     <Compile Include="SinglyLinkedList.cs" />
     <Compile Include="ListItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

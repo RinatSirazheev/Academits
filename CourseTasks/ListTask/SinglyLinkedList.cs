@@ -8,14 +8,18 @@ namespace ListTask
 {
     class SinglyLinkedList<T>
     {
-        private ListItem<T> head;
+        public ListItem<T> head;
         private int count;
 
-        public SinglyLinkedList(ListItem<T> head)
+        public SinglyLinkedList() { }
+        
+        public void Add(T data)
         {
-            this.head = head;
-        }
+            ListItem<T> item = new ListItem<T>(data);
 
+            item.Next = head;
+            head = item;
+        }
 
     }
 }
