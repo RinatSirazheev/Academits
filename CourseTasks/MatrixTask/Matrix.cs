@@ -303,7 +303,7 @@ namespace MatrixTask
         {
             if (matrix1.rows[0].GetSize() != matrix2.rows.Length)
             {
-                throw new ArgumentException($"Ошибка, количество столбцоы первой матрицы = {matrix1.rows[0].GetSize()}, " +
+                throw new ArgumentException($"Ошибка, количество столбцов первой матрицы = {matrix1.rows[0].GetSize()}, " +
                     $"количество строк второй матриц = {matrix2.rows.Length}, эти параметры должны быть равны.");
             }
 
