@@ -41,13 +41,15 @@ namespace ListTask
             }
 
             int counter = 0;
-            T result = null;
+            T result = new T();
 
             for (ListItem<T> item = head; item != null; item = item.Next)
             {
                 if (counter == index)
                 {
-                    result= item.Data;
+                    result = item.Data;
+
+                    break;
                 }
 
                 counter++;
@@ -64,7 +66,7 @@ namespace ListTask
             }
 
             int counter = 0;
-            T oldValue = head.Data;
+            T oldValue = new T();
 
             for (ListItem<T> item = head; item != null; item = item.Next)
             {
