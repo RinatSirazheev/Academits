@@ -10,12 +10,16 @@ namespace ListTask
     {
         static void Main()
         {
-            ListItem<int> item1 = new ListItem<int>(10);
+            SinglyLinkedList<int> list = new SinglyLinkedList<int>();
 
-            SinglyLinkedList<int> List1 = new SinglyLinkedList<int>();
+            list.Add(10);
+            list.Add(12);
+            list.Add(100);
 
-            
+            int z = list.Count;
+
+            Console.WriteLine(" " + list.SetItemTo(1,200));
+            Console.WriteLine(list.GetItemTo(1));
         }
-
     }
 }
