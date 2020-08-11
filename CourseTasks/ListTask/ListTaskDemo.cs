@@ -20,6 +20,8 @@ namespace ListTask
 
             Console.WriteLine(" " + list.SetItemTo(1,200));
             Console.WriteLine(list.GetItemTo(1));
+            Console.WriteLine(list.RemoveTo(1)); 
+            Console.WriteLine(list.GetItemTo(1));
         }
     }
 }

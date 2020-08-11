@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace ListTask
 {
-    class ListItem<T>
+    class ListItem<T> 
     {
         public T Data { get; set; }
         public ListItem<T> Next { get; set; }
+
+        public ListItem() { }
 
         public ListItem(T data)
         {

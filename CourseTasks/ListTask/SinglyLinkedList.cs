@@ -84,7 +84,37 @@ namespace ListTask
             return oldValue;
         }
 
+        public T RemoveTo(int index)
+        {
+            if (index < 0 || index >= count)
+            {
+                throw new ArgumentException($"Ошибка! Неверно указано значения индекса элемента списка индекс = {index}.", nameof(index));
+            }
 
+            int counter = 0;
+            ListItem<T> removedItem = new ListItem<T>();
+            ListItem<T> previousItem = new ListItem<T>();
+
+            for (ListItem<T> item = head; item != null; item = item.Next)
+            {
+                if (index == counter + 1)
+                {
+                    previousItem = item;
+                }
+
+                counter++;
+            }
+
+            removedItem = previousItem.Next;
+            previousItem.Next = previousItem.Next.Next;
+
+            return removedItem.Data;
+        }
+
+        public void AddTo(int index)
+        {
+
+        }
 
 
     }
