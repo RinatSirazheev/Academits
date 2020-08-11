@@ -84,7 +84,7 @@ namespace ListTask
             return oldValue;
         }
 
-        public T RemoveTo(int index)
+        public T RemoveAt(int index)
         {
             if (index < 0 || index >= count)
             {
@@ -100,6 +100,8 @@ namespace ListTask
                 if (index == counter + 1)
                 {
                     previousItem = item;
+
+                    break;
                 }
 
                 counter++;
@@ -107,15 +109,62 @@ namespace ListTask
 
             removedItem = previousItem.Next;
             previousItem.Next = previousItem.Next.Next;
+            count--;
 
             return removedItem.Data;
         }
 
-        public void AddTo(int index)
+        public void Insert(int index, T data)
         {
+            if (index < 0 || index >= count)
+            {
+                throw new ArgumentException($"Ошибка! Неверно указано значения индекса элемента списка индекс = {index}.", nameof(index));
+            }
 
+            ListItem<T> newItem = new ListItem<T>(data);
+            int counter = 0;
+
+            for (ListItem<T> item = head; item != null; item = item.Next)
+            {
+                if (index == counter )
+                {
+                    newItem.Next = item.Next;
+                    item.Next = newItem;
+
+                    break;
+                }
+
+                counter++;
+            }
+
+            count++;
         }
 
+        public bool Remove(T data)
+        {
+            if (data == null)
+            {
+                throw new ArgumentNullException("Ошибка");
+            }
 
+            bool result = false;
+
+            ListItem<T> previousItem = new ListItem<T>();
+
+            for(ListItem<T> item = head, prev=null; item != null;prev.Next=item, item = item.Next)
+            {
+                if (item.Data.Equals(data))
+                {
+                    previousItem = prev;
+                    result = true;
+
+                    break;
+                }
+            }
+
+            previousItem.Next = previousItem.Next.Next;
+
+            return result;
+        }
     }
 }

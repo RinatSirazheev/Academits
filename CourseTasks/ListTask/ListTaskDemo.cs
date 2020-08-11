@@ -18,10 +18,17 @@ namespace ListTask
 
             int z = list.Count;
 
-            Console.WriteLine(" " + list.SetItemTo(1,200));
-            Console.WriteLine(list.GetItemTo(1));
-            Console.WriteLine(list.RemoveTo(1)); 
-            Console.WriteLine(list.GetItemTo(1));
+            //Console.WriteLine(" " + list.SetItemTo(1,200));
+            //Console.WriteLine(list.GetItemTo(1));
+            //Console.WriteLine(list.RemoveTo(1)); 
+            //Console.WriteLine(list.GetItemTo(1));
+
+            list.Insert(1, 13); 
+
+            for(ListItem<int> item = list.head; item != null; item = item.Next)
+            {
+                Console.WriteLine(item);
+            }
         }
     }
 }
