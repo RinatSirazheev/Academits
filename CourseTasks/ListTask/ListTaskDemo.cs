@@ -25,10 +25,45 @@ namespace ListTask
 
             list.Insert(1, 13); 
 
-            for(ListItem<int> item = list.head; item != null; item = item.Next)
+            for(ListItem<int> item = list.Head; item != null; item = item.Next)
             {
                 Console.WriteLine(item);
             }
+
+            list.Turn();
+
+            Console.WriteLine();
+
+            for (ListItem<int> item = list.Head; item != null; item = item.Next)
+            {
+                Console.WriteLine(item);
+            }
+
+            Console.WriteLine();
+
+            SinglyLinkedList<int> l = list.Copy();
+
+            for (ListItem<int> item = l.Head; item != null; item = item.Next)
+            {
+                Console.WriteLine(item);
+            }
+
+            list.Turn();
+
+            Console.WriteLine();
+
+            for (ListItem<int> item = list.Head; item != null; item = item.Next)
+            {
+                Console.WriteLine(item);
+            }
+
+            Console.WriteLine();
+
+            for (ListItem<int> item = l.Head; item != null; item = item.Next)
+            {
+                Console.WriteLine(item);
+            }
+
         }
     }
 }
