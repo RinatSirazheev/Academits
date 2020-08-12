@@ -104,23 +104,12 @@ namespace VectorTasks
 
         public void Add(Vector vector)
         {
-            int maxArrayLength = components.Length;
-
-            if (components.Length != vector.components.Length)
+            if (components.Length < vector.components.Length)
             {
-                maxArrayLength = Math.Max(components.Length, vector.components.Length);
-
-                if (maxArrayLength == components.Length)
-                {
-                    Array.Resize(ref vector.components, maxArrayLength);
-                }
-                else
-                {
-                    Array.Resize(ref components, maxArrayLength);
-                }
+                Array.Resize(ref components, vector.components.Length);
             }
 
-            for (int i = 0; i < maxArrayLength; i++)
+            for (int i = 0; i < vector.components.Length; i++)
             {
                 components[i] += vector.components[i];
             }
@@ -128,23 +117,12 @@ namespace VectorTasks
 
         public void Subtract(Vector vector)
         {
-            int maxArrayLength = components.Length;
-
-            if (components.Length != vector.components.Length)
+            if (components.Length < vector.components.Length)
             {
-                maxArrayLength = Math.Max(components.Length, vector.components.Length);
-
-                if (maxArrayLength == components.Length)
-                {
-                    Array.Resize(ref vector.components, maxArrayLength);
-                }
-                else
-                {
-                    Array.Resize(ref components, maxArrayLength);
-                }
+                Array.Resize(ref components, vector.components.Length);
             }
 
-            for (int i = 0; i < maxArrayLength; i++)
+            for (int i = 0; i < vector.components.Length; i++)
             {
                 components[i] -= vector.components[i];
             }
