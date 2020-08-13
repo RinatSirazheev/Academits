@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ListTask
 {
     class SinglyLinkedList<T> where T : new()
     {
         public ListItem<T> Head { get; set; }
-        
+
         private int count;
 
         public int Count { get { return count; } }
@@ -27,12 +23,17 @@ namespace ListTask
             count++;
         }
 
-        public string FirstElement()
+        public T GetFirstElement()
         {
-            return Head.ToString();
+            if (Head == null)
+            {
+                throw new ArgumentNullException("Ошибка! Список пуст!");
+            }
+
+            return Head.Data;
         }
 
-        public T GetItemTo(int index)
+        public T GetItemAt(int index)
         {
             if (index < 0 || index >= count)
             {
@@ -57,7 +58,7 @@ namespace ListTask
             return result;
         }
 
-        public T SetItemTo(int index, T data)
+        public T SetItemAt(int index, T data)
         {
             if (index < 0 || index >= count)
             {
@@ -90,24 +91,33 @@ namespace ListTask
                 throw new ArgumentException($"Ошибка! Неверно указано значения индекса элемента списка индекс = {index}.", nameof(index));
             }
 
-            int counter = 0;
+            int counter = 1;
             ListItem<T> removedItem = new ListItem<T>();
             ListItem<T> previousItem = new ListItem<T>();
 
-            for (ListItem<T> item = Head; item != null; item = item.Next)
+            if (index == 0)
             {
-                if (index == counter + 1)
+                removedItem = Head;
+                Head = Head.Next;
+            }
+            else
+            {
+                for (ListItem<T> item = Head.Next, prev = Head; item != null; prev = item, item = item.Next)
                 {
-                    previousItem = item;
+                    if (index == counter)
+                    {
+                        previousItem = prev;
 
-                    break;
+                        break;
+                    }
+
+                    counter++;
                 }
 
-                counter++;
+                removedItem = previousItem.Next;
+                previousItem.Next = previousItem.Next.Next;
             }
 
-            removedItem = previousItem.Next;
-            previousItem.Next = previousItem.Next.Next;
             count--;
 
             return removedItem.Data;
@@ -155,7 +165,7 @@ namespace ListTask
 
             ListItem<T> previousItem = new ListItem<T>();
 
-            for (ListItem<T> item = Head, prev = null; item != null; prev.Next = item, item = item.Next)
+            for (ListItem<T> item = Head, prev = null; item != null; prev = item, item = item.Next)
             {
                 if (item.Data.Equals(data))
                 {
@@ -166,7 +176,10 @@ namespace ListTask
                 }
             }
 
-            previousItem.Next = previousItem.Next.Next;
+            if (previousItem.Next != null)
+            {
+                previousItem.Next = previousItem.Next.Next;
+            }
 
             return result;
         }
@@ -182,6 +195,11 @@ namespace ListTask
 
         public void Turn()
         {
+            if (Head == null)
+            {
+                throw new ArgumentNullException("Ошибка! Список пуст!");
+            }
+
             ListItem<T> itemCopy;
 
             for (ListItem<T> item = Head, prev = null; item != null; prev = item, item = itemCopy)
@@ -198,18 +216,41 @@ namespace ListTask
 
         public SinglyLinkedList<T> Copy()
         {
-            SinglyLinkedList<T> listCopy = new SinglyLinkedList<T>();
-            
-            this.Turn();
-            
-            for(ListItem<T> item = Head; item != null; item = item.Next)
+            if (Head == null)
             {
-                listCopy.Add(item.Data);
+                throw new ArgumentNullException("Ошибка! Список пуст!");
             }
 
-            this.Turn();
+            SinglyLinkedList<T> listCopy = new SinglyLinkedList<T>();
+
+            ListItem<T> headItemCopy = new ListItem<T>(Head.Data);
+
+            listCopy.Head = headItemCopy;
+            listCopy.count = count;
+
+            for (ListItem<T> item1 = Head.Next, item2 = headItemCopy; item1 != null; item1 = item1.Next, item2 = item2.Next)
+            {
+                ListItem<T> itemCopy = new ListItem<T>(item1.Data);
+
+                item2.Next = itemCopy;
+            }
 
             return listCopy;
+        }
+
+        public void Print()
+        {
+            if (Head == null)
+            {
+                throw new ArgumentNullException("Ошибка! Список пуст!");
+            }
+
+            for (ListItem<T> item = Head; item != null; item = item.Next)
+            {
+                Console.Write(item + " ");
+            }
+
+            Console.WriteLine();
         }
     }
 }

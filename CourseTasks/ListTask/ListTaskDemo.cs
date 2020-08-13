@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ListTask
 {
@@ -12,57 +8,59 @@ namespace ListTask
         {
             SinglyLinkedList<int> list = new SinglyLinkedList<int>();
 
-            list.Add(10);
-            list.Add(12);
-            list.Add(100);
-
-            int z = list.Count;
-
-            //Console.WriteLine(" " + list.SetItemTo(1,200));
-            //Console.WriteLine(list.GetItemTo(1));
-            //Console.WriteLine(list.RemoveTo(1)); 
-            //Console.WriteLine(list.GetItemTo(1));
-
-            list.Insert(1, 13); 
-
-            for(ListItem<int> item = list.Head; item != null; item = item.Next)
+            for (int i = 10; i > 0; i--)
             {
-                Console.WriteLine(item);
+                list.Add(i);
             }
 
+            Console.WriteLine("Создали односвязный список.");
+            list.Print();
+
+            Console.WriteLine("Размер списка = " + list.Count);
+
+            Console.WriteLine("Первый элемент списка = " + list.GetFirstElement());
+
+            Console.WriteLine("Пятый элемент списка равен = " + list.GetItemAt(4));
+
+            Console.WriteLine("Заменим пятый элемент списка  на 888. Старое значение = " + list.SetItemAt(4, 888));
+            list.Print();
+
+            Console.WriteLine("Удалим пятый элемент = " + list.RemoveAt(4));
+            list.Print();
+
+            Console.WriteLine("Вставим в начало число 888");
+            list.Add(888);
+            list.Print();
+
+            Console.WriteLine("Вставим число 888 по последнему индексу");
+            list.Insert(list.Count - 1, 888);
+            list.Print();
+
+            Console.WriteLine("Удалить элемент со значением 5");
+
+            if (list.Remove(5))
+            {
+                Console.WriteLine("Элемент списка со значением 5 успешно удален");
+
+                list.Print();
+            }
+            else
+            {
+                Console.WriteLine("Элемента со значением 5 в списке не найдено");
+            }
+
+            Console.WriteLine("Удалим первый элемент = " + list.RemoveFirstElement());
+            list.Print();
+
+            Console.WriteLine("Осуществим разворот списка.");
             list.Turn();
+            list.Print();
 
-            Console.WriteLine();
+            Console.WriteLine("Создадим копию существующего списка.");
 
-            for (ListItem<int> item = list.Head; item != null; item = item.Next)
-            {
-                Console.WriteLine(item);
-            }
+            SinglyLinkedList<int> listCopy = list.Copy();
 
-            Console.WriteLine();
-
-            SinglyLinkedList<int> l = list.Copy();
-
-            for (ListItem<int> item = l.Head; item != null; item = item.Next)
-            {
-                Console.WriteLine(item);
-            }
-
-            list.Turn();
-
-            Console.WriteLine();
-
-            for (ListItem<int> item = list.Head; item != null; item = item.Next)
-            {
-                Console.WriteLine(item);
-            }
-
-            Console.WriteLine();
-
-            for (ListItem<int> item = l.Head; item != null; item = item.Next)
-            {
-                Console.WriteLine(item);
-            }
+            listCopy.Print();
 
         }
     }
