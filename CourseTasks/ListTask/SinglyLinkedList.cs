@@ -2,7 +2,7 @@
 
 namespace ListTask
 {
-    class SinglyLinkedList<T> where T : new()
+    class SinglyLinkedList<T>
     {
         public ListItem<T> Head { get; set; }
 
@@ -33,7 +33,7 @@ namespace ListTask
             return Head.Data;
         }
 
-        public T GetItemAt(int index)
+        public ListItem<T> GetItemAt(int index)
         {
             if (index < 0 || index >= count)
             {
@@ -41,13 +41,13 @@ namespace ListTask
             }
 
             int counter = 0;
-            T result = new T();
+            ListItem<T> result = new ListItem<T>();
 
             for (ListItem<T> item = Head; item != null; item = item.Next)
             {
                 if (counter == index)
                 {
-                    result = item.Data;
+                    result.Data = item.Data;
 
                     break;
                 }
@@ -66,13 +66,13 @@ namespace ListTask
             }
 
             int counter = 0;
-            T oldValue = new T();
+            ListItem<T> oldValue = new ListItem<T>();
 
             for (ListItem<T> item = Head; item != null; item = item.Next)
             {
                 if (counter == index)
                 {
-                    oldValue = item.Data;
+                    oldValue.Data = item.Data;
                     item.Data = data;
 
                     break;
@@ -81,7 +81,7 @@ namespace ListTask
                 counter++;
             }
 
-            return oldValue;
+            return oldValue.Data;
         }
 
         public T RemoveAt(int index)
