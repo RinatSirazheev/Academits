@@ -29,8 +29,8 @@ namespace MatrixTask
 
             Matrix matrix4 = new Matrix(vector);
 
-            Console.WriteLine($"Количество строк в матрице {nameof(matrix4)} = " + matrix4.GetRowsNumber());
-            Console.WriteLine($"Количество столбцов в матрице {nameof(matrix4)} = " + matrix4.GetColumnsNumber());
+            Console.WriteLine($"Количество строк в матрице {nameof(matrix4)} = " + matrix4.GetRowsCount());
+            Console.WriteLine($"Количество столбцов в матрице {nameof(matrix4)} = " + matrix4.GetColumnsCount());
             Console.WriteLine($"Первая строка матрицы {nameof(matrix4)} = " + matrix4.GetRow(0));
             Console.WriteLine("Теперь заменим первую строку матрицы.");
 
