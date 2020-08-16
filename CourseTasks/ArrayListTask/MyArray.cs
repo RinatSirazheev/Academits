@@ -7,10 +7,23 @@ using System.Threading.Tasks;
 
 namespace ArrayListTask
 {
-    class MyArray<T>
+    class MyArray<T> : IList<T>
     {
         private T[] items;
         private int length;
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            for (int i = 0; i < length; i++)
+            {
+                yield return items[i];
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
 
         public int Count
         {
@@ -38,6 +51,8 @@ namespace ArrayListTask
                 Array.Copy(old, 0, items, 0, old.Length);
             }
         }
+
+        public bool IsReadOnly => throw new NotImplementedException();
 
         public MyArray()
         {
@@ -74,7 +89,69 @@ namespace ArrayListTask
 
         public void Add(T item)
         {
+            if (length >= Capacity)
+            {
+                IncreaseCapacity();
+            }
 
+            items[length] = item;
+            length++;
+        }
+
+        private void IncreaseCapacity()
+        {
+            T[] old = items;
+            items = new T[old.Length * 2];
+
+            Array.Copy(old, 0, items, 0, old.Length);
+        }
+
+        public void RemoveAt(int index)
+        {
+            if (index < 0 || index >= Count)
+            {
+                throw new ArgumentOutOfRangeException($"Ошибка! Индекс = {index}, индекс не должен выходить за рамки массива.", nameof(index));
+            }
+
+            Array.Copy(items, index + 1, items, index, length - index - 1);
+        }
+
+        public int IndexOf(T item)
+        {
+            foreach(T i in items)
+            {
+                if (i.Equals(item))
+                {
+
+                }
+            }
+
+            return 1;
+        }
+
+        public void Insert(int index, T item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Clear()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Contains(T item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CopyTo(T[] array, int arrayIndex)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Remove(T item)
+        {
+            throw new NotImplementedException();
         }
     }
 }

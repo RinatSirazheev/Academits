@@ -18,6 +18,14 @@ namespace ArrayListTask
 
             Console.WriteLine(list.Capacity);
 
+            list.Add(1);
+            list.Add(2);
+
+            foreach(int i in list)
+            {
+                Console.WriteLine(i);
+            }
+
         }
     }
 }
