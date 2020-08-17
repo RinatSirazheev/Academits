@@ -26,6 +26,8 @@ namespace ArrayListTask
                 Console.WriteLine(i);
             }
 
+            Console.WriteLine(list.IndexOf(3));
+
         }
     }
 }
