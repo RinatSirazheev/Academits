@@ -11,11 +11,19 @@ namespace ArrayListTask
     {
         private T[] items;
         private int length;
+        private int modeCoumt;
 
         public IEnumerator<T> GetEnumerator()
         {
+            int flag = modeCoumt;
+
             for (int i = 0; i < length; i++)
             {
+                if (flag != modeCoumt)
+                {
+                    throw new InvalidOperationException("Ошибка! В колекции за время обхода изменилось количество элементов!");
+                }
+
                 yield return items[i];
             }
         }
@@ -96,6 +104,7 @@ namespace ArrayListTask
 
             items[length] = item;
             length++;
+            modeCoumt++;
         }
 
         private void IncreaseCapacity()
@@ -114,6 +123,9 @@ namespace ArrayListTask
             }
 
             Array.Copy(items, index + 1, items, index, length - index - 1);
+
+            length--;
+            modeCoumt++;
         }
 
         public int IndexOf(T item)
@@ -154,6 +166,7 @@ namespace ArrayListTask
 
             items[index] = item;
             length++;
+            modeCoumt++;
         }
 
         public void Clear()
@@ -166,6 +179,7 @@ namespace ArrayListTask
             items = new T[10];
 
             length = 0;
+            modeCoumt++;
         }
 
         public bool Contains(T item)
@@ -219,7 +233,9 @@ namespace ArrayListTask
                 if (items[i].Equals(item))
                 {
                     Array.Copy(items, i + 1, items, i, length - i - 1);
+
                     length--;
+                    modeCoumt++;
                     result = true;
 
                     break;
@@ -256,7 +272,7 @@ namespace ArrayListTask
         public void TrimExcess()
         {
             T[] arrayCopy = items;
-            items = new T[arrayCopy.Length];
+            items = new T[arrayCopy.Count()];
 
             Array.Copy(arrayCopy, 0, items, 0, length);
         }
