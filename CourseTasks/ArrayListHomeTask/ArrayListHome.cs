@@ -9,60 +9,36 @@ namespace ArrayListHomeTask
     {
         private static List<string> ReadToList(string path)
         {
-            try
-            {
-                List<string> list = new List<string>();
+            List<string> list = new List<string>();
 
-                using (StreamReader reader = new StreamReader(path))
+            using (StreamReader reader = new StreamReader(path))
+            {
+                string currentLine;
+
+                while ((currentLine = reader.ReadLine()) != null)
                 {
-                    string currentLine;
-
-                    while ((currentLine = reader.ReadLine()) != null)
-                    {
-                        list.Add(currentLine);
-                    }
+                    list.Add(currentLine);
                 }
+            }
 
-                return list;
-            }
-            catch (FileNotFoundException)
-            {
-                throw new FileNotFoundException($"Ошибка! Файл {path} отсутствует.");
-            }
+            return list;
         }
 
-        private static void RemoveOddNumbers(List<int> list)
+        private static void RemoveEvenNumbers(List<int> list)
         {
-            if (list.Count == 0)
-            {
-                throw new Exception($"Ошибка! Количество элементов в списке = {list.Count}.");
-            }
-
-            int i = 0;
-
-            do
+            for (int i = 0; i < list.Count(); i++)
             {
                 if (list[i] % 2 == 0)
                 {
-                    list.Remove(list[i]);
-                }
-                else
-                {
-                    i++;
+                    list.RemoveAt(i);
+                    i--;
                 }
             }
-            while (list.Count != i);
-
         }
 
         private static List<int> CreateListWithUniqueElements(List<int> list)
         {
-            if (list.Count == 0)
-            {
-                throw new Exception($"Ошибка! Количество элементов в списке = {list.Count}.");
-            }
-
-            List<int> resultList = new List<int> { list[0] };
+            List<int> resultList = new List<int> { Capacity = list.Capacity };
 
             foreach (int elementList in list)
             {
@@ -77,14 +53,21 @@ namespace ArrayListHomeTask
 
         public static void Main()
         {
-            string fileName = "input.txt";
-            List<string> listTask1 = ReadToList(fileName);
+            try
+            {
+                string fileName = "input.txt";
+                List<string> listTask1 = ReadToList(fileName);
 
-            Console.WriteLine(string.Join(", ", listTask1));
+                Console.WriteLine(string.Join(", ", listTask1));
+            }
+            catch
+            {
+                Console.WriteLine($"Файл отсутствует!");
+            }
 
             List<int> listTask2 = new List<int> { 1, 1, 2, 10, 3, 4, 27, 99, 5, 6, 7, 7, 8, 8, 8 };
 
-            RemoveOddNumbers(listTask2);
+            RemoveEvenNumbers(listTask2);
 
             Console.WriteLine(string.Join(", ", listTask2));
 
