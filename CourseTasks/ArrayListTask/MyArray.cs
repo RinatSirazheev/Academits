@@ -52,7 +52,7 @@ namespace ArrayListTask
             }
         }
 
-        public bool IsReadOnly => throw new NotImplementedException();
+        public bool IsReadOnly { get { return false; } }
 
         public MyArray()
         {
@@ -118,40 +118,147 @@ namespace ArrayListTask
 
         public int IndexOf(T item)
         {
-            foreach(T i in items)
-            {
-                if (i.Equals(item))
-                {
+            int specificItemIndex = -1;
 
+            for (int i = 0; i < length; i++)
+            {
+                if (items[i].Equals(item))
+                {
+                    specificItemIndex = i;
+
+                    break;
                 }
             }
 
-            return 1;
+            return specificItemIndex;
         }
 
         public void Insert(int index, T item)
         {
-            throw new NotImplementedException();
+            if (index < 0 || index >= length)
+            {
+                throw new IndexOutOfRangeException($"Ошибка! Индекс = {index}. Индекс не должен выходить за пределы массива");
+            }
+
+            if (IsReadOnly)
+            {
+                throw new NotSupportedException("Ошибка! Список только для чтения!");
+            }
+
+            if (length >= Capacity)
+            {
+                IncreaseCapacity();
+            }
+
+            Array.Copy(items, index, items, index + 1, length - index);
+
+            items[index] = item;
+            length++;
         }
 
         public void Clear()
         {
-            throw new NotImplementedException();
+            if (IsReadOnly)
+            {
+                throw new NotSupportedException("Ошибка! Список только для чтения!");
+            }
+
+            items = new T[10];
+
+            length = 0;
         }
 
         public bool Contains(T item)
         {
-            throw new NotImplementedException();
+            bool contains = false;
+
+            foreach (T e in items)
+            {
+                if (e.Equals(item))
+                {
+                    contains = true;
+
+                    break;
+                }
+            }
+
+            return contains;
         }
 
         public void CopyTo(T[] array, int arrayIndex)
         {
-            throw new NotImplementedException();
+            if (array == null)
+            {
+                throw new ArgumentNullException($"Ошибка! Массив {nameof(array)} равен Null");
+            }
+
+            if (arrayIndex < 0)
+            {
+                throw new ArgumentOutOfRangeException($"Ошибка! Индекс = {arrayIndex}, не может быть меньше нуля.");
+            }
+
+            if (length > array.Length - arrayIndex)
+            {
+                throw new ArgumentException("Ошибка! Количество элементов в исходной коллекции больше доступного места в массиве.");
+            }
+
+            Array.Copy(items, 0, array, arrayIndex, length);
         }
 
         public bool Remove(T item)
         {
-            throw new NotImplementedException();
+            if (IsReadOnly)
+            {
+                throw new NotSupportedException("Ошибка! Список только для чтения!");
+            }
+
+            bool result = false;
+
+            for (int i = 0; i < length; i++)
+            {
+                if (items[i].Equals(item))
+                {
+                    Array.Copy(items, i + 1, items, i, length - i - 1);
+                    length--;
+                    result = true;
+
+                    break;
+                }
+            }
+
+            return result;
+        }
+
+        public T[] ToArray()
+        {
+            T[] newArray = new T[length];
+
+            Array.Copy(items, 0, newArray, 0, length);
+
+            return newArray;
+        }
+
+        public int LastIndexOf(T item)
+        {
+            int specificItemOccurrenceLastIndex = -1;
+
+            for (int i = 0; i < length; i++)
+            {
+                if (items[i].Equals(item))
+                {
+                    specificItemOccurrenceLastIndex = i;
+                }
+            }
+
+            return specificItemOccurrenceLastIndex;
+        }
+
+        public void TrimExcess()
+        {
+            T[] arrayCopy = items;
+            items = new T[arrayCopy.Length];
+
+            Array.Copy(arrayCopy, 0, items, 0, length);
         }
     }
 }
