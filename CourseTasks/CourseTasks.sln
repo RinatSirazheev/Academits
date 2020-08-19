@@ -22,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListTask", "ListTask\ListTa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArrayListTask", "ArrayListTask\ArrayListTask.csproj", "{499E9F6E-0E45-433A-A8B7-44DBFA96FFF2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HashTableTask", "HashTableTask\HashTableTask.csproj", "{908FFEDD-3CB2-4B3F-9222-7D32AF72AEA0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,6 +58,10 @@ Global
 		{499E9F6E-0E45-433A-A8B7-44DBFA96FFF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{499E9F6E-0E45-433A-A8B7-44DBFA96FFF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{499E9F6E-0E45-433A-A8B7-44DBFA96FFF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{908FFEDD-3CB2-4B3F-9222-7D32AF72AEA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{908FFEDD-3CB2-4B3F-9222-7D32AF72AEA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{908FFEDD-3CB2-4B3F-9222-7D32AF72AEA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{908FFEDD-3CB2-4B3F-9222-7D32AF72AEA0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
