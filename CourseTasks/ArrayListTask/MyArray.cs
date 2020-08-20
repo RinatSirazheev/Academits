@@ -21,7 +21,7 @@ namespace ArrayListTask
             {
                 if (flag != modeCoumt)
                 {
-                    throw new InvalidOperationException("Ошибка! В колекции за время обхода изменилось количество элементов!");
+                    throw new InvalidOperationException("Ошибка! В коллекции за время обхода изменилось количество элементов!");
                 }
 
                 yield return items[i];
