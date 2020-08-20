@@ -1,5 +1,4 @@
-﻿using NPOI.SS.Formula.Functions;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +24,7 @@ namespace HashTableTask
 
         public int Count { get { return length; } }
 
-        public bool IsReadOnly { get { return true; } }
+        public bool IsReadOnly { get { return false; } }
 
         public void Add(T item)
         {
@@ -33,23 +32,39 @@ namespace HashTableTask
 
             if (array[index] == null)
             {
-                array[index].Add(item);
+                array[index] = new List<T> { item };
+                length++;
             }
-
-            if (array[index] != null)
+            else
             {
-
+                array[index].Add(item);
+                length++;
             }
         }
 
         public void Clear()
         {
-            throw new NotImplementedException();
+            if (IsReadOnly)
+            {
+                throw new NotSupportedException("Ошибка! Доступен только для чтения.");
+            }
+
+            foreach (List<T> element in array)
+            {
+                if (element != null)
+                {
+                    element.Clear();
+                }
+            }
+
+            length = 0;
         }
 
         public bool Contains(T item)
         {
-            throw new NotImplementedException();
+            
+
+throw new NotImplementedException();
         }
 
         public void CopyTo(T[] array, int arrayIndex)
@@ -59,7 +74,14 @@ namespace HashTableTask
 
         public IEnumerator<T> GetEnumerator()
         {
-            throw new NotImplementedException();
+            for(int i = 0; i < length; i++)
+            {
+                for(int j = 0; j < array[i].Count; j++)
+                {
+                    T res = array[i][j];
+                    yield return res;
+                }
+            }
         }
 
         public bool Remove(T item)
