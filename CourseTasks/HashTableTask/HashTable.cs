@@ -62,36 +62,86 @@ namespace HashTableTask
 
         public bool Contains(T item)
         {
-            
+            bool result = false;
 
-throw new NotImplementedException();
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (array[i] != null)
+                {
+                    if (array[i].Contains(item))
+                    {
+                        result = true;
+
+                        break;
+                    }
+                }
+            }
+
+            return result;
         }
 
         public void CopyTo(T[] array, int arrayIndex)
         {
-            throw new NotImplementedException();
+            if (array == null)
+            {
+                throw new ArgumentNullException($"Ошибка! Массив {nameof(array)} равен Null");
+            }
+
+            if (arrayIndex < 0)
+            {
+                throw new ArgumentOutOfRangeException($"Ошибка! Индекс = {arrayIndex}, не может быть меньше нуля.");
+            }
+
+            if (length > array.Length - arrayIndex)
+            {
+                throw new ArgumentException("Ошибка! Количество элементов в исходной коллекции больше доступного места в массиве.");
+            }
+
+            Array.Copy(this.array, 0, array, arrayIndex, length);
         }
 
         public IEnumerator<T> GetEnumerator()
         {
-            for(int i = 0; i < length; i++)
+            for (int i = 0; i < array.Length; i++)
             {
-                for(int j = 0; j < array[i].Count; j++)
+                if (array[i] != null)
                 {
-                    T res = array[i][j];
-                    yield return res;
+                    for (int j = 0; j < array[i].Count; j++)
+                    {
+                        yield return array[i][j];
+                    }
                 }
             }
         }
 
         public bool Remove(T item)
         {
-            throw new NotImplementedException();
+            if (IsReadOnly)
+            {
+                throw new NotSupportedException("Ошибка! Доступен только для чтения.");
+            }
+
+            bool result = false;
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (array[i] != null)
+                {
+                    if (array[i].Contains(item))
+                    {
+                        result = array[i].Remove(item);
+
+                        break;
+                    }
+                }
+            }
+
+            return result;
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return GetEnumerator();
         }
     }
 }

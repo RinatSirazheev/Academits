@@ -11,13 +11,22 @@ namespace HashTableTask
     {
         static void Main()
         {
-            HashTable<string> a = new HashTable<string>(10);
-            string s = "sss";
-            a.Add(s);
+            HashTable<int> hash = new HashTable<int>(10);
+            
+            hash.Add(1);
+            hash.Add(2);
+            hash.Add(5);
 
-            foreach(string aa in a)
+            foreach(int element in hash)
             {
-                Console.WriteLine(aa);
+                Console.WriteLine(element);
+            }
+
+            Console.WriteLine(hash.Remove(2));
+
+            foreach (int element in hash)
+            {
+                Console.WriteLine(element);
             }
         }
     }
