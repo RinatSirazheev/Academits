@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ListTask
 {
-    class ListItem<T> 
+    class ListItem<T>
     {
         public T Data { get; set; }
-        public ListItem<T> Next { get; set; }
 
+        public ListItem<T> Next { get; set; }
+        //TODO Нужно удалить.
         public ListItem() { }
 
         public ListItem(T data)
@@ -25,7 +22,7 @@ namespace ListTask
 
         public ListItem(T data, ListItem<T> next)
         {
-            if(data == null)
+            if (data == null)
             {
                 throw new ArgumentNullException("Ошибка. Отсутствуют данные для создания элемента списка.", nameof(data));
             }

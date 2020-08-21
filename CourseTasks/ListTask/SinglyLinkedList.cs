@@ -6,38 +6,33 @@ namespace ListTask
     {
         public ListItem<T> Head { get; set; }
 
-        private int count;
+        //private int Count;
 
-        public int Count { get { return count; } }
+        public int Count { get; private set; }
 
-        public void Add(T data)
+        public void AddFirst(T data)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException("Ошибка. Отсутствуют данные для создания элемента списка.", nameof(data));
-            }
-
             ListItem<T> item = new ListItem<T>(data, Head);
 
             Head = item;
-            count++;
+            Count++;
         }
 
         public T GetFirstElement()
         {
             if (Head == null)
             {
-                throw new ArgumentNullException("Ошибка! Список пуст!");
+                throw new NullReferenceException("Ошибка, невозможно обратиться к первому элементу списка! Список пуст!");
             }
-
+            
             return Head.Data;
         }
 
-        public ListItem<T> GetItemAt(int index)
+        public T GetItemAt(int index)
         {
-            if (index < 0 || index >= count)
+            if (index < 0 || index >= Count)
             {
-                throw new ArgumentException($"Ошибка! Неверно указано значения индекса элемента списка индекс = {index}.", nameof(index));
+                throw new ArgumentOutOfRangeException($"Ошибка! Неверно указано значения индекса элемента списка, индекс = {index}.", nameof(index));
             }
 
             int counter = 0;
@@ -55,24 +50,24 @@ namespace ListTask
                 counter++;
             }
 
-            return result;
+            return result.Data;
         }
 
         public T SetItemAt(int index, T data)
         {
-            if (index < 0 || index >= count)
+            if (index < 0 || index >= Count)
             {
-                throw new ArgumentException($"Ошибка! Неверно указано значения индекса элемента списка индекс = {index}.", nameof(index));
+                throw new ArgumentOutOfRangeException($"Ошибка! Неверно указано значения индекса элемента списка индекс = {index}.", nameof(index));
             }
 
             int counter = 0;
-            ListItem<T> oldValue = new ListItem<T>();
+            T result = Head.Data;
 
             for (ListItem<T> item = Head; item != null; item = item.Next)
             {
                 if (counter == index)
                 {
-                    oldValue.Data = item.Data;
+                    result = item.Data;
                     item.Data = data;
 
                     break;
@@ -81,14 +76,14 @@ namespace ListTask
                 counter++;
             }
 
-            return oldValue.Data;
+            return result;
         }
 
         public T RemoveAt(int index)
         {
-            if (index < 0 || index >= count)
+            if (index < 0 || index >= Count)
             {
-                throw new ArgumentException($"Ошибка! Неверно указано значения индекса элемента списка индекс = {index}.", nameof(index));
+                throw new ArgumentOutOfRangeException($"Ошибка! Неверно указано значения индекса элемента списка индекс = {index}.", nameof(index));
             }
 
             int counter = 1;
@@ -118,16 +113,16 @@ namespace ListTask
                 previousItem.Next = previousItem.Next.Next;
             }
 
-            count--;
+            Count--;
 
             return removedItem.Data;
         }
 
         public void Insert(int index, T data)
         {
-            if (index < 0 || index >= count)
+            if (index < 0 || index >= Count)
             {
-                throw new ArgumentException($"Ошибка! Неверно указано значения индекса элемента списка индекс = {index}.", nameof(index));
+                throw new ArgumentOutOfRangeException($"Ошибка! Неверно указано значения индекса элемента списка индекс = {index}.", nameof(index));
             }
 
             if (data == null)
@@ -151,7 +146,7 @@ namespace ListTask
                 counter++;
             }
 
-            count++;
+            Count++;
         }
 
         public bool Remove(T data)
@@ -226,7 +221,7 @@ namespace ListTask
             ListItem<T> headItemCopy = new ListItem<T>(Head.Data);
 
             listCopy.Head = headItemCopy;
-            listCopy.count = count;
+            listCopy.Count = Count;
 
             for (ListItem<T> item1 = Head.Next, item2 = headItemCopy; item1 != null; item1 = item1.Next, item2 = item2.Next)
             {

@@ -10,7 +10,7 @@ namespace ListTask
 
             for (int i = 10; i > 0; i--)
             {
-                list.Add(i);
+                list.AddFirst(i);
             }
 
             Console.WriteLine("Создали односвязный список.");
@@ -29,7 +29,7 @@ namespace ListTask
             list.Print();
 
             Console.WriteLine("Вставим в начало число 888");
-            list.Add(888);
+            list.AddFirst(888);
             list.Print();
 
             Console.WriteLine("Вставим число 888 по последнему индексу");
@@ -61,6 +61,10 @@ namespace ListTask
             SinglyLinkedList<int> listCopy = list.Copy();
 
             listCopy.Print();
+
+            var listD = new SinglyLinkedList<int>();
+
+            var q = listD.GetFirstElement();
 
         }
     }
