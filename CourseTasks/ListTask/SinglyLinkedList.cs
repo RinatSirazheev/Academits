@@ -24,7 +24,7 @@ namespace ListTask
             {
                 throw new NullReferenceException("Ошибка, невозможно обратиться к первому элементу списка! Список пуст!");
             }
-            
+
             return Head.Data;
         }
 
@@ -87,7 +87,7 @@ namespace ListTask
             }
 
             int counter = 1;
-            ListItem<T> removedItem = new ListItem<T>();
+            ListItem<T> removedItem;
             ListItem<T> previousItem = new ListItem<T>();
 
             if (index == 0)
