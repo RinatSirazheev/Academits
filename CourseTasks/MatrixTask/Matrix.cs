@@ -1,6 +1,6 @@
-﻿using VectorTasks;
-using System;
+﻿using System;
 using System.Text;
+using VectorTasks;
 
 namespace MatrixTask
 {
@@ -86,14 +86,19 @@ namespace MatrixTask
 
         public override string ToString()
         {
-            StringBuilder stringBuilder = new StringBuilder(rows[0].ToString());
+            StringBuilder stringBuilder = new StringBuilder("{");
+
+            stringBuilder.Append(rows[0]);
 
             for (int i = 1; i < rows.Length; i++)
             {
-                stringBuilder.Append(", " + rows[i].ToString());
+                stringBuilder.Append(", ");
+                stringBuilder.Append(rows[i]);
             }
 
-            return "{" + stringBuilder + "}";
+            stringBuilder.Append("}");
+
+            return stringBuilder.ToString();
         }
 
         public int GetRowsCount()
@@ -133,6 +138,11 @@ namespace MatrixTask
 
         public Vector GetColumn(int index)
         {
+            if (index < 0 || index >= rows.Length)
+            {
+                throw new IndexOutOfRangeException($"Ошибка, индекс = {index}! Индекс не должен выходить за пределы. Параметр {nameof(index)}.");
+            }
+
             Vector vector = new Vector(rows.Length);
 
             for (int i = 0; i < rows.Length; i++)
@@ -235,9 +245,9 @@ namespace MatrixTask
         {
             if (rows.Length != matrix.rows.Length || GetColumnsCount() != matrix.GetColumnsCount())
             {
-                throw new ArgumentException($"Ошибка! Количество строк в первой и второй матрицах соответственно: {GetRowsCount()}, {matrix.GetRowsCount()}.\n" +
-                    $"Количество столбцоы в первой и второй матрицах соответственно: {GetColumnsCount()}, {matrix.GetColumnsCount()}.\n " +
-                    $"Размеры матриц должны быть одинаковыми!");
+                throw new ArgumentException($"Ошибка! Количество строк в первой и второй матрицах соответственно: {GetRowsCount()}, {matrix.GetRowsCount()}. " +
+                    $"Количество столбцоы в первой и второй матрицах соответственно: {GetColumnsCount()}, {matrix.GetColumnsCount()}. " +
+                    "Размеры матриц должны быть одинаковыми!");
             }
 
             for (int i = 0; i < rows.Length; i++)
@@ -250,9 +260,9 @@ namespace MatrixTask
         {
             if (rows.Length != matrix.rows.Length || GetColumnsCount() != matrix.GetColumnsCount())
             {
-                throw new ArgumentException($"Ошибка! Количество строк в первой и второй матрицах соответственно: {GetRowsCount()}, {matrix.GetRowsCount()}.\n" +
-                     $"Количество столбцоы в первой и второй матрицах соответственно: {GetColumnsCount()}, {matrix.GetColumnsCount()}.\n " +
-                     $"Размеры матриц должны быть одинаковыми!");
+                throw new ArgumentException($"Ошибка! Количество строк в первой и второй матрицах соответственно: {GetRowsCount()}, {matrix.GetRowsCount()}. " +
+                     $"Количество столбцоы в первой и второй матрицах соответственно: {GetColumnsCount()}, {matrix.GetColumnsCount()}. " +
+                     "Размеры матриц должны быть одинаковыми!");
             }
 
             for (int i = 0; i < rows.Length; i++)
@@ -279,9 +289,9 @@ namespace MatrixTask
         {
             if (matrix1.rows.Length != matrix2.rows.Length || matrix1.GetColumnsCount() != matrix2.GetColumnsCount())
             {
-                throw new ArgumentException($"Ошибка! Количество строк в первой и второй матрицах соответственно: {matrix1.GetRowsCount()}, {matrix2.GetRowsCount()}.\n" +
-                    $"Количество столбцоы в первой и второй матрицах соответственно: {matrix1.GetColumnsCount()}, {matrix2.GetColumnsCount()}.\n " +
-                    $"У складываемых матриц должны быть одинаковые размерности!");
+                throw new ArgumentException($"Ошибка! Количество строк в первой и второй матрицах соответственно: {matrix1.GetRowsCount()}, {matrix2.GetRowsCount()}." +
+                    $"Количество столбцоы в первой и второй матрицах соответственно: {matrix1.GetColumnsCount()}, {matrix2.GetColumnsCount()}." +
+                    "У складываемых матриц должны быть одинаковые размерности!");
             }
 
             Matrix matrixResult = new Matrix(matrix1);
@@ -291,7 +301,7 @@ namespace MatrixTask
             return matrixResult;
         }
 
-        public static Matrix GetMultiplication(Matrix matrix1, Matrix matrix2)
+        public static Matrix GetProduct(Matrix matrix1, Matrix matrix2)
         {
             if (matrix1.GetColumnsCount() != matrix2.rows.Length)
             {

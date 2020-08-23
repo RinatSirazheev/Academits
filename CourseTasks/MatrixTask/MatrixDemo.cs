@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using VectorTasks;
 
 namespace MatrixTask
@@ -15,7 +11,7 @@ namespace MatrixTask
 
             Matrix matrix2 = new Matrix(matrix1);
 
-            double[,] array = new double[,] { { 1, 2, 3, 4, 1 }, { 5, 4, 3, 2, 1 } };
+            double[,] array = { { 1, 2, 3, 4, 1 }, { 5, 4, 3, 2, 1 } };
 
             Matrix matrix3 = new Matrix(array);
 
@@ -25,7 +21,7 @@ namespace MatrixTask
             Vector vector4 = new Vector(new double[] { 1, 2, 6, 8, 5 });
             Vector vector5 = new Vector(new double[] { 8, 2, 7, 4, -9 });
 
-            Vector[] vector = new Vector[] { vector1, vector2, vector3, vector4, vector5 };
+            Vector[] vector = { vector1, vector2, vector3, vector4, vector5 };
 
             Matrix matrix4 = new Matrix(vector);
 
