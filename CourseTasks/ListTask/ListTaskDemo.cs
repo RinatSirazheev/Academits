@@ -62,9 +62,7 @@ namespace ListTask
 
             listCopy.Print();
 
-            var listD = new SinglyLinkedList<int>();
-
-            var q = listD.GetFirstElement();
+            Console.WriteLine(listCopy);
 
         }
     }

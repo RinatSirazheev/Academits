@@ -1,12 +1,11 @@
 ﻿using System;
+using System.Text;
 
 namespace ListTask
 {
     class SinglyLinkedList<T>
     {
         public ListItem<T> Head { get; set; }
-
-        //private int Count;
 
         public int Count { get; private set; }
 
@@ -36,13 +35,13 @@ namespace ListTask
             }
 
             int counter = 0;
-            ListItem<T> result = new ListItem<T>();
+            T result = Head.Data;
 
             for (ListItem<T> item = Head; item != null; item = item.Next)
             {
                 if (counter == index)
                 {
-                    result.Data = item.Data;
+                    result = item.Data;
 
                     break;
                 }
@@ -50,7 +49,7 @@ namespace ListTask
                 counter++;
             }
 
-            return result.Data;
+            return result;
         }
 
         public T SetItemAt(int index, T data)
@@ -88,7 +87,7 @@ namespace ListTask
 
             int counter = 1;
             ListItem<T> removedItem;
-            ListItem<T> previousItem = new ListItem<T>();
+            ListItem<T> previousItem = Head;
 
             if (index == 0)
             {
@@ -120,14 +119,9 @@ namespace ListTask
 
         public void Insert(int index, T data)
         {
-            if (index < 0 || index >= Count)
+            if (index <= 0 || index >= Count)
             {
                 throw new ArgumentOutOfRangeException($"Ошибка! Неверно указано значения индекса элемента списка индекс = {index}.", nameof(index));
-            }
-
-            if (data == null)
-            {
-                throw new ArgumentNullException("Ошибка");
             }
 
             ListItem<T> newItem = new ListItem<T>(data);
@@ -151,20 +145,14 @@ namespace ListTask
 
         public bool Remove(T data)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException("Ошибка");
-            }
-
             bool result = false;
 
-            ListItem<T> previousItem = new ListItem<T>();
+            ListItem<T> previousItem = null;
 
-            for (ListItem<T> item = Head, prev = null; item != null; prev = item, item = item.Next)
+            for (ListItem<T> item = Head; item != null; previousItem = item, item = item.Next)
             {
                 if (item.Data.Equals(data))
                 {
-                    previousItem = prev;
                     result = true;
 
                     break;
@@ -181,20 +169,16 @@ namespace ListTask
 
         public T RemoveFirstElement()
         {
-            ListItem<T> removeItem = Head;
+            ListItem<T> removedItem = Head;
 
             Head = Head.Next;
+            Count--;
 
-            return removeItem.Data;
+            return removedItem.Data;
         }
 
         public void Turn()
         {
-            if (Head == null)
-            {
-                throw new ArgumentNullException("Ошибка! Список пуст!");
-            }
-
             ListItem<T> itemCopy;
 
             for (ListItem<T> item = Head, prev = null; item != null; prev = item, item = itemCopy)
@@ -211,11 +195,6 @@ namespace ListTask
 
         public SinglyLinkedList<T> Copy()
         {
-            if (Head == null)
-            {
-                throw new ArgumentNullException("Ошибка! Список пуст!");
-            }
-
             SinglyLinkedList<T> listCopy = new SinglyLinkedList<T>();
 
             ListItem<T> headItemCopy = new ListItem<T>(Head.Data);
@@ -233,13 +212,21 @@ namespace ListTask
             return listCopy;
         }
 
-        public void Print()
+        public override string ToString()
         {
-            if (Head == null)
+            var stringBuilder = new StringBuilder();
+
+            for (ListItem<T> item = Head; item != null; item = item.Next)
             {
-                throw new ArgumentNullException("Ошибка! Список пуст!");
+                stringBuilder.Append(item,);
+                stringBuilder.Append(" ");
             }
 
+            return stringBuilder.ToString();
+        }
+
+        public void Print()
+        {
             for (ListItem<T> item = Head; item != null; item = item.Next)
             {
                 Console.Write(item + " ");

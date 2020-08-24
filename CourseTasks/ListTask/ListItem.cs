@@ -7,8 +7,6 @@ namespace ListTask
         public T Data { get; set; }
 
         public ListItem<T> Next { get; set; }
-        //TODO Нужно удалить.
-        public ListItem() { }
 
         public ListItem(T data)
         {
