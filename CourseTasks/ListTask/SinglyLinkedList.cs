@@ -9,6 +9,19 @@ namespace ListTask
 
         public int Count { get; private set; }
 
+        public override string ToString()
+        {
+            var stringBuilder = new StringBuilder();
+
+            for (ListItem<T> item = Head; item != null; item = item.Next)
+            {
+                stringBuilder.Append(item);
+                stringBuilder.Append(" ");
+            }
+
+            return stringBuilder.ToString();
+        }
+
         public void AddFirst(T data)
         {
             ListItem<T> item = new ListItem<T>(data, Head);
@@ -27,21 +40,16 @@ namespace ListTask
             return Head.Data;
         }
 
-        public T GetItemAt(int index)
+        private ListItem<T> GetListItemAt(int index)
         {
-            if (index < 0 || index >= Count)
-            {
-                throw new ArgumentOutOfRangeException($"Ошибка! Неверно указано значения индекса элемента списка, индекс = {index}.", nameof(index));
-            }
-
             int counter = 0;
-            T result = Head.Data;
+            ListItem<T> result = null;
 
             for (ListItem<T> item = Head; item != null; item = item.Next)
             {
                 if (counter == index)
                 {
-                    result = item.Data;
+                    result = item;
 
                     break;
                 }
@@ -52,6 +60,16 @@ namespace ListTask
             return result;
         }
 
+        public T GetItemAt(int index)
+        {
+            if (index < 0 || index >= Count)
+            {
+                throw new ArgumentOutOfRangeException($"Ошибка! Неверно указано значения индекса элемента списка, индекс = {index}.", nameof(index));
+            }
+
+            return GetListItemAt(index).Data;
+        }
+
         public T SetItemAt(int index, T data)
         {
             if (index < 0 || index >= Count)
@@ -59,21 +77,8 @@ namespace ListTask
                 throw new ArgumentOutOfRangeException($"Ошибка! Неверно указано значения индекса элемента списка индекс = {index}.", nameof(index));
             }
 
-            int counter = 0;
-            T result = Head.Data;
-
-            for (ListItem<T> item = Head; item != null; item = item.Next)
-            {
-                if (counter == index)
-                {
-                    result = item.Data;
-                    item.Data = data;
-
-                    break;
-                }
-
-                counter++;
-            }
+            T result = GetListItemAt(index).Data;
+            GetListItemAt(index).Data = data;
 
             return result;
         }
@@ -85,9 +90,7 @@ namespace ListTask
                 throw new ArgumentOutOfRangeException($"Ошибка! Неверно указано значения индекса элемента списка индекс = {index}.", nameof(index));
             }
 
-            int counter = 1;
             ListItem<T> removedItem;
-            ListItem<T> previousItem = Head;
 
             if (index == 0)
             {
@@ -96,17 +99,7 @@ namespace ListTask
             }
             else
             {
-                for (ListItem<T> item = Head.Next, prev = Head; item != null; prev = item, item = item.Next)
-                {
-                    if (index == counter)
-                    {
-                        previousItem = prev;
-
-                        break;
-                    }
-
-                    counter++;
-                }
+                var previousItem = GetListItemAt(index - 1);
 
                 removedItem = previousItem.Next;
                 previousItem.Next = previousItem.Next.Next;
@@ -124,21 +117,11 @@ namespace ListTask
                 throw new ArgumentOutOfRangeException($"Ошибка! Неверно указано значения индекса элемента списка индекс = {index}.", nameof(index));
             }
 
-            ListItem<T> newItem = new ListItem<T>(data);
-            int counter = 0;
+            var newItem = new ListItem<T>(data);
+            var item = GetListItemAt(index);
 
-            for (ListItem<T> item = Head; item != null; item = item.Next)
-            {
-                if (index == counter)
-                {
-                    newItem.Next = item.Next;
-                    item.Next = newItem;
-
-                    break;
-                }
-
-                counter++;
-            }
+            newItem.Next = item.Next;
+            item.Next = newItem;
 
             Count++;
         }
@@ -154,12 +137,17 @@ namespace ListTask
                 if (item.Data.Equals(data))
                 {
                     result = true;
+                    Count--;
 
                     break;
                 }
             }
 
-            if (previousItem.Next != null)
+            if (previousItem == null && result)
+            {
+                Head = Head.Next;
+            }
+            else if (result)
             {
                 previousItem.Next = previousItem.Next.Next;
             }
@@ -210,29 +198,6 @@ namespace ListTask
             }
 
             return listCopy;
-        }
-
-        public override string ToString()
-        {
-            var stringBuilder = new StringBuilder();
-
-            for (ListItem<T> item = Head; item != null; item = item.Next)
-            {
-                stringBuilder.Append(item,);
-                stringBuilder.Append(" ");
-            }
-
-            return stringBuilder.ToString();
-        }
-
-        public void Print()
-        {
-            for (ListItem<T> item = Head; item != null; item = item.Next)
-            {
-                Console.Write(item + " ");
-            }
-
-            Console.WriteLine();
         }
     }
 }

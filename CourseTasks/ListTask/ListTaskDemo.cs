@@ -14,7 +14,7 @@ namespace ListTask
             }
 
             Console.WriteLine("Создали односвязный список.");
-            list.Print();
+            Console.WriteLine(list);
 
             Console.WriteLine("Размер списка = " + list.Count);
 
@@ -23,18 +23,18 @@ namespace ListTask
             Console.WriteLine("Пятый элемент списка равен = " + list.GetItemAt(4));
 
             Console.WriteLine("Заменим пятый элемент списка  на 888. Старое значение = " + list.SetItemAt(4, 888));
-            list.Print();
+            Console.WriteLine(list);
 
             Console.WriteLine("Удалим пятый элемент = " + list.RemoveAt(4));
-            list.Print();
+            Console.WriteLine(list);
 
             Console.WriteLine("Вставим в начало число 888");
             list.AddFirst(888);
-            list.Print();
+            Console.WriteLine(list);
 
             Console.WriteLine("Вставим число 888 по последнему индексу");
             list.Insert(list.Count - 1, 888);
-            list.Print();
+            Console.WriteLine(list);
 
             Console.WriteLine("Удалить элемент со значением 5");
 
@@ -42,7 +42,7 @@ namespace ListTask
             {
                 Console.WriteLine("Элемент списка со значением 5 успешно удален");
 
-                list.Print();
+                Console.WriteLine(list);
             }
             else
             {
@@ -50,20 +50,17 @@ namespace ListTask
             }
 
             Console.WriteLine("Удалим первый элемент = " + list.RemoveFirstElement());
-            list.Print();
+            Console.WriteLine(list);
 
             Console.WriteLine("Осуществим разворот списка.");
             list.Turn();
-            list.Print();
+            Console.WriteLine(list);
 
             Console.WriteLine("Создадим копию существующего списка.");
 
             SinglyLinkedList<int> listCopy = list.Copy();
 
-            listCopy.Print();
-
             Console.WriteLine(listCopy);
-
         }
     }
 }
