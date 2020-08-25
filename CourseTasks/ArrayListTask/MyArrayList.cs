@@ -109,7 +109,7 @@ namespace ArrayListTask
 
             Array.Copy(items, index + 1, items, index, Count - index - 1);
 
-            items[Count] = items[Count + 1];
+            items[Count] = default;
             Count--;
             modeCount++;
         }

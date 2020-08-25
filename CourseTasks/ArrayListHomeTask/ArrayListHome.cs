@@ -26,7 +26,7 @@ namespace ArrayListHomeTask
 
         private static void RemoveEvenNumbers(List<int> list)
         {
-            for (int i = 0; i < list.Count(); i++)
+            for (int i = 0; i < list.Count; i++)
             {
                 if (list[i] % 2 == 0)
                 {
@@ -38,7 +38,7 @@ namespace ArrayListHomeTask
 
         private static List<int> CreateListWithUniqueElements(List<int> list)
         {
-            List<int> resultList = new List<int> { Capacity = list.Capacity };
+            List<int> resultList = new List<int>(list.Capacity);
 
             foreach (int elementList in list)
             {
@@ -62,7 +62,7 @@ namespace ArrayListHomeTask
             }
             catch
             {
-                Console.WriteLine($"Файл отсутствует!");
+                Console.WriteLine("Файл отсутствует!");
             }
 
             List<int> listTask2 = new List<int> { 1, 1, 2, 10, 3, 4, 27, 99, 5, 6, 7, 7, 8, 8, 8 };

@@ -25,6 +25,10 @@ namespace ArrayListTask
             Console.WriteLine(list.IndexOf(3));
 
             list.RemoveAt(0);
+
+            var li = new MyArrayList<string>();
+
+            li.IndexOf(null);
         }
     }
 }
