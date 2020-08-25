@@ -109,7 +109,7 @@ namespace ArrayListTask
 
             Array.Copy(items, index + 1, items, index, Count - index - 1);
 
-            items[Count] = default;
+            items[Count - 1] = default;
             Count--;
             modeCount++;
         }
@@ -120,6 +120,18 @@ namespace ArrayListTask
 
             for (int i = 0; i < Count; i++)
             {
+                if (items[i] == null)
+                {
+                    if (item == null)
+                    {
+                        specificItemIndex = i;
+
+                        break;
+                    }
+
+                    continue;
+                }
+
                 if (items[i].Equals(item))
                 {
                     specificItemIndex = i;

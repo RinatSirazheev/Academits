@@ -28,6 +28,11 @@ namespace ArrayListTask
 
             var li = new MyArrayList<string>();
 
+            li.Add(null);
+            li.Add("aaa");
+            li.Add(null);
+            li.Add("bbb");
+
             li.IndexOf(null);
         }
     }
