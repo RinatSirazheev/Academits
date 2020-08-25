@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ArrayListTask
 {
@@ -10,7 +6,7 @@ namespace ArrayListTask
     {
         static void Main()
         {
-            MyArray<int> list = new MyArray<int>(20);
+            MyArrayList<int> list = new MyArrayList<int>(20);
 
             Console.WriteLine(list.Capacity);
 
@@ -28,6 +24,7 @@ namespace ArrayListTask
 
             Console.WriteLine(list.IndexOf(3));
 
+            list.RemoveAt(0);
         }
     }
 }
