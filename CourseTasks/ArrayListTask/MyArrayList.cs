@@ -9,6 +9,7 @@ namespace ArrayListTask
     {
         private T[] items;
         private int modeCount;
+        private const int defaultCapacity = 10;
 
         public int Count { get; private set; }
 
@@ -33,7 +34,7 @@ namespace ArrayListTask
 
         public MyArrayList()
         {
-            items = new T[10];
+            items = new T[defaultCapacity];
         }
 
         public MyArrayList(int capacity)
@@ -92,10 +93,7 @@ namespace ArrayListTask
 
         private void IncreaseCapacity()
         {
-            T[] old = items;
-            items = new T[old.Length * 2];
-
-            Array.Copy(old, 0, items, 0, old.Length);
+            Array.Resize<T>(ref items, items.Length + defaultCapacity);
 
             modeCount++;
         }
@@ -120,19 +118,7 @@ namespace ArrayListTask
 
             for (int i = 0; i < Count; i++)
             {
-                if (items[i] == null)
-                {
-                    if (item == null)
-                    {
-                        specificItemIndex = i;
-
-                        break;
-                    }
-
-                    continue;
-                }
-
-                if (items[i].Equals(item))
+                if (Equals(items[i], item))
                 {
                     specificItemIndex = i;
 
@@ -147,12 +133,7 @@ namespace ArrayListTask
         {
             if (index < 0 || index > Count)
             {
-                throw new IndexOutOfRangeException($"Ошибка! Индекс = {index}. Индекс не должен выходить за пределы массива");
-            }
-
-            if (IsReadOnly)
-            {
-                throw new NotSupportedException("Ошибка! Список только для чтения!");
+                throw new ArgumentOutOfRangeException($"Ошибка! Индекс = {index}. Индекс не должен выходить за пределы массива");
             }
 
             if (Count >= Capacity)
@@ -169,12 +150,10 @@ namespace ArrayListTask
 
         public void Clear()
         {
-            if (IsReadOnly)
+            for (int i = 0; i < Count; i++)
             {
-                throw new NotSupportedException("Ошибка! Список только для чтения!");
+                items[i] = default;
             }
-
-            items = new T[10];
 
             Count = 0;
             modeCount++;
@@ -184,14 +163,9 @@ namespace ArrayListTask
         {
             bool contains = false;
 
-            foreach (T e in items)
+            if (IndexOf(item) != -1)
             {
-                if (e.Equals(item))
-                {
-                    contains = true;
-
-                    break;
-                }
+                contains = true;
             }
 
             return contains;
@@ -219,25 +193,16 @@ namespace ArrayListTask
 
         public bool Remove(T item)
         {
-            if (IsReadOnly)
-            {
-                throw new NotSupportedException("Ошибка! Список только для чтения!");
-            }
-
             bool result = false;
+            int itemIndex = IndexOf(item);
 
-            for (int i = 0; i < Count; i++)
+            if (itemIndex != -1)
             {
-                if (items[i].Equals(item))
-                {
-                    Array.Copy(items, i + 1, items, i, Count - i - 1);
+                Array.Copy(items, itemIndex + 1, items, itemIndex, Count - itemIndex - 1);
 
-                    Count--;
-                    modeCount++;
-                    result = true;
-
-                    break;
-                }
+                Count--;
+                modeCount++;
+                result = true;
             }
 
             return result;
@@ -256,11 +221,13 @@ namespace ArrayListTask
         {
             int specificItemOccurrenceLastIndex = -1;
 
-            for (int i = 0; i < Count; i++)
+            for (int i = Count - 1; i > 0; i--)
             {
-                if (items[i].Equals(item))
+                if (Equals(items[i], item))
                 {
                     specificItemOccurrenceLastIndex = i;
+
+                    break;
                 }
             }
 

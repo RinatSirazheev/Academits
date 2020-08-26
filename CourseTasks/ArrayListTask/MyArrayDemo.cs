@@ -6,34 +6,42 @@ namespace ArrayListTask
     {
         static void Main()
         {
-            MyArrayList<int> list = new MyArrayList<int>(20);
+            var list = new MyArrayList<string>();
 
-            Console.WriteLine(list.Capacity);
-
-            list.Capacity = 30;
-
-            Console.WriteLine(list.Capacity);
-
-            list.Add(1);
-            list.Add(2);
-
-            foreach(int i in list)
+            for (int i = 0; i < 10; i++)
             {
-                Console.WriteLine(i);
+                list.Add("Test" + i);
             }
 
-            Console.WriteLine(list.IndexOf(3));
+            foreach (var item in list)
+            {
+                Console.Write(item + " ");
+            }
+            Console.WriteLine();
 
-            list.RemoveAt(0);
+            list.RemoveAt(5);
 
-            var li = new MyArrayList<string>();
+            foreach (var item in list)
+            {
+                Console.Write(item + " ");
+            }
+            Console.WriteLine();
 
-            li.Add(null);
-            li.Add("aaa");
-            li.Add(null);
-            li.Add("bbb");
+            Console.WriteLine("Индекс первого вхождения элемента \"Test2\" = {0}", list.IndexOf("Test2"));
 
-            li.IndexOf(null);
+            list.Insert(7, "Test4");
+
+            foreach (var item in list)
+            {
+                Console.Write(item + " ");
+            }
+            Console.WriteLine();
+
+            string[] array = new string[list.Count];
+
+            list.CopyTo(array, 0);
+
+            Console.WriteLine(string.Join(", ", array));
         }
     }
 }
