@@ -8,22 +8,22 @@ namespace TreeTask
 {
     class BinatryTree<T> where T : IComparable<T>
     {
-        public TreeNode<T> Root { get; set; }
+        public TreeNode<T> Root { get; private set; }
 
         public BinatryTree(T data)
         {
             Root = new TreeNode<T>(data);
         }
 
-        public bool Contains(T data)
+        public TreeNode<T> GetNode(T data)
         {
-            bool result = false;
+            TreeNode<T> result = default;
 
-            while (Root != null)
+            while (true)
             {
                 if (Root.Data.CompareTo(data) == 0)
                 {
-                    result = true;
+                    result = Root;
 
                     break;
                 }
@@ -37,7 +37,7 @@ namespace TreeTask
                     }
                     else
                     {
-                        result = false;
+
 
                         break;
                     }
@@ -52,7 +52,7 @@ namespace TreeTask
                     }
                     else
                     {
-                        result = false;
+
 
                         break;
                     }
@@ -99,5 +99,12 @@ namespace TreeTask
             }
 
         }
+
+        public void Remove(T data)
+        {
+
+        }
+
+
     }
 }

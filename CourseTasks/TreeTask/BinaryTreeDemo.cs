@@ -14,8 +14,9 @@ namespace TreeTask
 
             tree.Add(11);
             tree.Add(8);
+            tree.Add(9);
 
-            Console.WriteLine(tree.Contains(12));
+            Console.WriteLine(tree.GetNode(8).Right.Data);
         }
     }
 }
