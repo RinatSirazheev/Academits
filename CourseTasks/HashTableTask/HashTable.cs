@@ -7,11 +7,11 @@ namespace HashTableTask
     class HashTable<T> : ICollection<T>
     {
         private List<T>[] array;
-        private int length;
+        private const int defaultCapacity = 100;
 
         public HashTable()
         {
-            array = new List<T>[100];
+            array = new List<T>[defaultCapacity];
         }
 
         public HashTable(int capacity)
@@ -19,7 +19,7 @@ namespace HashTableTask
             array = new List<T>[capacity];
         }
 
-        public int Count { get { return length; } }
+        public int Count { get; private set; }
 
         public bool IsReadOnly { get { return false; } }
 
@@ -30,22 +30,17 @@ namespace HashTableTask
             if (array[index] == null)
             {
                 array[index] = new List<T> { item };
-                length++;
+                Count++;
             }
             else
             {
                 array[index].Add(item);
-                length++;
+                Count++;
             }
         }
 
         public void Clear()
         {
-            if (IsReadOnly)
-            {
-                throw new NotSupportedException("Ошибка! Доступен только для чтения.");
-            }
-
             foreach (List<T> element in array)
             {
                 if (element != null)
@@ -54,7 +49,7 @@ namespace HashTableTask
                 }
             }
 
-            length = 0;
+            Count = 0;
         }
 
         public bool Contains(T item)
@@ -89,35 +84,16 @@ namespace HashTableTask
                 throw new ArgumentOutOfRangeException($"Ошибка! Индекс = {arrayIndex}, не может быть меньше нуля.");
             }
 
-            if (length > array.Length - arrayIndex)
+            if (Count > array.Length - arrayIndex)
             {
                 throw new ArgumentException("Ошибка! Количество элементов в исходной коллекции больше доступного места в массиве.");
             }
 
-            Array.Copy(this.array, 0, array, arrayIndex, length);
-        }
-
-        public IEnumerator<T> GetEnumerator()
-        {
-            for (int i = 0; i < array.Length; i++)
-            {
-                if (array[i] != null)
-                {
-                    for (int j = 0; j < array[i].Count; j++)
-                    {
-                        yield return array[i][j];
-                    }
-                }
-            }
+            Array.Copy(this.array, 0, array, arrayIndex, Count);
         }
 
         public bool Remove(T item)
         {
-            if (IsReadOnly)
-            {
-                throw new NotSupportedException("Ошибка! Доступен только для чтения.");
-            }
-
             bool result = false;
 
             for (int i = 0; i < array.Length; i++)
@@ -134,6 +110,20 @@ namespace HashTableTask
             }
 
             return result;
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (array[i] != null)
+                {
+                    for (int j = 0; j < array[i].Count; j++)
+                    {
+                        yield return array[i][j];
+                    }
+                }
+            }
         }
 
         IEnumerator IEnumerable.GetEnumerator()
