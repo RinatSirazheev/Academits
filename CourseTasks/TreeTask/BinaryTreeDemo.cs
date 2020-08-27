@@ -10,12 +10,19 @@ namespace TreeTask
     {
         static void Main()
         {
-            var tree = new BinatryTree<int>(10);
+            var tree = new BinatryTree<int>(8);
+            var treeNumber = new[] { 3, 10, 1, 6, 14, 4, 7, 13 };
 
-            tree.Add(11);
-            tree.Add(8);
+            for (int i = 0; i < treeNumber.Length; i++)
+            {
+                tree.Add(treeNumber[i]);
+            }
 
-            Console.WriteLine(tree.Contains(12));
+            Console.WriteLine(tree.GetParentAt(13).Data);
+
+            Console.WriteLine( tree.Contains(5));
+
+           // Console.WriteLine(tree.GetParentAt(5).Data);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace TreeTask
 {
     class BinatryTree<T> where T : IComparable<T>
     {
-        public TreeNode<T> Root { get; set; }
+        public TreeNode<T> Root { get; private set; }
 
         public BinatryTree(T data)
         {
@@ -17,21 +17,22 @@ namespace TreeTask
 
         public bool Contains(T data)
         {
-            bool result = false;
+            var result = false;
+            var currentNode = Root;
 
-            while (Root != null)
+            while (true)
             {
-                if (Root.Data.CompareTo(data) == 0)
+                if (currentNode.Data.CompareTo(data) == 0)
                 {
                     result = true;
 
                     break;
                 }
-                else if (Root.Data.CompareTo(data) > 0)
+                else if (currentNode.Data.CompareTo(data) > 0)
                 {
-                    if (Root.Left != null)
+                    if (currentNode.Left != null)
                     {
-                        Root = Root.Left;
+                        currentNode = currentNode.Left;
 
                         continue;
                     }
@@ -44,9 +45,9 @@ namespace TreeTask
                 }
                 else
                 {
-                    if (Root.Right != null)
+                    if (currentNode.Right != null)
                     {
-                        Root = Root.Right;
+                        currentNode = currentNode.Right;
 
                         continue;
                     }
@@ -64,39 +65,98 @@ namespace TreeTask
 
         public void Add(T data)
         {
+            var currentNode = Root;
+
             while (true)
             {
-                if (Root.Data.CompareTo(data) > 0)
+                if (currentNode.Data.CompareTo(data) > 0)
                 {
-                    if (Root.Left != null)
+                    if (currentNode.Left != null)
                     {
-                        Root = Root.Left;
+                        currentNode = currentNode.Left;
 
                         continue;
                     }
                     else
                     {
-                        Root.Left = new TreeNode<T>(data);
+                        currentNode.Left = new TreeNode<T>(data);
 
                         break;
                     }
                 }
                 else
                 {
-                    if (Root.Right != null)
+                    if (currentNode.Right != null)
                     {
-                        Root = Root.Right;
+                        currentNode = currentNode.Right;
 
                         continue;
                     }
                     else
                     {
-                        Root.Right = new TreeNode<T>(data);
+                        currentNode.Right = new TreeNode<T>(data);
 
                         break;
                     }
                 }
             }
+
+        }
+
+        public TreeNode<T> GetParentAt(T data)
+        {
+            TreeNode<T> result = default;
+            TreeNode<T> previous = default;
+            var currentNode = Root;
+
+            while (true)
+            {
+                if (currentNode.Data.CompareTo(data) == 0)
+                {
+                    result = previous;
+
+                    break;
+                }
+                else if (currentNode.Data.CompareTo(data) > 0)
+                {
+                    if (currentNode.Left != null)
+                    {
+                        previous = currentNode;
+                        currentNode = currentNode.Left;
+
+                        continue;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                else
+                {
+                    if (currentNode.Right != null)
+                    {
+                        previous = currentNode;
+                        currentNode = currentNode.Right;
+
+                        continue;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        public void RemoveAt(T data)
+        {
+            if (!Contains(data))
+            {
+                throw new ArgumentException($"Ошибка! Элемента списка с параметром = {data} не существует", nameof(data));
+            }
+
 
         }
     }
