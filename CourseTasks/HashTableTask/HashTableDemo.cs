@@ -6,20 +6,46 @@ namespace HashTableTask
     {
         static void Main()
         {
-            HashTable<int> hash = new HashTable<int>(10);
+            HashTable<string> hash = new HashTable<string>(10);
             
-            hash.Add(1);
-            hash.Add(2);
-            hash.Add(5);
-
-            foreach(int element in hash)
+            hash.Add("a");
+            hash.Add("b");
+            hash.Add(null);
+            hash.Add("bs");
+            hash.Add("avv");
+            hash.Add("hello");
+            hash.Add("aaaa");
+            
+            foreach (var element in hash)
             {
                 Console.WriteLine(element);
             }
 
-            Console.WriteLine(hash.Remove(2));
+            Console.WriteLine(hash.Contains("hello"));
 
-            foreach (int element in hash)
+            Console.WriteLine(hash.Remove("b"));
+
+            Console.WriteLine(hash.Contains("b"));
+
+            foreach (var element in hash)
+            {
+                Console.WriteLine(element);
+            }
+
+            string[] arstr = new string[hash.Count];
+
+            hash.CopyTo(arstr,0);
+
+            Console.WriteLine("TEST");
+
+            foreach (var item in arstr)
+            {
+                Console.WriteLine(item);
+            }
+
+            Console.WriteLine( hash.Remove("hello")) ;
+
+            foreach (var element in hash)
             {
                 Console.WriteLine(element);
             }

@@ -6,7 +6,8 @@ namespace HashTableTask
 {
     class HashTable<T> : ICollection<T>
     {
-        private List<T>[] array;
+        private readonly List<T>[] array;
+        private int modeCount;
         private const int defaultCapacity = 100;
 
         public HashTable()
@@ -21,55 +22,52 @@ namespace HashTableTask
 
         public int Count { get; private set; }
 
-        public bool IsReadOnly { get { return false; } }
+        public bool IsReadOnly => false;
 
         public void Add(T item)
         {
-            int index = Math.Abs(item.GetHashCode() % array.Length);
+            int index = Math.Abs(item == null ? 0 : item.GetHashCode() % array.Length);
 
             if (array[index] == null)
             {
                 array[index] = new List<T> { item };
-                Count++;
             }
             else
             {
                 array[index].Add(item);
-                Count++;
             }
+
+            Count++;
+            modeCount++;
         }
 
         public void Clear()
         {
-            foreach (List<T> element in array)
+            foreach (var element in array)
             {
-                if (element != null)
-                {
-                    element.Clear();
-                }
+                element?.Clear();
             }
 
+            modeCount++;
             Count = 0;
         }
 
         public bool Contains(T item)
         {
-            bool result = false;
+            var hashTableIndex = Math.Abs(item != null ? item.GetHashCode() % array.Length : 0);
 
-            for (int i = 0; i < array.Length; i++)
+            if (array[hashTableIndex] != null)
             {
-                if (array[i] != null)
+                foreach (var element in array[hashTableIndex])
                 {
-                    if (array[i].Contains(item))
+                    if (Equals(element, item))
                     {
-                        result = true;
-
-                        break;
+                        return true;
                     }
                 }
             }
 
-            return result;
+            return false;
         }
 
         public void CopyTo(T[] array, int arrayIndex)
@@ -89,33 +87,36 @@ namespace HashTableTask
                 throw new ArgumentException("Ошибка! Количество элементов в исходной коллекции больше доступного места в массиве.");
             }
 
-            Array.Copy(this.array, 0, array, arrayIndex, Count);
+            foreach (var item in this)
+            {
+                array[arrayIndex] = item;
+                arrayIndex++;
+            }
         }
 
         public bool Remove(T item)
         {
-            bool result = false;
+            var hashTableIndex = Math.Abs(item != null ? item.GetHashCode() % array.Length : 0);
 
-            for (int i = 0; i < array.Length; i++)
+            if (array[hashTableIndex] != null)
             {
-                if (array[i] != null)
-                {
-                    if (array[i].Contains(item))
-                    {
-                        result = array[i].Remove(item);
-
-                        break;
-                    }
-                }
+                return array[hashTableIndex].Remove(item);
             }
 
-            return result;
+            return false;
         }
 
         public IEnumerator<T> GetEnumerator()
         {
+            int startModeCount = modeCount;
+
             for (int i = 0; i < array.Length; i++)
             {
+                if (startModeCount != modeCount)
+                {
+                    throw new InvalidOperationException("Ошибка! В коллекции за время обхода изменилось количество элементов!");
+                }
+
                 if (array[i] != null)
                 {
                     for (int j = 0; j < array[i].Count; j++)
