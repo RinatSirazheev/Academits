@@ -38,7 +38,7 @@ namespace ArrayListHomeTask
 
         private static List<int> CreateListWithUniqueElements(List<int> list)
         {
-            List<int> resultList = new List<int>(list.Capacity);
+            List<int> resultList = new List<int>(list.Count);
 
             foreach (int elementList in list)
             {

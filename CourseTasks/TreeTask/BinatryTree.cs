@@ -141,7 +141,7 @@ namespace TreeTask
 
                 var rootLeftNode = Root.Left;
                 Root = Root.Right;
-                
+
                 Add(rootLeftNode);
 
                 return;
@@ -153,13 +153,60 @@ namespace TreeTask
             {
                 throw new ArgumentException($"Ошибка! Элемента списка с параметром = {data} не существует", nameof(data));
             }
-                       
+
             var removedNode = Equals(parentNode.Left, data) ? parentNode.Left : parentNode.Right;
 
             if (removedNode.Left == null && removedNode.Right == null)
             {
-
+                if (removedNode.Data.CompareTo(parentNode.Data) >= 0)
+                {
+                    parentNode.Right = null;
+                }
+                else
+                {
+                    parentNode.Left = null;
+                }
             }
+            else if(removedNode.Left == null || removedNode.Right == null)
+            {
+                var child = removedNode.Right == null ? removedNode.Left : removedNode.Right;
+
+                if (removedNode.Data.CompareTo(parentNode.Data) >= 0)
+                {
+                    parentNode.Left = child;
+                }
+                else
+                {
+                    parentNode.Right = child;
+                }
+            }
+            else
+            {
+                var minLeftNode = removedNode.Right;
+                var minLeftNodeParent = removedNode;
+
+                while (minLeftNode.Left != null)
+                {
+                    minLeftNodeParent = minLeftNode;
+                    minLeftNode = minLeftNode.Left;
+                }
+
+                if(minLeftNode.Right != null)
+                {
+                    minLeftNodeParent.Left = minLeftNode.Right;
+
+                    if (parentNode.Data.CompareTo(removedNode.Data) >= 0)
+                    {
+                        parentNode.Right = minLeftNode;
+                    }
+                }
+                else
+                {
+                    minLeftNodeParent.Left = null;
+                    parentNode.Left = minLeftNode;
+                }
+            }
+
 
 
         }

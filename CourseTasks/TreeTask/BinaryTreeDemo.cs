@@ -23,11 +23,15 @@ namespace TreeTask
 
             Console.WriteLine( tree.Contains(100));
 
-            tree.RemoveAt(8);
+            //tree.RemoveAt(8);
 
             Console.WriteLine(tree.Contains(8));
 
             Console.WriteLine(tree.GetParentAt(14).Data);
+
+            tree.RemoveAt(6);
+
+            Console.WriteLine(tree.Contains(100));
         }
     }
 }
