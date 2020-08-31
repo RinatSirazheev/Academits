@@ -16,18 +16,18 @@ namespace TreeTask
 
             for (int i = 0; i < treeNumber.Length; i++)
             {
-                tree.Add(treeNumber[i]);
+                tree.Add(new TreeNode<int> (treeNumber[i]));
             }
 
             Console.WriteLine(tree.GetParentAt(13).Data);
 
             Console.WriteLine( tree.Contains(100));
 
+            tree.RemoveAt(8);
 
+            Console.WriteLine(tree.Contains(8));
 
-            
-
-           // Console.WriteLine(tree.GetParentAt(5).Data);
+            Console.WriteLine(tree.GetParentAt(14).Data);
         }
     }
 }
