@@ -17,50 +17,14 @@ namespace TreeTask
 
         public bool Contains(T data)
         {
-            var result = false;
-            var currentNode = Root;
+            var parentNode = GetParentAt(data);
 
-            while (true)
+            if (parentNode == null && !Equals(Root.Data,data))
             {
-                if (currentNode.Data.CompareTo(data) == 0)
-                {
-                    result = true;
-
-                    break;
-                }
-                else if (currentNode.Data.CompareTo(data) > 0)
-                {
-                    if (currentNode.Left != null)
-                    {
-                        currentNode = currentNode.Left;
-
-                        continue;
-                    }
-                    else
-                    {
-                        result = false;
-
-                        break;
-                    }
-                }
-                else
-                {
-                    if (currentNode.Right != null)
-                    {
-                        currentNode = currentNode.Right;
-
-                        continue;
-                    }
-                    else
-                    {
-                        result = false;
-
-                        break;
-                    }
-                }
+                return false;
             }
 
-            return result;
+            return true;
         }
 
         public void Add(T data)
