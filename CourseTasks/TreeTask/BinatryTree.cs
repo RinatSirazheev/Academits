@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TreeTask
 {
@@ -78,7 +75,7 @@ namespace TreeTask
 
         }
 
-        public TreeNode<T> GetParentAt(T data)
+        private TreeNode<T> GetParentAt(T data)
         {
             TreeNode<T> result = default;
             TreeNode<T> previous = default;
@@ -229,6 +226,69 @@ namespace TreeTask
                 minLeftNode.Left = removedNode.Left;
                 minLeftNode.Right = removedNode.Right;
                 Count--;
+            }
+        }
+
+        public void BreadthFirstTraversing()
+        {
+            var queue = new Queue<TreeNode<T>>();
+
+            queue.Enqueue(Root);
+
+            while (queue.Count != 0)
+            {
+                var currentNode = queue.Dequeue();
+
+                Console.WriteLine(currentNode);
+
+                if (currentNode.Left != null)
+                {
+                    queue.Enqueue(currentNode.Left);
+                }
+
+                if (currentNode.Right != null)
+                {
+                    queue.Enqueue(currentNode.Right);
+                }
+            }
+        }
+
+        public void DepthFirstTraversing()
+        {
+            var stack = new Stack<TreeNode<T>>();
+
+            stack.Push(Root);
+
+            while (stack.Count != 0)
+            {
+                var curentNode = stack.Pop();
+
+                Console.WriteLine(curentNode);
+
+                if (curentNode.Right != null)
+                {
+                    stack.Push(curentNode.Right);
+                }
+
+                if (curentNode.Left != null)
+                {
+                    stack.Push(curentNode.Left);
+                }
+            }
+        }
+
+        public void Visit(TreeNode<T> node)
+        {
+            Console.WriteLine(node);
+
+            if (node.Left != null)
+            {
+                Visit(node.Left);
+            }
+
+            if (node.Right != null)
+            {
+                Visit(node.Right);
             }
         }
     }

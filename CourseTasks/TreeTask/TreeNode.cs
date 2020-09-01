@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TreeTask
+﻿namespace TreeTask
 {
     class TreeNode<T>
     {
         public TreeNode<T> Left { get; set; }
+
         public TreeNode<T> Right { get; set; }
         
         public T Data { get; set; }
@@ -21,6 +16,11 @@ namespace TreeTask
         public TreeNode(T data)
         {
             Data = data;
+        }
+
+        public override string ToString()
+        {
+            return Data.ToString();
         }
     }
 }
