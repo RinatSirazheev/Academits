@@ -10,9 +10,18 @@ namespace TreeTask
     {
         public TreeNode<T> Root { get; private set; }
 
+        public int Count { get; private set; }
+
+        public BinatryTree()
+        {
+            Root = new TreeNode<T>();
+        }
+
         public BinatryTree(T data)
         {
             Root = new TreeNode<T>(data);
+
+            Count++;
         }
 
         public bool Contains(T data)
@@ -44,6 +53,7 @@ namespace TreeTask
                     else
                     {
                         currentNode.Left = node;
+                        Count++;
 
                         break;
                     }
@@ -59,6 +69,7 @@ namespace TreeTask
                     else
                     {
                         currentNode.Right = node;
+                        Count++;
 
                         break;
                     }
@@ -144,6 +155,8 @@ namespace TreeTask
 
                 Add(rootLeftNode);
 
+                Count--;
+
                 return;
             }
 
@@ -154,30 +167,34 @@ namespace TreeTask
                 throw new ArgumentException($"Ошибка! Элемента списка с параметром = {data} не существует", nameof(data));
             }
 
-            var removedNode = Equals(parentNode.Left, data) ? parentNode.Left : parentNode.Right;
+            var removedNode = Equals(parentNode.Left.Data, data) ? parentNode.Left : parentNode.Right;
 
             if (removedNode.Left == null && removedNode.Right == null)
             {
                 if (removedNode.Data.CompareTo(parentNode.Data) >= 0)
                 {
                     parentNode.Right = null;
+                    Count--;
                 }
                 else
                 {
                     parentNode.Left = null;
+                    Count--;
                 }
             }
-            else if(removedNode.Left == null || removedNode.Right == null)
+            else if (removedNode.Left == null || removedNode.Right == null)
             {
-                var child = removedNode.Right == null ? removedNode.Left : removedNode.Right;
+                var child = removedNode.Right ?? removedNode.Left;
 
                 if (removedNode.Data.CompareTo(parentNode.Data) >= 0)
                 {
                     parentNode.Left = child;
+                    Count--;
                 }
                 else
                 {
                     parentNode.Right = child;
+                    Count--;
                 }
             }
             else
@@ -191,24 +208,28 @@ namespace TreeTask
                     minLeftNode = minLeftNode.Left;
                 }
 
-                if(minLeftNode.Right != null)
+                if (minLeftNode.Right != null)
                 {
                     minLeftNodeParent.Left = minLeftNode.Right;
-
-                    if (parentNode.Data.CompareTo(removedNode.Data) >= 0)
-                    {
-                        parentNode.Right = minLeftNode;
-                    }
                 }
                 else
                 {
                     minLeftNodeParent.Left = null;
+                }
+
+                if (parentNode.Data.CompareTo(removedNode.Data) < 0)
+                {
+                    parentNode.Right = minLeftNode;
+                }
+                else
+                {
                     parentNode.Left = minLeftNode;
                 }
+
+                minLeftNode.Left = removedNode.Left;
+                minLeftNode.Right = removedNode.Right;
+                Count--;
             }
-
-
-
         }
     }
 }

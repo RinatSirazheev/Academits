@@ -11,27 +11,29 @@ namespace TreeTask
     {
         static void Main()
         {
-            var tree = new BinatryTree<int>(8);
-            var treeNumber = new[] { 3, 10, 1, 6, 14, 4, 7, 13 };
+            var tree = new BinatryTree<double>(8);
+            //var treeNumber = new[] { 3, 10, 1, 6, 14, 4, 7, 13,6.5,7.5,6.3,6.7,6.4};
+            var treeNumber = new[] { 3, 10, 1, 6, 14, 4};
 
             for (int i = 0; i < treeNumber.Length; i++)
             {
-                tree.Add(new TreeNode<int> (treeNumber[i]));
+                tree.Add(new TreeNode<double> (treeNumber[i]));
             }
 
-            Console.WriteLine(tree.GetParentAt(13).Data);
+            //Console.WriteLine(tree.GetParentAt(13).Data);
 
-            Console.WriteLine( tree.Contains(100));
+            //Console.WriteLine( tree.Contains(100));
 
-            //tree.RemoveAt(8);
+            ////tree.RemoveAt(8);
 
-            Console.WriteLine(tree.Contains(8));
+            //Console.WriteLine(tree.Contains(8));
 
-            Console.WriteLine(tree.GetParentAt(14).Data);
+            //Console.WriteLine(tree.GetParentAt(14).Data);
 
-            tree.RemoveAt(6);
 
-            Console.WriteLine(tree.Contains(100));
+            tree.RemoveAt(8);
+
+            Console.WriteLine(tree.Count);
         }
     }
 }
