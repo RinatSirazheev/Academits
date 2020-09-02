@@ -61,6 +61,10 @@ namespace ListTask
             SinglyLinkedList<int> listCopy = list.Copy();
 
             Console.WriteLine(listCopy);
+
+            SinglyLinkedList<string> test = new SinglyLinkedList<string>();
+
+            var testCopy = test.Copy();
         }
     }
 }

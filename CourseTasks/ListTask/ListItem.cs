@@ -10,21 +10,11 @@ namespace ListTask
 
         public ListItem(T data)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException("Ошибка. Отсутствуют данные для создания элемента списка.", nameof(data));
-            }
-
             Data = data;
         }
 
         public ListItem(T data, ListItem<T> next)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException("Ошибка. Отсутствуют данные для создания элемента списка.", nameof(data));
-            }
-
             Data = data;
             Next = next;
         }

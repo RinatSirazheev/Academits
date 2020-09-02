@@ -5,18 +5,26 @@ namespace ListTask
 {
     class SinglyLinkedList<T>
     {
-        public ListItem<T> Head { get; set; }
+        private ListItem<T> Head { get; set; }
 
         public int Count { get; private set; }
 
         public override string ToString()
         {
-            var stringBuilder = new StringBuilder();
+            StringBuilder stringBuilder = new StringBuilder("{");
 
             for (ListItem<T> item = Head; item != null; item = item.Next)
             {
                 stringBuilder.Append(item);
-                stringBuilder.Append(" ");
+
+                if (item.Next != null)
+                {
+                    stringBuilder.Append(", ");
+                }
+                else
+                {
+                    stringBuilder.Append("}");
+                }
             }
 
             return stringBuilder.ToString();
@@ -34,7 +42,7 @@ namespace ListTask
         {
             if (Head == null)
             {
-                throw new NullReferenceException("Ошибка, невозможно обратиться к первому элементу списка! Список пуст!");
+                throw new InvalidOperationException("Ошибка, невозможно обратиться к первому элементу списка! Список пуст!");
             }
 
             return Head.Data;
@@ -42,19 +50,18 @@ namespace ListTask
 
         private ListItem<T> GetListItemAt(int index)
         {
-            int counter = 0;
+            int i = 0;
             ListItem<T> result = null;
 
             for (ListItem<T> item = Head; item != null; item = item.Next)
             {
-                if (counter == index)
+                if (i == index)
                 {
                     result = item;
-
                     break;
                 }
 
-                counter++;
+                i++;
             }
 
             return result;
@@ -64,7 +71,7 @@ namespace ListTask
         {
             if (index < 0 || index >= Count)
             {
-                throw new ArgumentOutOfRangeException($"Ошибка! Неверно указано значения индекса элемента списка, индекс = {index}.", nameof(index));
+                throw new IndexOutOfRangeException("Ошибка! Неверно указано значения индекса элемента списка.");
             }
 
             return GetListItemAt(index).Data;
@@ -74,20 +81,17 @@ namespace ListTask
         {
             if (index < 0 || index >= Count)
             {
-                throw new ArgumentOutOfRangeException($"Ошибка! Неверно указано значения индекса элемента списка индекс = {index}.", nameof(index));
+                throw new IndexOutOfRangeException("Ошибка! Неверно указано значения индекса элемента списка.");
             }
 
-            T result = GetListItemAt(index).Data;
-            GetListItemAt(index).Data = data;
-
-            return result;
+            return GetListItemAt(index).Data = data;
         }
 
         public T RemoveAt(int index)
         {
             if (index < 0 || index >= Count)
             {
-                throw new ArgumentOutOfRangeException($"Ошибка! Неверно указано значения индекса элемента списка индекс = {index}.", nameof(index));
+                throw new IndexOutOfRangeException("Ошибка! Неверно указано значения индекса элемента списка.");
             }
 
             ListItem<T> removedItem;
@@ -99,7 +103,7 @@ namespace ListTask
             }
             else
             {
-                var previousItem = GetListItemAt(index - 1);
+                ListItem<T> previousItem = GetListItemAt(index - 1);
 
                 removedItem = previousItem.Next;
                 previousItem.Next = previousItem.Next.Next;
@@ -112,13 +116,20 @@ namespace ListTask
 
         public void Insert(int index, T data)
         {
-            if (index <= 0 || index >= Count)
+            if (index < 0 || index > Count)
             {
-                throw new ArgumentOutOfRangeException($"Ошибка! Неверно указано значения индекса элемента списка индекс = {index}.", nameof(index));
+                throw new IndexOutOfRangeException("Ошибка! Неверно указано значения индекса элемента списка индекс.");
             }
 
-            var newItem = new ListItem<T>(data);
-            var item = GetListItemAt(index);
+            if (index == 0)
+            {
+                AddFirst(data);
+
+                return;
+            }
+
+            ListItem<T> newItem = new ListItem<T>(data);
+            ListItem<T> item = GetListItemAt(index - 1);
 
             newItem.Next = item.Next;
             item.Next = newItem;
@@ -128,35 +139,34 @@ namespace ListTask
 
         public bool Remove(T data)
         {
-            bool result = false;
-
-            ListItem<T> previousItem = null;
-
-            for (ListItem<T> item = Head; item != null; previousItem = item, item = item.Next)
+            if (Equals(Head.Data, data))
             {
-                if (item.Data.Equals(data))
+                Head = Head.Next;
+
+                return true;
+            }
+
+            for (ListItem<T> item = Head, previousItem = null; item != null; previousItem = item, item = item.Next)
+            {
+                if (Equals(item.Data, data))
                 {
-                    result = true;
+                    previousItem.Next = previousItem.Next.Next;
                     Count--;
 
-                    break;
+                    return true;
                 }
             }
 
-            if (previousItem == null && result)
-            {
-                Head = Head.Next;
-            }
-            else if (result)
-            {
-                previousItem.Next = previousItem.Next.Next;
-            }
-
-            return result;
+            return false;
         }
 
         public T RemoveFirstElement()
         {
+            if (Head == null)
+            {
+                throw new InvalidOperationException("Ошибка! Список пуст!");
+            }
+
             ListItem<T> removedItem = Head;
 
             Head = Head.Next;
@@ -185,16 +195,21 @@ namespace ListTask
         {
             SinglyLinkedList<T> listCopy = new SinglyLinkedList<T>();
 
+            if (Head == null)
+            {
+                return listCopy;
+            }
+
             ListItem<T> headItemCopy = new ListItem<T>(Head.Data);
 
             listCopy.Head = headItemCopy;
             listCopy.Count = Count;
 
-            for (ListItem<T> item1 = Head.Next, item2 = headItemCopy; item1 != null; item1 = item1.Next, item2 = item2.Next)
+            for (ListItem<T> sourceArrayItem = Head.Next, destinationArrayItem = headItemCopy; sourceArrayItem != null; sourceArrayItem = sourceArrayItem.Next, destinationArrayItem = destinationArrayItem.Next)
             {
-                ListItem<T> itemCopy = new ListItem<T>(item1.Data);
+                ListItem<T> itemCopy = new ListItem<T>(sourceArrayItem.Data);
 
-                item2.Next = itemCopy;
+                destinationArrayItem.Next = itemCopy;
             }
 
             return listCopy;
