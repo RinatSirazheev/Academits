@@ -7,16 +7,21 @@ namespace HashTableTask
     class HashTable<T> : ICollection<T>
     {
         private readonly List<T>[] array;
-        private int modeCount;
-        private const int defaultCapacity = 100;
+        private int changesCount;
+        private const int DefaultCapacity = 100;
 
         public HashTable()
         {
-            array = new List<T>[defaultCapacity];
+            array = new List<T>[DefaultCapacity];
         }
 
         public HashTable(int capacity)
         {
+            if (capacity < 0)
+            {
+                throw new ArgumentOutOfRangeException("Ошибка! Вместимость не может быть меньше нуля.");
+            }
+
             array = new List<T>[capacity];
         }
 
@@ -24,21 +29,33 @@ namespace HashTableTask
 
         public bool IsReadOnly => false;
 
-        public void Add(T item)
+        private int GetHash(T item)
         {
-            int index = Math.Abs(item == null ? 0 : item.GetHashCode() % array.Length);
-
-            if (array[index] == null)
+            if (item == null)
             {
-                array[index] = new List<T> { item };
+                return 0;
             }
             else
             {
-                array[index].Add(item);
+                return Math.Abs(item.GetHashCode() % array.Length);
+            }
+        }
+
+        public void Add(T item)
+        {
+            var hashTableIndex = GetHash(item);
+
+            if (array[hashTableIndex] == null)
+            {
+                array[hashTableIndex] = new List<T> { item };
+            }
+            else
+            {
+                array[hashTableIndex].Add(item);
             }
 
             Count++;
-            modeCount++;
+            changesCount++;
         }
 
         public void Clear()
@@ -48,80 +65,71 @@ namespace HashTableTask
                 element?.Clear();
             }
 
-            modeCount++;
+            changesCount++;
             Count = 0;
         }
 
         public bool Contains(T item)
         {
-            var hashTableIndex = Math.Abs(item != null ? item.GetHashCode() % array.Length : 0);
+            var hashTableIndex = GetHash(item);
 
             if (array[hashTableIndex] != null)
             {
-                foreach (var element in array[hashTableIndex])
-                {
-                    if (Equals(element, item))
-                    {
-                        return true;
-                    }
-                }
+                return array[hashTableIndex].Contains(item);
             }
 
             return false;
         }
 
-        public void CopyTo(T[] array, int arrayIndex)
+        public void CopyTo(T[] array, int hashTableIndex)
         {
             if (array == null)
             {
                 throw new ArgumentNullException($"Ошибка! Массив {nameof(array)} равен Null");
             }
 
-            if (arrayIndex < 0)
+            if (hashTableIndex < 0)
             {
-                throw new ArgumentOutOfRangeException($"Ошибка! Индекс = {arrayIndex}, не может быть меньше нуля.");
+                throw new ArgumentOutOfRangeException($"Ошибка! Индекс = {hashTableIndex}, не может быть меньше нуля.");
             }
 
-            if (Count > array.Length - arrayIndex)
+            if (Count > array.Length - hashTableIndex)
             {
                 throw new ArgumentException("Ошибка! Количество элементов в исходной коллекции больше доступного места в массиве.");
             }
 
+            var i = hashTableIndex;
+
             foreach (var item in this)
             {
-                array[arrayIndex] = item;
-                arrayIndex++;
+                array[i] = item;
+                i++;
             }
         }
 
         public bool Remove(T item)
         {
-            var hashTableIndex = Math.Abs(item != null ? item.GetHashCode() % array.Length : 0);
+            var hashTableIndex = GetHash(item);
 
-            if (array[hashTableIndex] != null)
-            {
-                return array[hashTableIndex].Remove(item);
-            }
-
-            return false;
+            return array[hashTableIndex] != null ? array[hashTableIndex].Remove(item) : false;
         }
 
         public IEnumerator<T> GetEnumerator()
         {
-            int startModeCount = modeCount;
+            var startChangesCount = changesCount;
 
-            for (int i = 0; i < array.Length; i++)
+            foreach (var list in array)
             {
-                if (startModeCount != modeCount)
+                if (list != null)
                 {
-                    throw new InvalidOperationException("Ошибка! В коллекции за время обхода изменилось количество элементов!");
-                }
-
-                if (array[i] != null)
-                {
-                    for (int j = 0; j < array[i].Count; j++)
+                    if (startChangesCount != changesCount)
                     {
-                        yield return array[i][j];
+                        throw new InvalidOperationException("Ошибка! В коллекции за время обхода изменилось количество элементов!");
+                    }
+
+                    for (var i = 0; i < list.Count; i++)
+                    {
+                        yield return list[i];
                     }
                 }
             }
