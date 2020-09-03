@@ -21,12 +21,15 @@ namespace ArrayListTask
             {
                 if (value < Count)
                 {
-                    throw new ArgumentException("Ошибка. Нельзя задать вместимость списка меньше количества элементов списка.");
+                    throw new ArgumentException($"Ошибка. Нельзя задать вместимость списка = {Capacity} если она меньше количества элементов списка({Count}).");
                 }
 
-                T[] old = items;
-                items = new T[value];
-                Array.Copy(old, 0, items, 0, old.Length);
+                if (Capacity == value)
+                {
+                    return;
+                }
+
+                Array.Resize(ref items, value);
             }
         }
 
@@ -39,6 +42,11 @@ namespace ArrayListTask
 
         public MyArrayList(int capacity)
         {
+            if (capacity < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(capacity), $"Ошибка! Вместимость = {capacity}. Вместимость не может быть меньше нуля.");
+            }
+
             items = new T[capacity];
         }
 
@@ -66,9 +74,9 @@ namespace ArrayListTask
         {
             get
             {
-                if (index < 0 || index > Count)
+                if (index < 0 || index >= Count)
                 {
-                    throw new ArgumentOutOfRangeException($"Ошибка! Индекс = {index} находится вне границ массива.");
+                    throw new ArgumentOutOfRangeException(nameof(index), $"Ошибка! Индекс = {index} находится вне границ массива.");
                 }
 
                 return items[index];
@@ -76,9 +84,9 @@ namespace ArrayListTask
 
             set
             {
-                if (index < 0 || index > Count)
+                if (index < 0 || index >= Count)
                 {
-                    throw new ArgumentOutOfRangeException($"Ошибка! Индекс = {index} находится вне границ массива.");
+                    throw new ArgumentOutOfRangeException(nameof(index), $"Ошибка! Индекс = {index} находится вне границ массива.");
                 }
 
                 items[index] = value;
@@ -93,7 +101,14 @@ namespace ArrayListTask
 
         private void IncreaseCapacity()
         {
-            Array.Resize<T>(ref items, items.Length + defaultCapacity);
+            if (items.Length == 0)
+            {
+                Capacity = defaultCapacity;
+            }
+            else
+            {
+                Capacity = items.Length * 2;
+            }
 
             modeCount++;
         }
@@ -161,14 +176,7 @@ namespace ArrayListTask
 
         public bool Contains(T item)
         {
-            bool contains = false;
-
-            if (IndexOf(item) != -1)
-            {
-                contains = true;
-            }
-
-            return contains;
+            return IndexOf(item) != -1;
         }
 
         public void CopyTo(T[] array, int arrayIndex)
