@@ -42,6 +42,13 @@ namespace ArrayListTask
             list.CopyTo(array, 0);
 
             Console.WriteLine(string.Join(", ", array));
+
+            list.Add("Test1");
+            list.Add("Test3");
+
+            Console.WriteLine( list.LastIndexOf("Test0"));
+
+            Console.WriteLine(list[-1]);
         }
     }
 }

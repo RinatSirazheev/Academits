@@ -8,8 +8,8 @@ namespace ArrayListTask
     class MyArrayList<T> : IList<T>
     {
         private T[] items;
-        private int modeCount;
-        private const int defaultCapacity = 10;
+        private int changesCount;
+        private const int DefaultCapacity = 10;
 
         public int Count { get; private set; }
 
@@ -30,6 +30,8 @@ namespace ArrayListTask
                 }
 
                 Array.Resize(ref items, value);
+
+                changesCount++;
             }
         }
 
@@ -37,7 +39,7 @@ namespace ArrayListTask
 
         public MyArrayList()
         {
-            items = new T[defaultCapacity];
+            items = new T[DefaultCapacity];
         }
 
         public MyArrayList(int capacity)
@@ -52,11 +54,11 @@ namespace ArrayListTask
 
         public IEnumerator<T> GetEnumerator()
         {
-            int startModeCount = modeCount;
+            int startModeCount = changesCount;
 
             for (int i = 0; i < Count; i++)
             {
-                if (startModeCount != modeCount)
+                if (startModeCount != changesCount)
                 {
                     throw new InvalidOperationException("Ошибка! В коллекции за время обхода изменилось количество элементов!");
                 }
@@ -70,13 +72,15 @@ namespace ArrayListTask
             return GetEnumerator();
         }
 
+        private bool IsGodIndex(int index) => index < 0 || index >= Count;
+
         public T this[int index]
         {
             get
             {
-                if (index < 0 || index >= Count)
+                if (IsGodIndex(index))
                 {
-                    throw new ArgumentOutOfRangeException(nameof(index), $"Ошибка! Индекс = {index} находится вне границ массива.");
+                    throw new ArgumentOutOfRangeException(nameof(index), $"Ошибка! Индекс = {index} находится вне границ массива. Допустимый диапазон значений от 0 до {Count}.");
                 }
 
                 return items[index];
@@ -84,13 +88,13 @@ namespace ArrayListTask
 
             set
             {
-                if (index < 0 || index >= Count)
+                if (IsGodIndex(index))
                 {
-                    throw new ArgumentOutOfRangeException(nameof(index), $"Ошибка! Индекс = {index} находится вне границ массива.");
+                    throw new ArgumentOutOfRangeException(nameof(index), $"Ошибка! Индекс = {index} находится вне границ массива. Допустимый диапазон значений от 0 до {Count}.");
                 }
 
                 items[index] = value;
-                modeCount++;
+                changesCount++;
             }
         }
 
@@ -103,52 +107,48 @@ namespace ArrayListTask
         {
             if (items.Length == 0)
             {
-                Capacity = defaultCapacity;
+                Capacity = DefaultCapacity;
             }
             else
             {
                 Capacity = items.Length * 2;
             }
 
-            modeCount++;
+            changesCount++;
         }
 
         public void RemoveAt(int index)
         {
-            if (index < 0 || index >= Count)
+            if (IsGodIndex(index))
             {
-                throw new ArgumentOutOfRangeException($"Ошибка! Индекс = {index}, индекс не должен выходить за рамки массива.", nameof(index));
+                throw new ArgumentOutOfRangeException(nameof(index), $"Ошибка! Индекс = {index} находится вне границ массива. Допустимый диапазон значений от 0 до {Count}.");
             }
 
             Array.Copy(items, index + 1, items, index, Count - index - 1);
 
             items[Count - 1] = default;
             Count--;
-            modeCount++;
+            changesCount++;
         }
 
         public int IndexOf(T item)
         {
-            int specificItemIndex = -1;
-
             for (int i = 0; i < Count; i++)
             {
                 if (Equals(items[i], item))
                 {
-                    specificItemIndex = i;
-
-                    break;
+                    return i;
                 }
             }
 
-            return specificItemIndex;
+            return -1;
         }
 
         public void Insert(int index, T item)
         {
-            if (index < 0 || index > Count)
+            if (IsGodIndex(index))
             {
-                throw new ArgumentOutOfRangeException($"Ошибка! Индекс = {index}. Индекс не должен выходить за пределы массива");
+                throw new ArgumentOutOfRangeException(nameof(index), $"Ошибка! Индекс = {index} находится вне границ массива. Допустимый диапазон значений от 0 до {Count}.");
             }
 
             if (Count >= Capacity)
@@ -160,7 +160,7 @@ namespace ArrayListTask
 
             items[index] = item;
             Count++;
-            modeCount++;
+            changesCount++;
         }
 
         public void Clear()
@@ -171,7 +171,7 @@ namespace ArrayListTask
             }
 
             Count = 0;
-            modeCount++;
+            changesCount++;
         }
 
         public bool Contains(T item)
@@ -201,7 +201,6 @@ namespace ArrayListTask
 
         public bool Remove(T item)
         {
-            bool result = false;
             int itemIndex = IndexOf(item);
 
             if (itemIndex != -1)
@@ -209,11 +208,12 @@ namespace ArrayListTask
                 Array.Copy(items, itemIndex + 1, items, itemIndex, Count - itemIndex - 1);
 
                 Count--;
-                modeCount++;
-                result = true;
+                changesCount++;
+
+                return true;
             }
 
-            return result;
+            return false;
         }
 
         public T[] ToArray()
@@ -227,29 +227,20 @@ namespace ArrayListTask
 
         public int LastIndexOf(T item)
         {
-            int specificItemOccurrenceLastIndex = -1;
-
-            for (int i = Count - 1; i > 0; i--)
+            for (int i = Count - 1; i >= 0; i--)
             {
                 if (Equals(items[i], item))
                 {
-                    specificItemOccurrenceLastIndex = i;
-
-                    break;
+                    return i;
                 }
             }
 
-            return specificItemOccurrenceLastIndex;
+            return -1;
         }
 
         public void TrimExcess()
         {
-            T[] arrayCopy = items;
-            items = new T[arrayCopy.Count()];
-
-            Array.Copy(arrayCopy, 0, items, 0, Count);
-
-            modeCount++;
+            Capacity = Count;
         }
     }
 }
