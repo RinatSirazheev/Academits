@@ -23,7 +23,33 @@ namespace GraphTask
             visited = new bool[array.GetLength(0)];
         }
 
+        public void BreadthFirstTraversing()
+        {
+            var queue = new Queue<int>();
 
+            queue.Enqueue(0);
 
+            while (queue.Count != 0)
+            {
+                var curentVertex = queue.Dequeue();
+
+                if (visited[curentVertex] == true)
+                {
+                    continue;
+                }
+
+                Console.WriteLine(curentVertex);
+
+                for (int i = 1; i < Graph.GetLength(0); i++)
+                {
+                    if (Graph[curentVertex, i] == 1)
+                    {
+                        queue.Enqueue(i);
+
+                        visited[curentVertex] = true;
+                    }
+                }
+            }
+        }
     }
 }
