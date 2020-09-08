@@ -26,7 +26,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HashTableTask", "HashTableT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeTask", "TreeTask\TreeTask.csproj", "{306F0D50-3A3A-4694-88EB-5B0A1A83C48A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphTask", "GraphTask\GraphTask.csproj", "{304FB18A-7540-417B-A311-EA6327FD4398}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphTask", "Graph1\GraphTask.csproj", "{A3DC3DF9-DFC3-49A8-81CD-3F53D4BBFD87}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -70,16 +70,13 @@ Global
 		{306F0D50-3A3A-4694-88EB-5B0A1A83C48A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{306F0D50-3A3A-4694-88EB-5B0A1A83C48A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{306F0D50-3A3A-4694-88EB-5B0A1A83C48A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{304FB18A-7540-417B-A311-EA6327FD4398}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{304FB18A-7540-417B-A311-EA6327FD4398}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{304FB18A-7540-417B-A311-EA6327FD4398}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{304FB18A-7540-417B-A311-EA6327FD4398}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3DC3DF9-DFC3-49A8-81CD-3F53D4BBFD87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3DC3DF9-DFC3-49A8-81CD-3F53D4BBFD87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3DC3DF9-DFC3-49A8-81CD-3F53D4BBFD87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3DC3DF9-DFC3-49A8-81CD-3F53D4BBFD87}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{304FB18A-7540-417B-A311-EA6327FD4398} = {92992958-7D0B-495A-A302-BC6A72F15D17}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FEE9E4AC-5B41-4515-8D91-BE7495CBA5AC}
