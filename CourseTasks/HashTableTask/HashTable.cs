@@ -17,7 +17,7 @@ namespace HashTableTask
 
         public HashTable(int capacity)
         {
-            if (capacity < 0)
+            if (capacity <= 0)
             {
                 throw new ArgumentOutOfRangeException("Ошибка! Вместимость не может быть меньше нуля.");
             }
@@ -29,21 +29,19 @@ namespace HashTableTask
 
         public bool IsReadOnly => false;
 
-        private int GetHash(T item)
+        private int GetHashCode(T item)
         {
             if (item == null)
             {
                 return 0;
             }
-            else
-            {
-                return Math.Abs(item.GetHashCode() % array.Length);
-            }
+
+            return Math.Abs(item.GetHashCode() % array.Length);
         }
 
         public void Add(T item)
         {
-            var hashTableIndex = GetHash(item);
+            var hashTableIndex = GetHashCode(item);
 
             if (array[hashTableIndex] == null)
             {
@@ -71,7 +69,7 @@ namespace HashTableTask
 
         public bool Contains(T item)
         {
-            var hashTableIndex = GetHash(item);
+            var hashTableIndex = GetHashCode(item);
 
             if (array[hashTableIndex] != null)
             {
@@ -109,7 +107,7 @@ namespace HashTableTask
 
         public bool Remove(T item)
         {
-            var hashTableIndex = GetHash(item);
+            var hashTableIndex = GetHashCode(item);
 
             return array[hashTableIndex] != null ? array[hashTableIndex].Remove(item) : false;
         }
