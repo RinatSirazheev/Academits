@@ -19,7 +19,7 @@ namespace HashTableTask
         {
             if (capacity <= 0)
             {
-                throw new ArgumentOutOfRangeException("Ошибка! Вместимость не может быть меньше нуля.");
+                throw new ArgumentOutOfRangeException(nameof(capacity), "Ошибка! Вместимость не может быть меньше нуля.");
             }
 
             array = new List<T>[capacity];
@@ -83,12 +83,12 @@ namespace HashTableTask
         {
             if (array == null)
             {
-                throw new ArgumentNullException($"Ошибка! Массив {nameof(array)} равен Null");
+                throw new ArgumentNullException(nameof(array), "Ошибка! Массив равен Null");
             }
 
             if (hashTableIndex < 0)
             {
-                throw new ArgumentOutOfRangeException($"Ошибка! Индекс = {hashTableIndex}, не может быть меньше нуля.");
+                throw new ArgumentOutOfRangeException(nameof(hashTableIndex), "Ошибка! Индекс, не может быть меньше нуля.");
             }
 
             if (Count > array.Length - hashTableIndex)
@@ -109,25 +109,33 @@ namespace HashTableTask
         {
             var hashTableIndex = GetHashCode(item);
 
-            return array[hashTableIndex] != null ? array[hashTableIndex].Remove(item) : false;
+            if (array[hashTableIndex]?.Remove(item) ?? false)
+            {
+                Count--;
+                changesCount++;
+
+                return true;
+            }
+
+            return false;
         }
 
         public IEnumerator<T> GetEnumerator()
         {
-            var startChangesCount = changesCount;
+            var initialChangesCount = changesCount;
 
             foreach (var list in array)
             {
                 if (list != null)
                 {
-                    if (startChangesCount != changesCount)
+                    foreach (var element in list)
                     {
-                        throw new InvalidOperationException("Ошибка! В коллекции за время обхода изменилось количество элементов!");
-                    }
+                        if (initialChangesCount != changesCount)
+                        {
+                            throw new InvalidOperationException("Ошибка! В коллекции за время обхода изменилось количество элементов!");
+                        }
 
-                    for (var i = 0; i < list.Count; i++)
-                    {
-                        yield return list[i];
+                        yield return element;
                     }
                 }
             }
