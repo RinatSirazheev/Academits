@@ -1,17 +1,15 @@
-﻿namespace TreeTask
+﻿using System;
+using System.Collections.Generic;
+
+namespace TreeTask
 {
-    class TreeNode<T>
+    class TreeNode<T> 
     {
         public TreeNode<T> Left { get; set; }
 
         public TreeNode<T> Right { get; set; }
         
         public T Data { get; set; }
-
-        public TreeNode()
-        {
-
-        }
 
         public TreeNode(T data)
         {
@@ -22,5 +20,6 @@
         {
             return Data.ToString();
         }
+
     }
 }

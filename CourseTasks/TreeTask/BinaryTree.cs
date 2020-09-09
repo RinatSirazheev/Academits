@@ -3,18 +3,18 @@ using System.Collections.Generic;
 
 namespace TreeTask
 {
-    class BinatryTree<T> where T : IComparable<T>
+    class BinaryTree<T> where T : IComparable<T>
     {
         public TreeNode<T> Root { get; private set; }
 
         public int Count { get; private set; }
 
-        public BinatryTree()
+        public BinaryTree()
         {
-            Root = new TreeNode<T>();
+            Root = null;
         }
 
-        public BinatryTree(T data)
+        public BinaryTree(T data)
         {
             Root = new TreeNode<T>(data);
 
@@ -25,21 +25,18 @@ namespace TreeTask
         {
             var parentNode = GetParentAt(data);
 
-            if (parentNode == null && !Equals(Root.Data, data))
-            {
-                return false;
-            }
-
-            return true;
+            return parentNode == null && !Equals(Root.Data, data);
         }
 
-        public void Add(TreeNode<T> node)
+        public void Add(T data)
         {
+            var node = new TreeNode<T>(data);
+
             var currentNode = Root;
 
             while (true)
             {
-                if (currentNode.Data.CompareTo(node.Data) > 0)
+                if ((currentNode.Data as IComparable<T>).CompareTo(node.Data) > 0)
                 {
                     if (currentNode.Left != null)
                     {
@@ -83,13 +80,15 @@ namespace TreeTask
 
             while (true)
             {
-                if (currentNode.Data.CompareTo(data) == 0)
+                var compareIndicator = currentNode.Data.CompareTo(data);
+
+                if (compareIndicator == 0)
                 {
                     result = previous;
 
                     break;
                 }
-                else if (currentNode.Data.CompareTo(data) > 0)
+                else if (compareIndicator > 0)
                 {
                     if (currentNode.Left != null)
                     {
@@ -147,10 +146,10 @@ namespace TreeTask
                     return;
                 }
 
-                var rootLeftNode = Root.Left;
+                //var rootLeftNode = Root.Left;
                 Root = Root.Right;
 
-                Add(rootLeftNode);
+                Add(Root.Left.Data);
 
                 Count--;
 
@@ -229,7 +228,7 @@ namespace TreeTask
             }
         }
 
-        public void BreadthFirstTraversing()
+        public void BreadthFirstTraversing(Action<TreeNode<T>> action)
         {
             var queue = new Queue<TreeNode<T>>();
 
@@ -239,7 +238,7 @@ namespace TreeTask
             {
                 var currentNode = queue.Dequeue();
 
-                Console.WriteLine(currentNode);
+                action();
 
                 if (currentNode.Left != null)
                 {
@@ -261,18 +260,18 @@ namespace TreeTask
 
             while (stack.Count != 0)
             {
-                var curentNode = stack.Pop();
+                var currentNode = stack.Pop();
 
-                Console.WriteLine(curentNode);
+                Console.WriteLine(currentNode);
 
-                if (curentNode.Right != null)
+                if (currentNode.Right != null)
                 {
-                    stack.Push(curentNode.Right);
+                    stack.Push(currentNode.Right);
                 }
 
-                if (curentNode.Left != null)
+                if (currentNode.Left != null)
                 {
-                    stack.Push(curentNode.Left);
+                    stack.Push(currentNode.Left);
                 }
             }
         }
