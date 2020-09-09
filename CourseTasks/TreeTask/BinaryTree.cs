@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace TreeTask
@@ -9,6 +10,8 @@ namespace TreeTask
 
         public int Count { get; private set; }
 
+        public IComparer<T> Comparer { get; set; }
+
         public BinaryTree()
         {
             Root = null;
@@ -17,6 +20,14 @@ namespace TreeTask
         public BinaryTree(T data)
         {
             Root = new TreeNode<T>(data);
+
+            Count++;
+        }
+
+        public BinaryTree(T data, IComparer<T> comparer)
+        {
+            Root = new TreeNode<T>(data);
+            Comparer = comparer;
 
             Count++;
         }
@@ -31,12 +42,12 @@ namespace TreeTask
         public void Add(T data)
         {
             var node = new TreeNode<T>(data);
-
+           
             var currentNode = Root;
-
+            
             while (true)
             {
-                if ((currentNode.Data as IComparable<T>).CompareTo(node.Data) > 0)
+                if (Comparer.Compare(currentNode.Data, node.Data) > 0)
                 {
                     if (currentNode.Left != null)
                     {
@@ -146,10 +157,10 @@ namespace TreeTask
                     return;
                 }
 
-                //var rootLeftNode = Root.Left;
+                var rootLeftNode = Root.Left;
                 Root = Root.Right;
 
-                Add(Root.Left.Data);
+                Add(rootLeftNode.Data);
 
                 Count--;
 
@@ -238,7 +249,7 @@ namespace TreeTask
             {
                 var currentNode = queue.Dequeue();
 
-                action();
+                action(currentNode);
 
                 if (currentNode.Left != null)
                 {

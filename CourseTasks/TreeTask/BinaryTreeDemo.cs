@@ -21,7 +21,7 @@ namespace TreeTask
             Console.WriteLine(tree.Contains(8));
 
             Console.WriteLine(tree.Count);
-            tree.BreadthFirstTraversing();
+            tree.BreadthFirstTraversing(Console.WriteLine);
 
             Console.WriteLine();
 
