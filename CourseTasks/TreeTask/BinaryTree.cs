@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace TreeTask
 {
-    class BinaryTree<T> where T : IComparable<T>
+    class BinaryTree<T>
     {
         public TreeNode<T> Root { get; private set; }
 
@@ -32,74 +31,101 @@ namespace TreeTask
             Count++;
         }
 
+        private int Compare(TreeNode<T> currentNode, TreeNode<T> node)
+        {
+            if (Comparer != null)
+            {
+                return Comparer.Compare(currentNode.Data, node.Data);
+            }
+
+            IComparable<T> p = (IComparable<T>)currentNode.Data;
+            return p.CompareTo(node.Data);
+        }
+
         public bool Contains(T data)
         {
+            if (Root == null)
+            {
+                return false;
+            }
+
             var parentNode = GetParentAt(data);
 
-            return parentNode == null && !Equals(Root.Data, data);
+            return !(parentNode == null && Compare(Root, new TreeNode<T>(data)) == 1);
         }
 
         public void Add(T data)
         {
-            var node = new TreeNode<T>(data);
-           
-            var currentNode = Root;
-            
-            while (true)
+            Add(new TreeNode<T>(data));
+        }
+
+        private void Add(TreeNode<T> node)
+        {
+            if (Root == null)
             {
-                if (Comparer.Compare(currentNode.Data, node.Data) > 0)
-                {
-                    if (currentNode.Left != null)
-                    {
-                        currentNode = currentNode.Left;
+                Root = node;
 
-                        continue;
+            }
+            else
+            {
+                var currentNode = Root;
+
+                while (true)
+                {
+                    if (Compare(currentNode, node) > 0)
+                    {
+                        if (currentNode.Left != null)
+                        {
+                            currentNode = currentNode.Left;
+
+                            continue;
+                        }
+                        else
+                        {
+                            currentNode.Left = node;
+                            Count++;
+
+                            break;
+                        }
                     }
                     else
                     {
-                        currentNode.Left = node;
-                        Count++;
+                        if (currentNode.Right != null)
+                        {
+                            currentNode = currentNode.Right;
 
-                        break;
-                    }
-                }
-                else
-                {
-                    if (currentNode.Right != null)
-                    {
-                        currentNode = currentNode.Right;
+                            continue;
+                        }
+                        else
+                        {
+                            currentNode.Right = node;
+                            Count++;
 
-                        continue;
-                    }
-                    else
-                    {
-                        currentNode.Right = node;
-                        Count++;
-
-                        break;
+                            break;
+                        }
                     }
                 }
             }
-
         }
 
         private TreeNode<T> GetParentAt(T data)
         {
             TreeNode<T> result = default;
             TreeNode<T> previous = default;
+            TreeNode<T> node = new TreeNode<T>(data);
             var currentNode = Root;
 
             while (true)
             {
-                var compareIndicator = currentNode.Data.CompareTo(data);
+                var comparsionResult = Compare(currentNode, node);
 
-                if (compareIndicator == 0)
+                if (comparsionResult == 0)
                 {
                     result = previous;
 
                     break;
                 }
-                else if (compareIndicator > 0)
+                else if (comparsionResult > 0)
                 {
                     if (currentNode.Left != null)
                     {
@@ -134,7 +160,12 @@ namespace TreeTask
 
         public void RemoveAt(T data)
         {
-            if (Equals(Root.Data, data))
+            if (Root == null)
+            {
+                throw new Exception("Ошибка! Список пуст!");
+            }
+
+            if (Compare(Root, new TreeNode<T>(data)) == 1)
             {
                 if (Root.Right == null && Root.Left == null)
                 {
@@ -160,7 +191,7 @@ namespace TreeTask
                 var rootLeftNode = Root.Left;
                 Root = Root.Right;
 
-                Add(rootLeftNode.Data);
+                Add(rootLeftNode);
 
                 Count--;
 
@@ -178,7 +209,7 @@ namespace TreeTask
 
             if (removedNode.Left == null && removedNode.Right == null)
             {
-                if (removedNode.Data.CompareTo(parentNode.Data) >= 0)
+                if (Compare(removedNode, parentNode) >= 0)
                 {
                     parentNode.Right = null;
                     Count--;
@@ -193,7 +224,7 @@ namespace TreeTask
             {
                 var child = removedNode.Right ?? removedNode.Left;
 
-                if (removedNode.Data.CompareTo(parentNode.Data) >= 0)
+                if (Compare(removedNode, parentNode) >= 0)
                 {
                     parentNode.Left = child;
                     Count--;
@@ -224,7 +255,7 @@ namespace TreeTask
                     minLeftNodeParent.Left = null;
                 }
 
-                if (parentNode.Data.CompareTo(removedNode.Data) < 0)
+                if (Compare(parentNode, removedNode) < 0)
                 {
                     parentNode.Right = minLeftNode;
                 }

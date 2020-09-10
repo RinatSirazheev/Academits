@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace TreeTask
 {
-    class TreeNode<T> 
+    class TreeNode<T>
     {
         public TreeNode<T> Left { get; set; }
 
         public TreeNode<T> Right { get; set; }
-        
+
         public T Data { get; set; }
 
         public TreeNode(T data)
@@ -18,7 +18,7 @@ namespace TreeTask
 
         public override string ToString()
         {
-            return Data.ToString();
+            return Data?.ToString() ?? "null";
         }
 
     }
