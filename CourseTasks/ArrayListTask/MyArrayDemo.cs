@@ -47,8 +47,6 @@ namespace ArrayListTask
             list.Add("Test3");
 
             Console.WriteLine( list.LastIndexOf("Test0"));
-
-            Console.WriteLine(list[-1]);
         }
     }
 }

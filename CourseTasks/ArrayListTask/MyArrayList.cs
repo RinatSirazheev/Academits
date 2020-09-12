@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace ArrayListTask
 {
@@ -54,13 +53,13 @@ namespace ArrayListTask
 
         public IEnumerator<T> GetEnumerator()
         {
-            int startModeCount = changesCount;
+            int initialChangesCount = changesCount;
 
             for (int i = 0; i < Count; i++)
             {
-                if (startModeCount != changesCount)
+                if (initialChangesCount != changesCount)
                 {
-                    throw new InvalidOperationException("Ошибка! В коллекции за время обхода изменилось количество элементов!");
+                    throw new InvalidOperationException("Ошибка! В коллекции добавились/удалились элементы за время обхода!");
                 }
 
                 yield return items[i];
@@ -72,26 +71,26 @@ namespace ArrayListTask
             return GetEnumerator();
         }
 
-        private bool IsGodIndex(int index) => index < 0 || index >= Count;
+        private void CheckIndex(int index)
+        {
+            if (index < 0 || index >= Count)
+            {
+                throw new ArgumentOutOfRangeException(nameof(index), $"Ошибка! Индекс = {index} находится вне границ массива. Допустимый диапазон значений от 0 до {Count}.");
+            }
+        }
 
         public T this[int index]
         {
             get
             {
-                if (IsGodIndex(index))
-                {
-                    throw new ArgumentOutOfRangeException(nameof(index), $"Ошибка! Индекс = {index} находится вне границ массива. Допустимый диапазон значений от 0 до {Count}.");
-                }
+                CheckIndex(index);
 
                 return items[index];
             }
 
             set
             {
-                if (IsGodIndex(index))
-                {
-                    throw new ArgumentOutOfRangeException(nameof(index), $"Ошибка! Индекс = {index} находится вне границ массива. Допустимый диапазон значений от 0 до {Count}.");
-                }
+                CheckIndex(index);
 
                 items[index] = value;
                 changesCount++;
@@ -119,10 +118,7 @@ namespace ArrayListTask
 
         public void RemoveAt(int index)
         {
-            if (IsGodIndex(index))
-            {
-                throw new ArgumentOutOfRangeException(nameof(index), $"Ошибка! Индекс = {index} находится вне границ массива. Допустимый диапазон значений от 0 до {Count}.");
-            }
+            CheckIndex(index);
 
             Array.Copy(items, index + 1, items, index, Count - index - 1);
 
@@ -146,7 +142,7 @@ namespace ArrayListTask
 
         public void Insert(int index, T item)
         {
-            if (IsGodIndex(index))
+            if (index < 0 || index > Count)
             {
                 throw new ArgumentOutOfRangeException(nameof(index), $"Ошибка! Индекс = {index} находится вне границ массива. Допустимый диапазон значений от 0 до {Count}.");
             }
@@ -203,17 +199,18 @@ namespace ArrayListTask
         {
             int itemIndex = IndexOf(item);
 
-            if (itemIndex != -1)
+            if (itemIndex == -1)
             {
-                Array.Copy(items, itemIndex + 1, items, itemIndex, Count - itemIndex - 1);
-
-                Count--;
-                changesCount++;
-
-                return true;
+                return false;
             }
 
-            return false;
+            Array.Copy(items, itemIndex + 1, items, itemIndex, Count - itemIndex - 1);
+
+            items[Count - 1] = default;
+            Count--;
+            changesCount++;
+
+            return true;
         }
 
         public T[] ToArray()
