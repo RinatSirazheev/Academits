@@ -19,7 +19,7 @@ namespace HashTableTask
         {
             if (capacity <= 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(capacity), "Ошибка! Вместимость не может быть меньше нуля.");
+                throw new ArgumentOutOfRangeException(nameof(capacity), "Ошибка! Вместимость не может быть меньше либо равна нулю.");
             }
 
             array = new List<T>[capacity];
@@ -29,7 +29,7 @@ namespace HashTableTask
 
         public bool IsReadOnly => false;
 
-        private int GetHashCode(T item)
+        private int GetIndex(T item)
         {
             if (item == null)
             {
@@ -41,7 +41,7 @@ namespace HashTableTask
 
         public void Add(T item)
         {
-            var hashTableIndex = GetHashCode(item);
+            var hashTableIndex = GetIndex(item);
 
             if (array[hashTableIndex] == null)
             {
@@ -69,7 +69,7 @@ namespace HashTableTask
 
         public bool Contains(T item)
         {
-            var hashTableIndex = GetHashCode(item);
+            var hashTableIndex = GetIndex(item);
 
             if (array[hashTableIndex] != null)
             {
@@ -79,24 +79,24 @@ namespace HashTableTask
             return false;
         }
 
-        public void CopyTo(T[] array, int hashTableIndex)
+        public void CopyTo(T[] array, int arrayIndex)
         {
             if (array == null)
             {
                 throw new ArgumentNullException(nameof(array), "Ошибка! Массив равен Null");
             }
 
-            if (hashTableIndex < 0)
+            if (arrayIndex < 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(hashTableIndex), "Ошибка! Индекс, не может быть меньше нуля.");
+                throw new ArgumentOutOfRangeException(nameof(arrayIndex), "Ошибка! Индекс, не может быть меньше нуля.");
             }
 
-            if (Count > array.Length - hashTableIndex)
+            if (Count > array.Length - arrayIndex)
             {
                 throw new ArgumentException("Ошибка! Количество элементов в исходной коллекции больше доступного места в массиве.");
             }
 
-            var i = hashTableIndex;
+            var i = arrayIndex;
 
             foreach (var item in this)
             {
@@ -107,9 +107,14 @@ namespace HashTableTask
 
         public bool Remove(T item)
         {
-            var hashTableIndex = GetHashCode(item);
+            var hashTableIndex = GetIndex(item);
 
-            if (array[hashTableIndex]?.Remove(item) ?? false)
+            if (array[hashTableIndex] == null)
+            {
+                return false;
+            }
+
+            if (array[hashTableIndex].Remove(item))
             {
                 Count--;
                 changesCount++;
