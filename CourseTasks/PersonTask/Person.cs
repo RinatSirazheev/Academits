@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace PersonTask
 {
@@ -59,7 +58,7 @@ namespace PersonTask
             var personList = new List<Person>()
             {
                 new Person("Ivan", 30),
-                new Person("Ivan", 30),
+                new Person("Ivan", 15),
                 new Person("Pavel", 32),
                 new Person("Anton", 25),
                 new Person("Olga", 22),
@@ -85,10 +84,13 @@ namespace PersonTask
             minorPersons.ForEach(Console.WriteLine);
             Console.WriteLine(minorPersonAverageAge);
 
-            var a = personList.GroupBy(p => p.Name).ToDictionary(p => p.Key, p => p.ToList().Select(p => p.Age).Sum());
+            Dictionary<string, int> a = personList.GroupBy(p => p.Name).ToDictionary(p => p.Key, p => p.ToList().Select(x => x.Age).Sum() / p.Count());
 
-            //var a = personList.GroupBy(p => p.Name).ToList();
-            Console.WriteLine(a);
+            Console.WriteLine(a["Ivan"]);
+
+            var b = personList.Where(p => p.Age > 25 && p.Age < 45).OrderByDescending(p => p.Age).ToList();
+
+            b.ForEach(Console.WriteLine);
         }
     }
 }
