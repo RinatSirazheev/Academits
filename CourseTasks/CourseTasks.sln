@@ -28,6 +28,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeTask", "TreeTask\TreeTa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphTask", "GraphTask\GraphTask.csproj", "{A3DC3DF9-DFC3-49A8-81CD-3F53D4BBFD87}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonTask", "PersonTask\PersonTask.csproj", "{6BA76927-6D39-4868-8B2E-95486B4DF857}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -74,6 +76,10 @@ Global
 		{A3DC3DF9-DFC3-49A8-81CD-3F53D4BBFD87}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3DC3DF9-DFC3-49A8-81CD-3F53D4BBFD87}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3DC3DF9-DFC3-49A8-81CD-3F53D4BBFD87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BA76927-6D39-4868-8B2E-95486B4DF857}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BA76927-6D39-4868-8B2E-95486B4DF857}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BA76927-6D39-4868-8B2E-95486B4DF857}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BA76927-6D39-4868-8B2E-95486B4DF857}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
