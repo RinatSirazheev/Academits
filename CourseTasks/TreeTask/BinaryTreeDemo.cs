@@ -16,20 +16,20 @@ namespace TreeTask
             tree.Add(null);
             Console.WriteLine(tree.Contains(8 + " test"));
 
-            //tree.RemoveAt(84);
+            tree.RemoveAt("7 test");
 
-            //Console.WriteLine(tree.Contains(8));
+            Console.WriteLine(tree.Contains("4 test"));
 
             Console.WriteLine(tree.Count);
             tree.BreadthFirstTraversing(Console.WriteLine);
 
             Console.WriteLine();
 
-            //tree.Visit(tree.Root);
+            tree.Visit(tree.Root);
 
-            //Console.WriteLine();
+            Console.WriteLine();
 
-            //tree.DepthFirstTraversing();
+            tree.DepthFirstTraversing();
 
 
         }
