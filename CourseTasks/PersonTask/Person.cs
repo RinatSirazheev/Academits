@@ -88,9 +88,11 @@ namespace PersonTask
 
             Console.WriteLine(a["Ivan"]);
 
-            var b = personList.Where(p => p.Age > 25 && p.Age < 45).OrderByDescending(p => p.Age).ToList();
+            var personsAged20To40 = personList.Where(p => p.Age >= 20 && p.Age <= 40).OrderByDescending(p => p.Age).ToList();
 
-            b.ForEach(Console.WriteLine);
+            Console.WriteLine();
+
+            personsAged20To40.ForEach(Console.WriteLine);
         }
     }
 }
