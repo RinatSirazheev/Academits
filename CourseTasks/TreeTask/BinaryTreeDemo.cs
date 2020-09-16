@@ -25,11 +25,11 @@ namespace TreeTask
 
             Console.WriteLine();
 
-            tree.Visit(tree.Root);
+            tree.Visit(tree.Root, Console.WriteLine);
 
             Console.WriteLine();
 
-            tree.DepthFirstTraversing();
+            tree.DepthFirstTraversing(Console.WriteLine);
 
 
         }

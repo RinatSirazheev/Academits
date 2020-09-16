@@ -165,7 +165,9 @@ namespace TreeTask
                 throw new Exception("Ошибка! Список пуст!");
             }
 
-            if (Compare(Root, new TreeNode<T>(data)) == 1)
+            var node = new TreeNode<T>(data);
+
+            if (Compare(Root, node) == 1)
             {
                 if (Root.Right == null && Root.Left == null)
                 {
@@ -205,7 +207,7 @@ namespace TreeTask
                 throw new ArgumentException($"Ошибка! Элемента списка с параметром = {data} не существует", nameof(data));
             }
 
-            var removedNode = Equals(parentNode.Left.Data, data) ? parentNode.Left : parentNode.Right;
+            var removedNode = Compare(parentNode.Left, node)==1 ? parentNode.Left : parentNode.Right;
 
             if (removedNode.Left == null && removedNode.Right == null)
             {
@@ -294,7 +296,7 @@ namespace TreeTask
             }
         }
 
-        public void DepthFirstTraversing()
+        public void DepthFirstTraversing(Action<TreeNode<T>> action)
         {
             var stack = new Stack<TreeNode<T>>();
 
@@ -304,7 +306,7 @@ namespace TreeTask
             {
                 var currentNode = stack.Pop();
 
-                Console.WriteLine(currentNode);
+                action(currentNode);
 
                 if (currentNode.Right != null)
                 {
@@ -318,18 +320,18 @@ namespace TreeTask
             }
         }
 
-        public void Visit(TreeNode<T> node)
+        public void Visit(TreeNode<T> node, Action<TreeNode<T>> action)
         {
-            Console.WriteLine(node);
+            action(node);
 
             if (node.Left != null)
             {
-                Visit(node.Left);
+                Visit(node.Left, action);
             }
 
             if (node.Right != null)
             {
-                Visit(node.Right);
+                Visit(node.Right, action);
             }
         }
     }
