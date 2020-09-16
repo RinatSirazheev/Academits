@@ -14,7 +14,7 @@ namespace GraphTask
                 { 0, 1, 0, 0, 0, 0, 0 },
                 { 0, 1, 0, 0, 0, 1, 0 },
                 { 0, 1, 0, 0, 1, 0, 1 },
-                { 0, 0, 1 , 0, 0, 1, 0 }
+                { 0, 0, 1, 0, 0, 1, 0 }
             };
 
             var graph = new MyGraph(matrix);
@@ -27,6 +27,10 @@ namespace GraphTask
             Console.WriteLine("Обход несвязного графа в глубину.");
 
             graph.DepthFirstTraversing(Console.WriteLine);
+
+            Console.WriteLine("Test");
+
+            graph.Visit(Console.WriteLine);
         }
     }
 }

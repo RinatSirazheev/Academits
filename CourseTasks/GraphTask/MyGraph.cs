@@ -100,5 +100,38 @@ namespace GraphTask
                 }
             }
         }
+
+        private void Visit(Action<int> action, int vertex, ref bool[] visited)
+        {
+            action(vertex);
+
+            visited[vertex] = true;
+
+            for(var i = 0; i < Graph.GetLength(0); i++)
+            {
+                if (visited[i])
+                {
+                    continue;
+                }
+
+                if (Graph[vertex, i] == 1)
+                {
+                    Visit(action, i, ref visited);
+                }
+            }
+        }
+
+        public void Visit(Action<int> action)
+        {
+            var visited = new bool[Graph.GetLength(0)];
+
+            for(var i = 0; i < Graph.GetLength(0); i++)
+            {
+                if (!visited[i])
+                {
+                    Visit(action, i, ref visited);
+                }
+            }
+        }
     }
 }
