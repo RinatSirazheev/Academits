@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace GraphTask1
+namespace GraphTask
 {
     class MyGraph
     {
-        public int[,] Graph { get; private set; }
+        public int[,] Graph { get; }
 
         public MyGraph(int[,] array)
         {
@@ -17,29 +17,28 @@ namespace GraphTask1
             Graph = array;
         }
 
-        public void BreadthFirstTraversing()
+        private void BreadthFirstTraversing(Action<int> action, int vertex, ref bool[] visited)
         {
             var queue = new Queue<int>();
-            var visited = new bool[Graph.GetLength(0)];
 
-            queue.Enqueue(0);
+            queue.Enqueue(vertex);
 
             while (queue.Count != 0)
             {
-                var curentVertex = queue.Dequeue();
+                var currentVertex = queue.Dequeue();
 
-                if (visited[curentVertex] == true)
+                if (visited[currentVertex] == true)
                 {
                     continue;
                 }
 
-                visited[curentVertex] = true;
+                visited[currentVertex] = true;
 
-                Console.WriteLine(curentVertex);
+                action(currentVertex);
 
-                for (int i = 1; i < Graph.GetLength(0); i++)
+                for (var i = 1; i < Graph.GetLength(0); i++)
                 {
-                    if (Graph[curentVertex, i] == 1)
+                    if (Graph[currentVertex, i] == 1)
                     {
                         queue.Enqueue(i);
                     }
@@ -47,32 +46,57 @@ namespace GraphTask1
             }
         }
 
-        public void DepthFirstTraversing()
+        public void BreadthFirstTraversing(Action<int> action)
         {
-            var stack = new Stack<int>();
             var visited = new bool[Graph.GetLength(0)];
 
-            stack.Push(0);
+            for (var vertexNumber = 0; vertexNumber < Graph.GetLength(0); vertexNumber++)
+            {
+                if (!visited[vertexNumber])
+                {
+                    BreadthFirstTraversing(action, vertexNumber, ref visited);
+                }
+            }
+        }
+
+        private void DepthFirstTraversing(Action<int> action, int vertex, ref bool[] visited)
+        {
+            var stack = new Stack<int>();
+
+            stack.Push(vertex);
 
             while (stack.Count != 0)
             {
                 var curentVertex = stack.Pop();
 
-                if (visited[curentVertex] == true)
+                if (visited[curentVertex])
                 {
                     continue;
                 }
 
                 visited[curentVertex] = true;
 
-                Console.WriteLine(curentVertex);
+                action(curentVertex);
 
-                for (int i = Graph.GetLength(0) - 1; i > 0; i--)
+                for (var i = Graph.GetLength(0) - 1; i > 0; i--)
                 {
                     if (Graph[curentVertex, i] == 1)
                     {
                         stack.Push(i);
                     }
+                }
+            }
+        }
+
+        public void DepthFirstTraversing(Action<int> action)
+        {
+            var visited = new bool[Graph.GetLength(0)];
+
+            for (var vertexNumber = 0; vertexNumber < Graph.GetLength(0); vertexNumber++)
+            {
+                if (!visited[vertexNumber])
+                {
+                    DepthFirstTraversing(action, vertexNumber, ref visited);
                 }
             }
         }
