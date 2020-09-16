@@ -25,7 +25,7 @@ namespace TreeTask
 
             Console.WriteLine();
 
-            tree.Visit(tree.Root, Console.WriteLine);
+            tree.Visit(Console.WriteLine);
 
             Console.WriteLine();
 

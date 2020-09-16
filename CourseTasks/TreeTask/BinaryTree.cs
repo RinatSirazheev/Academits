@@ -320,7 +320,7 @@ namespace TreeTask
             }
         }
 
-        public void Visit(TreeNode<T> node, Action<TreeNode<T>> action)
+        private void Visit(TreeNode<T> node, Action<TreeNode<T>> action)
         {
             action(node);
 
@@ -333,6 +333,13 @@ namespace TreeTask
             {
                 Visit(node.Right, action);
             }
+        }
+
+        public void Visit(Action<TreeNode<T>> action)
+        {
+            var node = new TreeNode<T>(Root.Data);
+
+            Visit(node, action);
         }
     }
 }
