@@ -75,7 +75,7 @@ namespace ArrayListTask
         {
             if (index < 0 || index >= Count)
             {
-                throw new ArgumentOutOfRangeException(nameof(index), $"Ошибка! Индекс = {index} находится вне границ массива. Допустимый диапазон значений от 0 до {Count}.");
+                throw new ArgumentOutOfRangeException(nameof(index), $"Ошибка! Индекс = {index} находится вне границ массива. Допустимый диапазон значений от 0 до {Count-1}.");
             }
         }
 

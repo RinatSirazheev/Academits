@@ -53,9 +53,12 @@ namespace ListTask
             return head.Data;
         }
 
-        private bool IsInvalid(int index)
+        private void CheckIndex(int index)
         {
-            return index < 0 || index >= Count;
+            if (index < 0 || index >= Count)
+            {
+                throw new ArgumentOutOfRangeException(nameof(index), $"Ошибка! Индекс = {index} находится вне границ массива. Допустимый диапазон значений от 0 до {Count - 1}.");
+            }
         }
 
         private ListItem<T> GetItemAt(int index)
@@ -77,20 +80,14 @@ namespace ListTask
 
         public T GetItemDataAt(int index)
         {
-            if (IsInvalid(index))
-            {
-                throw new IndexOutOfRangeException($"Ошибка! Индекс = {index}, нижняя граница индекса = 0, верхняя граница = {Count - 1}.");
-            }
+            CheckIndex(index);
 
             return GetItemAt(index).Data;
         }
 
         public T SetItemAt(int index, T data)
         {
-            if (IsInvalid(index))
-            {
-                throw new IndexOutOfRangeException($"Ошибка! Индекс = {index}, нижняя граница индекса = 0, верхняя граница = {Count - 1}.");
-            }
+            CheckIndex(index);
 
             ListItem<T> item = GetItemAt(index);
 
@@ -102,10 +99,7 @@ namespace ListTask
 
         public T RemoveAt(int index)
         {
-            if (IsInvalid(index))
-            {
-                throw new IndexOutOfRangeException($"Ошибка! Индекс = {index}, нижняя граница индекса = 0, верхняя граница = {Count - 1}.");
-            }
+            CheckIndex(index);
 
             ListItem<T> removedItem;
 
