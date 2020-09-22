@@ -13,6 +13,7 @@ namespace TreeTask
             {
                 tree.Add(treeNumber[i] + " test");
             }
+
             tree.Add(null);
             Console.WriteLine(tree.Contains(8 + " test"));
 
@@ -30,8 +31,6 @@ namespace TreeTask
             Console.WriteLine();
 
             tree.DepthFirstTraversing(Console.WriteLine);
-
-
         }
     }
 }

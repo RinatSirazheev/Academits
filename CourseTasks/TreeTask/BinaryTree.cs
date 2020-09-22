@@ -5,7 +5,7 @@ namespace TreeTask
 {
     class BinaryTree<T>
     {
-        public TreeNode<T> Root { get; private set; }
+        private TreeNode<T> root;
 
         public int Count { get; private set; }
 
@@ -13,19 +13,18 @@ namespace TreeTask
 
         public BinaryTree()
         {
-            Root = null;
         }
 
         public BinaryTree(T data)
         {
-            Root = new TreeNode<T>(data);
+            root = new TreeNode<T>(data);
 
             Count++;
         }
 
         public BinaryTree(T data, IComparer<T> comparer)
         {
-            Root = new TreeNode<T>(data);
+            root = new TreeNode<T>(data);
             Comparer = comparer;
 
             Count++;
@@ -44,14 +43,14 @@ namespace TreeTask
 
         public bool Contains(T data)
         {
-            if (Root == null)
+            if (root == null)
             {
                 return false;
             }
 
             var parentNode = GetParentAt(data);
 
-            return !(parentNode == null && Compare(Root, new TreeNode<T>(data)) == 1);
+            return !(parentNode == null && Compare(root, new TreeNode<T>(data)) == 1);
         }
 
         public void Add(T data)
@@ -61,14 +60,14 @@ namespace TreeTask
 
         private void Add(TreeNode<T> node)
         {
-            if (Root == null)
+            if (root == null)
             {
-                Root = node;
+                root = node;
 
             }
             else
             {
-                var currentNode = Root;
+                var currentNode = root;
 
                 while (true)
                 {
@@ -113,19 +112,19 @@ namespace TreeTask
             TreeNode<T> result = default;
             TreeNode<T> previous = default;
             TreeNode<T> node = new TreeNode<T>(data);
-            var currentNode = Root;
+            var currentNode = root;
 
             while (true)
             {
-                var comparsionResult = Compare(currentNode, node);
+                var comparisonResult = Compare(currentNode, node);
 
-                if (comparsionResult == 0)
+                if (comparisonResult == 0)
                 {
                     result = previous;
 
                     break;
                 }
-                else if (comparsionResult > 0)
+                else if (comparisonResult > 0)
                 {
                     if (currentNode.Left != null)
                     {
@@ -160,38 +159,38 @@ namespace TreeTask
 
         public void RemoveAt(T data)
         {
-            if (Root == null)
+            if (root == null)
             {
                 throw new Exception("Ошибка! Список пуст!");
             }
 
             var node = new TreeNode<T>(data);
 
-            if (Compare(Root, node) == 1)
+            if (Compare(root, node) == 1)
             {
-                if (Root.Right == null && Root.Left == null)
+                if (root.Right == null && root.Left == null)
                 {
-                    Root = null;
+                    root = null;
 
                     return;
                 }
 
-                if (Root.Right == null)
+                if (root.Right == null)
                 {
-                    Root = Root.Left;
+                    root = root.Left;
 
                     return;
                 }
 
-                if (Root.Left == null)
+                if (root.Left == null)
                 {
-                    Root = Root.Right;
+                    root = root.Right;
 
                     return;
                 }
 
-                var rootLeftNode = Root.Left;
-                Root = Root.Right;
+                var rootLeftNode = root.Left;
+                root = root.Right;
 
                 Add(rootLeftNode);
 
@@ -207,7 +206,7 @@ namespace TreeTask
                 throw new ArgumentException($"Ошибка! Элемента списка с параметром = {data} не существует", nameof(data));
             }
 
-            var removedNode = Compare(parentNode.Left, node)==1 ? parentNode.Left : parentNode.Right;
+            var removedNode = Compare(parentNode.Left, node) == 1 ? parentNode.Left : parentNode.Right;
 
             if (removedNode.Left == null && removedNode.Right == null)
             {
@@ -276,7 +275,7 @@ namespace TreeTask
         {
             var queue = new Queue<TreeNode<T>>();
 
-            queue.Enqueue(Root);
+            queue.Enqueue(root);
 
             while (queue.Count != 0)
             {
@@ -300,7 +299,7 @@ namespace TreeTask
         {
             var stack = new Stack<TreeNode<T>>();
 
-            stack.Push(Root);
+            stack.Push(root);
 
             while (stack.Count != 0)
             {
@@ -337,7 +336,7 @@ namespace TreeTask
 
         public void Visit(Action<TreeNode<T>> action)
         {
-            var node = new TreeNode<T>(Root.Data);
+            var node = new TreeNode<T>(root.Data);
 
             Visit(node, action);
         }

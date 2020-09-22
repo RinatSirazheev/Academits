@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace TreeTask
+﻿namespace TreeTask
 {
     class TreeNode<T>
     {
@@ -20,6 +17,5 @@ namespace TreeTask
         {
             return Data?.ToString() ?? "null";
         }
-
     }
 }
