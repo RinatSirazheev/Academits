@@ -59,7 +59,7 @@ namespace ArrayListTask
             {
                 if (initialChangesCount != changesCount)
                 {
-                    throw new InvalidOperationException("Ошибка! В коллекции добавились/удалились элементы за время обхода!");
+                    throw new InvalidOperationException("Ошибка! Коллекция изменилась за время обхода!");
                 }
 
                 yield return items[i];
@@ -71,11 +71,18 @@ namespace ArrayListTask
             return GetEnumerator();
         }
 
+        public override string ToString()
+        {
+            TrimExcess();
+
+            return string.Join(", ", items);
+        }
+
         private void CheckIndex(int index)
         {
             if (index < 0 || index >= Count)
             {
-                throw new ArgumentOutOfRangeException(nameof(index), $"Ошибка! Индекс = {index} находится вне границ массива. Допустимый диапазон значений от 0 до {Count-1}.");
+                throw new ArgumentOutOfRangeException(nameof(index), $"Ошибка! Индекс = {index} находится вне границ массива. Допустимый диапазон значений от 0 до {Count - 1}.");
             }
         }
 
@@ -204,11 +211,7 @@ namespace ArrayListTask
                 return false;
             }
 
-            Array.Copy(items, itemIndex + 1, items, itemIndex, Count - itemIndex - 1);
-
-            items[Count - 1] = default;
-            Count--;
-            changesCount++;
+            RemoveAt(itemIndex);
 
             return true;
         }
