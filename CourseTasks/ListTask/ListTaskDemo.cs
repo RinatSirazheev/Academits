@@ -18,11 +18,11 @@ namespace ListTask
 
             Console.WriteLine("Размер списка = " + list.Count);
 
-            Console.WriteLine("Первый элемент списка = " + list.GetFirstItemData());
+            Console.WriteLine("Первый элемент списка = " + list.GetFirst());
 
-            Console.WriteLine("Пятый элемент списка равен = " + list.GetItemDataAt(4));
+            Console.WriteLine("Пятый элемент списка равен = " + list.GetDataIn(4));
 
-            Console.WriteLine("Заменим пятый элемент списка  на 888. Старое значение = " + list.SetItemAt(4, 888));
+            Console.WriteLine("Заменим пятый элемент списка  на 888. Старое значение = " + list.SetDataIn(4, 888));
             Console.WriteLine(list);
 
             Console.WriteLine("Удалим пятый элемент = " + list.RemoveAt(4));
@@ -49,7 +49,7 @@ namespace ListTask
                 Console.WriteLine("Элемента со значением 5 в списке не найдено");
             }
 
-            Console.WriteLine("Удалим первый элемент = " + list.RemoveFirstItem());
+            Console.WriteLine("Удалим первый элемент = " + list.RemoveFirst());
             Console.WriteLine(list);
 
             Console.WriteLine("Осуществим разворот списка.");

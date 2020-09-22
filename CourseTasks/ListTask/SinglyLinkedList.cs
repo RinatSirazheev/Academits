@@ -13,7 +13,7 @@ namespace ListTask
         {
             if (head == null)
             {
-                return "{ }";
+                return "{}";
             }
 
             StringBuilder stringBuilder = new StringBuilder("{");
@@ -43,7 +43,7 @@ namespace ListTask
             Count++;
         }
 
-        public T GetFirstItemData()
+        public T GetFirst()
         {
             if (head == null)
             {
@@ -78,14 +78,14 @@ namespace ListTask
             return null;
         }
 
-        public T GetItemDataAt(int index)
+        public T GetDataIn(int index)
         {
             CheckIndex(index);
 
             return GetItemAt(index).Data;
         }
 
-        public T SetItemAt(int index, T data)
+        public T SetDataIn(int index, T data)
         {
             CheckIndex(index);
 
@@ -101,20 +101,17 @@ namespace ListTask
         {
             CheckIndex(index);
 
-            ListItem<T> removedItem;
-
             if (index == 0)
             {
-                removedItem = head;
-                head = head.Next;
+                return RemoveFirst();
             }
-            else
-            {
-                ListItem<T> previousItem = GetItemAt(index - 1);
 
-                removedItem = previousItem.Next;
-                previousItem.Next = previousItem.Next.Next;
-            }
+            ListItem<T> removedItem;
+
+            ListItem<T> previousItem = GetItemAt(index - 1);
+
+            removedItem = previousItem.Next;
+            previousItem.Next = removedItem.Next;
 
             Count--;
 
@@ -153,12 +150,12 @@ namespace ListTask
 
             if (Equals(head.Data, data))
             {
-                head = head.Next;
+                RemoveFirst();
 
                 return true;
             }
 
-            for (ListItem<T> item = head, previousItem = null; item != null; previousItem = item, item = item.Next)
+            for (ListItem<T> item = head.Next, previousItem = head; item != null; previousItem = item, item = item.Next)
             {
                 if (Equals(item.Data, data))
                 {
@@ -172,7 +169,7 @@ namespace ListTask
             return false;
         }
 
-        public T RemoveFirstItem()
+        public T RemoveFirst()
         {
             if (head == null)
             {
@@ -212,12 +209,10 @@ namespace ListTask
                 return listCopy;
             }
 
-            ListItem<T> headItemCopy = new ListItem<T>(head.Data);
-
-            listCopy.head = headItemCopy;
+            listCopy.head = new ListItem<T>(head.Data);
             listCopy.Count = Count;
 
-            for (ListItem<T> sourceItem = head.Next, destinationItem = headItemCopy; sourceItem != null; sourceItem = sourceItem.Next, destinationItem = destinationItem.Next)
+            for (ListItem<T> sourceItem = head.Next, destinationItem = listCopy.head; sourceItem != null; sourceItem = sourceItem.Next, destinationItem = destinationItem.Next)
             {
                 destinationItem.Next = new ListItem<T>(sourceItem.Data);
             }

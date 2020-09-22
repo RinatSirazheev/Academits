@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ListTask
+﻿namespace ListTask
 {
     class ListItem<T>
     {
