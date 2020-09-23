@@ -1,98 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace PersonTask
+﻿namespace PersonTask
 {
     class Person
     {
-        private string name;
-        private int age;
+        public string Name { get; }
 
-        public string Name { get { return name; } }
-
-        public int Age { get { return age; } }
+        public int Age { get; }
 
         public Person(string name, int age)
         {
-            this.name = name;
-            this.age = age;
+            Name = name;
+            Age = age;
         }
 
         public override string ToString()
         {
             return Name;
-        }
-
-        class PersonByNameComparer : IEqualityComparer<Person>
-        {
-            public bool Equals(Person person1, Person person2)
-            {
-                if (ReferenceEquals(person1, person2))
-                {
-                    return true;
-                }
-
-                if (ReferenceEquals(null, person1) || ReferenceEquals(null, person2))
-                {
-                    return false;
-                }
-
-                return person1.Name == person2.Name;
-            }
-
-            public int GetHashCode(Person obj)
-            {
-                int prime = 19;
-                int hash = 1;
-
-                hash = prime * hash + obj.Age;
-                hash = prime * hash + (obj.Name != null ? obj.Name.GetHashCode() : 0);
-                return hash;
-            }
-        }
-
-        static void Main()
-        {
-            var personList = new List<Person>()
-            {
-                new Person("Ivan", 30),
-                new Person("Ivan", 15),
-                new Person("Pavel", 32),
-                new Person("Anton", 25),
-                new Person("Olga", 22),
-                new Person("Anna", 17),
-                new Person("Roman", 34)
-            };
-
-            var list = personList.Distinct(new PersonByNameComparer()).ToList();
-
-            list.ForEach(Console.WriteLine);
-
-            StringBuilder distinctName = new StringBuilder();
-            distinctName.Append("Имена: ")
-                        .Append(string.Join(", ", list.Select(p => p.Name)))
-                        .Append(".");
-
-            Console.WriteLine(distinctName);
-
-            var minorPersons = personList.Where(p => p.Age < 18).ToList();
-
-            var minorPersonAverageAge = minorPersons.Select(p => p.Age).Sum() / minorPersons.Count();
-
-            minorPersons.ForEach(Console.WriteLine);
-            Console.WriteLine(minorPersonAverageAge);
-
-            Dictionary<string, int> a = personList.GroupBy(p => p.Name).ToDictionary(p => p.Key, p => p.ToList().Select(x => x.Age).Sum() / p.Count());
-
-            Console.WriteLine(a["Ivan"]);
-
-            var personsAged20To40 = personList.Where(p => p.Age >= 20 && p.Age <= 40).OrderByDescending(p => p.Age).ToList();
-
-            Console.WriteLine();
-
-            personsAged20To40.ForEach(Console.WriteLine);
         }
     }
 }
