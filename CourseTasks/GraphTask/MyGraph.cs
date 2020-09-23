@@ -17,7 +17,7 @@ namespace GraphTask
             Graph = array;
         }
 
-        private void BreadthFirstTraversing(Action<int> action, int vertex, ref bool[] visited)
+        private void BreadthFirstTraversing(Action<int> action, int vertex, bool[] visited)
         {
             var queue = new Queue<int>();
 
@@ -27,7 +27,7 @@ namespace GraphTask
             {
                 var currentVertex = queue.Dequeue();
 
-                if (visited[currentVertex] == true)
+                if (visited[currentVertex])
                 {
                     continue;
                 }
@@ -54,12 +54,12 @@ namespace GraphTask
             {
                 if (!visited[vertexNumber])
                 {
-                    BreadthFirstTraversing(action, vertexNumber, ref visited);
+                    BreadthFirstTraversing(action, vertexNumber, visited);
                 }
             }
         }
 
-        private void DepthFirstTraversing(Action<int> action, int vertex, ref bool[] visited)
+        private void DepthFirstTraversing(Action<int> action, int vertex, bool[] visited)
         {
             var stack = new Stack<int>();
 
@@ -67,20 +67,20 @@ namespace GraphTask
 
             while (stack.Count != 0)
             {
-                var curentVertex = stack.Pop();
+                var currentVertex = stack.Pop();
 
-                if (visited[curentVertex])
+                if (visited[currentVertex])
                 {
                     continue;
                 }
 
-                visited[curentVertex] = true;
+                visited[currentVertex] = true;
 
-                action(curentVertex);
+                action(currentVertex);
 
                 for (var i = Graph.GetLength(0) - 1; i > 0; i--)
                 {
-                    if (Graph[curentVertex, i] == 1)
+                    if (Graph[currentVertex, i] == 1)
                     {
                         stack.Push(i);
                     }
@@ -96,18 +96,18 @@ namespace GraphTask
             {
                 if (!visited[vertexNumber])
                 {
-                    DepthFirstTraversing(action, vertexNumber, ref visited);
+                    DepthFirstTraversing(action, vertexNumber, visited);
                 }
             }
         }
 
-        private void Visit(Action<int> action, int vertex, ref bool[] visited)
+        private void Visit(Action<int> action, int vertex, bool[] visited)
         {
             action(vertex);
 
             visited[vertex] = true;
 
-            for(var i = 0; i < Graph.GetLength(0); i++)
+            for (var i = 0; i < Graph.GetLength(0); i++)
             {
                 if (visited[i])
                 {
@@ -116,7 +116,7 @@ namespace GraphTask
 
                 if (Graph[vertex, i] == 1)
                 {
-                    Visit(action, i, ref visited);
+                    Visit(action, i, visited);
                 }
             }
         }
@@ -125,11 +125,11 @@ namespace GraphTask
         {
             var visited = new bool[Graph.GetLength(0)];
 
-            for(var i = 0; i < Graph.GetLength(0); i++)
+            for (var i = 0; i < Graph.GetLength(0); i++)
             {
                 if (!visited[i])
                 {
-                    Visit(action, i, ref visited);
+                    Visit(action, i, visited);
                 }
             }
         }

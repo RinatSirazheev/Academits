@@ -2,40 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace PersonTask
 {
     class PersonDemo
     {
-        class PersonByNameComparer : IEqualityComparer<Person>
-        {
-            public bool Equals(Person person1, Person person2)
-            {
-                if (ReferenceEquals(person1, person2))
-                {
-                    return true;
-                }
-
-                if (ReferenceEquals(null, person1) || ReferenceEquals(null, person2))
-                {
-                    return false;
-                }
-
-                return person1.Name == person2.Name;
-            }
-
-            public int GetHashCode(Person obj)
-            {
-                int prime = 19;
-                int hash = 1;
-
-                hash = prime * hash + obj.Age;
-                hash = prime * hash + (obj.Name != null ? obj.Name.GetHashCode() : 0);
-                return hash;
-            }
-        }
-
         static void Main()
         {
             var personsList = new List<Person>()
@@ -54,7 +25,7 @@ namespace PersonTask
                 .Distinct()
                 .ToList();
 
-            StringBuilder distinctNamesList = new StringBuilder();
+            var distinctNamesList = new StringBuilder();
 
             distinctNamesList.Append("Имена: ")
                              .Append(string.Join(", ", distinctNameslist))
