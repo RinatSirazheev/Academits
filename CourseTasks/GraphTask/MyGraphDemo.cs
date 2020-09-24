@@ -24,11 +24,12 @@ namespace GraphTask
             graph.BreadthFirstTraversing(Console.WriteLine);
 
             Console.WriteLine();
-            Console.WriteLine("Обход несвязного графа в глубину.");
+            Console.WriteLine("Обход несвязного графа в глубину без использования рекурсии.");
 
             graph.DepthFirstTraversing(Console.WriteLine);
 
-            Console.WriteLine("Test");
+            Console.WriteLine();
+            Console.WriteLine("Обход несвязного графа в глубину c использованием рекурсии.");
 
             graph.Visit(Console.WriteLine);
         }

@@ -38,7 +38,7 @@ namespace GraphTask
 
                 for (var i = 1; i < Graph.GetLength(0); i++)
                 {
-                    if (Graph[currentVertex, i] == 1)
+                    if (Graph[currentVertex, i] == 1 && !visited[i])
                     {
                         queue.Enqueue(i);
                     }
@@ -80,7 +80,7 @@ namespace GraphTask
 
                 for (var i = Graph.GetLength(0) - 1; i > 0; i--)
                 {
-                    if (Graph[currentVertex, i] == 1)
+                    if (Graph[currentVertex, i] == 1 && !visited[i])
                     {
                         stack.Push(i);
                     }
