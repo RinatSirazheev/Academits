@@ -26,7 +26,7 @@ namespace CsvTask
                     {
                         writer.WriteLine("tr");
 
-                        var a = StringParser.GetTableDetails(currenLine);
+                        var a = StringParser.GetTableDetails(currenLine, reader);
 
 
 
