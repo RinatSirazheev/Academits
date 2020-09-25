@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CsvTask
 {
@@ -28,36 +26,35 @@ namespace CsvTask
                 {
                     if ((index = line.IndexOf("\",")) != -1)
                     {
-                        if (line[index - 1] == '"' && line[index - 2] != '"')
+
+                        while (line[index - 1] == '"' && line[index - 2] != '"')
                         {
-                            index = line.IndexOf("\",", index + 1);
+                            index = line.IndexOf("\",", index + 1);                          
                         }
 
                         if (index != -1)
                         {
-                            list.Add(line.Substring(1, index - 1));
-
+                            list.Add(line.Substring(1, index - 1).Replace("\"\"", "\""));
                             line = line.Remove(0, index + 2);
                         }
                         else
                         {
-                            list.Add(line.Substring(1, line.Length - 2));
-                            line = line.Remove(0, line.Length -2);
+                            list.Add(line.Substring(1, line.Length - 2).Replace("\"\"", "\""));
+                            line = line.Remove(0, line.Length - 2);
                         }
-
                     }
                     else
                     {
                         if (line.EndsWith("\""))
                         {
-                            list.Add(line.Substring(1, line.Length - 2));
-                            line = line.Remove(0, line.Length );
+                            var t = line.Length;
+                            list.Add(line.Substring(1, t - 2).Replace("\"\"", "\""));
+                            line = line.Remove(0, line.Length);
                         }
                         else
                         {
-                            line += " " + reader.ReadLine();
+                            line += Environment.NewLine + reader.ReadLine();
                         }
-
                     }
                 }
                 else
@@ -65,24 +62,16 @@ namespace CsvTask
                     if ((index = line.IndexOf(",")) != -1)
                     {
                         list.Add(line.Substring(0, index));
-
                         line = line.Remove(0, index + 1);
                     }
                     else
                     {
                         list.Add(line);
-
                         line = line.Remove(0, line.Length);
                     }
-
-
                 }
             }
-
-   
-
             return list;
         }
-
     }
 }

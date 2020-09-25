@@ -1,24 +1,33 @@
 table
-tr
-td
-a
-/td
-td
-b
-/td
-td
-c
-/td
-/tr
-tr
-td
-d
-/td
-td
-f
-/td
-td
-g
-/td
-/tr
+	tr
+		td
+			the next cell, contains a line feed
+		/td
+		td
+			before line feed
+after the line feed
+		/td
+		td
+			and this is the third column
+		/td
+	/tr
+	tr
+		td
+			the next cell contains a quotation mark and a comma
+		/td
+		td
+			here"z", they are:",
+		/td
+	/tr
+	tr
+		td
+			in this row the second and third cells each contain a single quotation mark
+		/td
+		td
+			""
+		/td
+		td
+			"
+		/td
+	/tr
 /table

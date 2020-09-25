@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 
 namespace CsvTask
 {
@@ -11,7 +6,6 @@ namespace CsvTask
     {
         static void Main()
         {
-
             var inFilePath = "..//..//inFile.txt";
             var outFilePath = "..//..//outFile.txt";
             
@@ -25,30 +19,23 @@ namespace CsvTask
 
                     while ((currenLine = reader.ReadLine()) != null)
                     {
-                        writer.WriteLine("tr");
+                        writer.WriteLine("\ttr");
 
                         var a = StringParser.GetTableDetails(currenLine, reader);
 
                         for(var i = 0; i < a.Count; i++)
                         {
-                            writer.WriteLine("td");
+                            writer.WriteLine("\t\ttd");
 
-                            writer.WriteLine(a[i]);
+                            writer.WriteLine("\t\t\t"+a[i]);
 
-                            writer.WriteLine("/td");
+                            writer.WriteLine("\t\t/td");
                         }
-
-
-                        writer.WriteLine("/tr");
-
+                        writer.WriteLine("\t/tr");
                     }
                 }
-
                 writer.WriteLine("/table");
             }
-
-            
-
         }
     }
 }
