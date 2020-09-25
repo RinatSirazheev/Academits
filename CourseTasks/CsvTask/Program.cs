@@ -11,6 +11,7 @@ namespace CsvTask
     {
         static void Main()
         {
+
             var inFilePath = "..//..//inFile.txt";
             var outFilePath = "..//..//outFile.txt";
             
@@ -28,7 +29,14 @@ namespace CsvTask
 
                         var a = StringParser.GetTableDetails(currenLine, reader);
 
+                        for(var i = 0; i < a.Count; i++)
+                        {
+                            writer.WriteLine("td");
 
+                            writer.WriteLine(a[i]);
+
+                            writer.WriteLine("/td");
+                        }
 
 
                         writer.WriteLine("/tr");
@@ -38,6 +46,8 @@ namespace CsvTask
 
                 writer.WriteLine("/table");
             }
+
+            
 
         }
     }

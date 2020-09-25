@@ -22,24 +22,64 @@ namespace CsvTask
 
             while (line.Length != 0)
             {
+                int index;
+
                 if (line.StartsWith("\""))
                 {
-                    int index;
-
                     if ((index = line.IndexOf("\",")) != -1)
                     {
-                        list.Add(line.Substring(1, index - 1));
+                        if (line[index - 1] == '"' && line[index - 2] != '"')
+                        {
+                            index = line.IndexOf("\",", index + 1);
+                        }
 
-                        line= line.Remove(0, index + 2);
+                        if (index != -1)
+                        {
+                            list.Add(line.Substring(1, index - 1));
+
+                            line = line.Remove(0, index + 2);
+                        }
+                        else
+                        {
+                            list.Add(line.Substring(1, line.Length - 2));
+                            line = line.Remove(0, line.Length -2);
+                        }
+
                     }
                     else
                     {
-                        line+=" " + reader.ReadLine();
+                        if (line.EndsWith("\""))
+                        {
+                            list.Add(line.Substring(1, line.Length - 2));
+                            line = line.Remove(0, line.Length );
+                        }
+                        else
+                        {
+                            line += " " + reader.ReadLine();
+                        }
+
                     }
+                }
+                else
+                {
+                    if ((index = line.IndexOf(",")) != -1)
+                    {
+                        list.Add(line.Substring(0, index));
+
+                        line = line.Remove(0, index + 1);
+                    }
+                    else
+                    {
+                        list.Add(line);
+
+                        line = line.Remove(0, line.Length);
+                    }
+
+
                 }
             }
 
-
+   
 
             return list;
         }

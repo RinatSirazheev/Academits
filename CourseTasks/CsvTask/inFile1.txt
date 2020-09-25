@@ -1,0 +1,4 @@
+"the next cell, contains a line feed","before line feed
+after the line feed",and this is the third column
+the next cell contains a quotation mark and a comma,"here they are:"",",
+in this row the second and third cells each contain a single quotation mark,"""",""""
