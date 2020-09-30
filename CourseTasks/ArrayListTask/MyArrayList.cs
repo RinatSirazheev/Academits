@@ -73,9 +73,7 @@ namespace ArrayListTask
 
         public override string ToString()
         {
-            TrimExcess();
-
-            return string.Join(", ", items);
+            return "[" + string.Join(", ", this) + "]";
         }
 
         private void CheckIndex(int index)
