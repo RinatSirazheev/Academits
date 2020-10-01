@@ -36,7 +36,7 @@ namespace GraphTask
 
                 action(currentVertex);
 
-                for (var i = 1; i < Graph.GetLength(0); i++)
+                for (var i = 0; i < Graph.GetLength(0); i++)
                 {
                     if (Graph[currentVertex, i] == 1 && !visited[i])
                     {
@@ -78,7 +78,7 @@ namespace GraphTask
 
                 action(currentVertex);
 
-                for (var i = Graph.GetLength(0) - 1; i > 0; i--)
+                for (var i = Graph.GetLength(0) - 1; i >= 0; i--)
                 {
                     if (Graph[currentVertex, i] == 1 && !visited[i])
                     {
