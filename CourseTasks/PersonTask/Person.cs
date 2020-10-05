@@ -14,7 +14,7 @@
 
         public override string ToString()
         {
-            return Name;
+            return "имя - " + Name + " возраст - " + Age;
         }
     }
 }

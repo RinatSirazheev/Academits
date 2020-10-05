@@ -20,16 +20,15 @@ namespace PersonTask
                 new Person("Roman", 34)
             };
 
-            var distinctNameslist = personsList
-                .Select(Person => Person.Name)
+            var distinctNamesList = personsList
+                .Select(p => p.Name)
                 .Distinct()
                 .ToList();
 
-            var distinctNames = new StringBuilder();
-
-            distinctNames.Append("Имена: ")
-                             .Append(string.Join(", ", distinctNameslist))
-                             .Append(".");
+            var distinctNames = new StringBuilder()
+                .Append("Имена: ")
+                .Append(string.Join(", ", distinctNamesList))
+                .Append(".");
 
             Console.WriteLine("Список содержащий только уникальные имена.");
             Console.WriteLine(distinctNames);
@@ -40,7 +39,7 @@ namespace PersonTask
                 .ToList();
 
             var minorPersonsAverageAge = minorPersons
-                .Select(Person => Person.Age)
+                .Select(p => p.Age)
                 .Average();
 
             Console.WriteLine("Список людей младше 18 лет: " + string.Join(", ", minorPersons) + ".");
@@ -50,19 +49,21 @@ namespace PersonTask
             Console.WriteLine();
 
             var peoplesAveragesAgesMap = personsList
-                .GroupBy(Person => Person.Name)
-                .ToDictionary(Person => Person.Key, Person => Person.ToList().Select(p => p.Age).Average());
+                .GroupBy(p => p.Name)
+                .ToDictionary(personsGroups => personsGroups.Key, personsGroups => personsGroups.Average(p => p.Age));
 
             Console.WriteLine("Коллекция в которой ключи - имена, а значения - средний возраст:");
-            foreach (KeyValuePair<string, double> valuePair in peoplesAveragesAgesMap)
+
+            foreach (var pair in peoplesAveragesAgesMap)
             {
-                Console.WriteLine(valuePair.Key + " - " + valuePair.Value);
+                Console.WriteLine(pair.Key + " - " + pair.Value);
             }
+
             Console.WriteLine();
 
             var personsAged20To40 = personsList
-                .Where(Person => Person.Age >= 20 && Person.Age <= 40)
-                .OrderByDescending(Person => Person.Age)
+                .Where(p => p.Age >= 20 && p.Age <= 40)
+                .OrderByDescending(p => p.Age)
                 .ToList();
 
             Console.WriteLine("Список людей, возраст которых от 20 до 45 лет:");
