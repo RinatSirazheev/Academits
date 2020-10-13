@@ -50,7 +50,7 @@ namespace PersonTask
 
             var peoplesAveragesAgesMap = personsList
                 .GroupBy(p => p.Name)
-                .ToDictionary(personsGroups => personsGroups.Key, personsGroups => personsGroups.Average(p => p.Age));
+                .ToDictionary(g => g.Key, g => g.Average(p => p.Age));
 
             Console.WriteLine("Коллекция в которой ключи - имена, а значения - средний возраст:");
 
